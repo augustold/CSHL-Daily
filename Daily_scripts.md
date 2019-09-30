@@ -28,29 +28,23 @@ cd Trinity/
 module load GCC/7.3.0-2.30
 module load OpenMPI/3.1.1
 module load Trinity/2.8.4
+module load SAMtools/1.9
 ```
+
+Creating file samples.txt: https://docs.google.com/spreadsheets/d/1gQn80BJNgY8LMA3DNF5LuaA6OgwkgGWJ8w-ijBq6n6w/edit#gid=901858591
 
 Creating script
 ```
 cat > Trinity.sh
 ```
-
 Add the following to the file
-
-
 ```
-# Combining all reads data sets
-
-cat /sonas-hs/ware/hpc/home/diniz/rnaseq/*_1.fq.gz > ALL.LEFT.fq.gz
-cat /sonas-hs/ware/hpc/home/diniz/rnaseq/*_2.fq.gz > ALL.RIGHT.fq.gz
-
-#Running Trinity for de novo assembly
-Trinity --seqType fq --SS_lib_type RF --left ALL.LEFT.fq --right ALL.RIGHT.fq --CPU 8 --M 5G
+Trinity --seqType fq --samples_file samples.txt --CPU 8 --max_memory 80G
 ```
 
 Running on CSHL cluster
 ```
-qsub -cwd -pe threads 8 -l m_mem_free=5G Trinity.sh
+qsub -cwd -pe threads 8 -l m_mem_free=10G Trinity.sh
 ```
 
 # Sep 26 2019
