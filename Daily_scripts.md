@@ -1,3 +1,58 @@
+# Sep 30 2019
+
+## Running Fastqc
+
+```
+module load FastQC/0.11.8-Java-1.8
+```
+
+```
+cat > Fastqc.sh
+```
+
+Add the following to the file
+```
+for f in /sonas-hs/ware/hpc/home/diniz/rnaseq/*.fq.gz; do fastqc --outdir  /sonas-hs/ware/hpc/home/diniz/Fastqc_Out -t 8 $f  ; done
+```
+
+Running on CSHL cluster
+```
+qsub -cwd -pe threads 8 -l m_mem_free=5G Fastqc.sh
+```
+
+## Running Trinity
+
+```
+mkdir Trininty
+cd Trinity/
+module load GCC/7.3.0-2.30
+module load OpenMPI/3.1.1
+module load Trinity/2.8.4
+```
+
+Creating script
+```
+cat > Trinity.sh
+```
+
+Add the following to the file
+
+
+```
+# Combining all reads data sets
+
+cat /sonas-hs/ware/hpc/home/diniz/rnaseq/*_1.fq.gz > ALL.LEFT.fq.gz
+cat /sonas-hs/ware/hpc/home/diniz/rnaseq/*_2.fq.gz > ALL.RIGHT.fq.gz
+
+#Running Trinity for de novo assembly
+Trinity --seqType fq --SS_lib_type RF --left ALL.LEFT.fq --right ALL.RIGHT.fq --CPU 8 --M 5G
+```
+
+Running on CSHL cluster
+```
+qsub -cwd -pe threads 8 -l m_mem_free=5G Trinity.sh
+```
+
 # Sep 26 2019
 
 ## Running STAR
@@ -63,4 +118,4 @@ grep ‘No paths found’ mapping.sam.log | wc -l
 ## Result:
 
 Regarding truncated gene models in the sugarcane assembly, I have mapped the full-length transcripts from sorghum and sugarcane (obtained from 454 sequencing in 2014).
-Sorghum has 95,380 full-length transcripts and 2,738 (2.87%) didn`t map to the sugarcane reference. Sugarcane has 40,587 predicted transcripts and 809 (1.99%) didn`t map to the sugarcane reference. Maybe we can say that we have only a small fraction of truncated genes gene models in our reference (~2%).
+Sorghum has 95,380 full-length transcripts and 2,738 (2.87%) didn't map to the sugarcane reference. Sugarcane has 40,587 predicted transcripts and 809 (1.99%) didn't map to the sugarcane reference. Maybe we can say that we have only a small fraction of truncated genes gene models in our reference (~2%).
