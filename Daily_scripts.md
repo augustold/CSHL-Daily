@@ -37,6 +37,9 @@ Running on CSHL cluster
 qsub -cwd -pe threads 20 -l m_mem_free=5G GMAP_run.sh
 ```
 
+Out of the 40,587 predicted transcripts for sugarcane, 34547 (85.11%) map to the sugarcane reference considering a threshold of 80% coverage and identidy.
+On the other hand, and considering the same threshold, 67707 (71%) out 95,380 sorghum full-length transcripts map to the sugarcane reference. 
+
 ## Sorghum orfeome *vs* SP80 genome: 80% cov and ident
 
 ```
@@ -104,12 +107,12 @@ cat > Trinity.sh
 ```
 Add the following to the file
 ```
-Trinity --seqType fq --samples_file samples.txt --CPU 8 --max_memory 80G
+Trinity --seqType fq --samples_file samples.txt --CPU 20 --max_memory 100G
 ```
 
 Running on CSHL cluster
 ```
-qsub -cwd -pe threads 10 -l m_mem_free=10G Trinity.sh
+qsub -cwd -pe threads 20 -l m_mem_free=5G Trinity.sh
 ```
 
 # Sep 26 2019
