@@ -1,8 +1,9 @@
 # Oct 1 2019
 
-## Running GSNAP - similar do GMAP but for larger genomes
+## Running GMAP: 80% cov and ident
 
 ```
+ssh diniz@bnbdev1
 module load GCC/7.3.0-2.30
 module load OpenMPI/3.1.1
 module load GMAP-GSNAP/2019-03-15
@@ -50,6 +51,7 @@ awk '/No paths found/ { count++ } END { print count }' mapping.sam.log
 ## Running Fastqc
 
 ```
+ssh diniz@bnbdev1
 module load FastQC/0.11.8-Java-1.8
 ```
 
@@ -70,6 +72,7 @@ qsub -cwd -pe threads 8 -l m_mem_free=5G Fastqc.sh
 ## Running Trinity
 
 ```
+ssh diniz@bnbdev1
 mkdir Trininty
 cd Trinity/
 module load GCC/7.3.0-2.30
