@@ -37,12 +37,25 @@ Running on CSHL cluster
 qsub -cwd -pe threads 20 -l m_mem_free=5G GMAP_run.sh
 ```
 
+## sugarcane orfeome vs SP80 genome: 80% cov and ident
+
+```
+# cat > GMAP_sorgh_run.sh
+
+gmap -D /sonas-hs/ware/hpc/home/diniz/Saccharum_genome_refs/SP803280/ -d gmap_index -f samse -t 20 -n 1 --min-trimmed-coverage=0.80 --min-identity=0.80 sorghum.combined11.collapsed.rep.fa > mapping_sorgh.sam 2> mapping_sorgh.sam.log
+```
+
+Running on CSHL cluster
+```
+qsub -cwd -pe threads 20 -l m_mem_free=5G GMAP_sorgh_run.sh
+```
+
 ## count how many transcripts didn’t map to the reference
 
 ```
-grep ‘No paths found’ mapping.sam.log | wc -l
+grep 'No paths found' mapping.sam.log | wc -l
 
-#If grep doesn't work
+#Alternative to grep
 awk '/No paths found/ { count++ } END { print count }' mapping.sam.log
 ```
 
@@ -154,6 +167,9 @@ gmap -D . -d scga7 -f samse -t 20 -n 1 sugarcane.fulllength.analysis.all.fasta >
 /projects/augustold/CSHL
 
 gmap -D . -d scga7 -f samse -t 20 -n 1 sorghum.combined11.collapsed.rep.fa > mapping.sam 2> mapping.sam.log
+
+# 80% coverage and identity
+gmap -D . -d scga7 -f samse -t 20 -n 1 --min-trimmed-coverage=0.80 --min-identity=0.80 sorghum.combined11.collapsed.rep.fa > mapping_80.sam 2> mapping_80.sam.log
 ```
 
 ## count how many transcripts didn’t map to the reference
