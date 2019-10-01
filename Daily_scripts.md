@@ -1,3 +1,50 @@
+# Oct 1 2019
+
+## Running GSNAP - similar do GMAP but for larger genomes
+
+```
+module load GCC/7.3.0-2.30
+module load OpenMPI/3.1.1
+module load GMAP-GSNAP/2019-03-15
+module load SAMtools/1.9
+```
+
+## Prepare the genomic region for alignment by GMAP
+
+```
+# cat > GMAP_build.sh
+
+cd /sonas-hs/ware/hpc/home/diniz/Saccharum_genome_refs/SP803280/
+gmap_build -d gmap_index -D . -k 13 sc.mlc.cns.sgl.utg.scga7.importdb.fa
+```
+
+Running on CSHL cluster
+```
+qsub -cwd -pe threads 8 -l m_mem_free=5G GMAP_build.sh
+```
+
+## sugarcane orfeome vs SP80 genome: 80% cov and ident
+
+```
+# cat > GMAP_run.sh
+
+gmap -D /sonas-hs/ware/hpc/home/diniz/Saccharum_genome_refs/SP803280/ -d gmap_index -f samse -t 20 -n 1 --min-trimmed-coverage=0.80 --min-identity=0.80 sugarcane.fulllength.analysis.all.fasta > mapping.sam 2> mapping.sam.log
+```
+
+Running on CSHL cluster
+```
+qsub -cwd -pe threads 20 -l m_mem_free=5G GMAP_run.sh
+```
+
+## count how many transcripts didn’t map to the reference
+
+```
+grep ‘No paths found’ mapping.sam.log | wc -l
+
+#If grep doesn't work
+awk '/No paths found/ { count++ } END { print count }' mapping.sam.log
+```
+
 # Sep 30 2019
 
 ## Running Fastqc
@@ -28,7 +75,9 @@ cd Trinity/
 module load GCC/7.3.0-2.30
 module load OpenMPI/3.1.1
 module load Trinity/2.8.4
+module load Jellyfish/2.2.10
 module load SAMtools/1.9
+module load Salmon
 ```
 
 Creating file samples.txt: https://docs.google.com/spreadsheets/d/1gQn80BJNgY8LMA3DNF5LuaA6OgwkgGWJ8w-ijBq6n6w/edit#gid=901858591
@@ -44,7 +93,7 @@ Trinity --seqType fq --samples_file samples.txt --CPU 8 --max_memory 80G
 
 Running on CSHL cluster
 ```
-qsub -cwd -pe threads 8 -l m_mem_free=10G Trinity.sh
+qsub -cwd -pe threads 10 -l m_mem_free=10G Trinity.sh
 ```
 
 # Sep 26 2019
@@ -108,6 +157,9 @@ gmap -D . -d scga7 -f samse -t 20 -n 1 sorghum.combined11.collapsed.rep.fa > map
 
 ```
 grep ‘No paths found’ mapping.sam.log | wc -l
+
+#If grep doesn't work
+awk '/No paths found/ { count++ } END { print count }' mapping.sam.log
 ```
 ## Result:
 
