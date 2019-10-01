@@ -1,6 +1,6 @@
 # Oct 1 2019
 
-## Running GMAP: 80% cov and ident
+## Running GMAP: 80% coverage and identity
 
 ```
 ssh diniz@bnbdev1
@@ -24,7 +24,7 @@ Running on CSHL cluster
 qsub -cwd -pe threads 8 -l m_mem_free=5G GMAP_build.sh
 ```
 
-## sugarcane orfeome vs SP80 genome: 80% cov and ident
+## Sugarcane orfeome *vs* SP80 genome: 80% cov and ident
 
 ```
 # cat > GMAP_run.sh
@@ -37,7 +37,7 @@ Running on CSHL cluster
 qsub -cwd -pe threads 20 -l m_mem_free=5G GMAP_run.sh
 ```
 
-## sugarcane orfeome vs SP80 genome: 80% cov and ident
+## Sorghum orfeome *vs* SP80 genome: 80% cov and ident
 
 ```
 # cat > GMAP_sorgh_run.sh
@@ -50,7 +50,7 @@ Running on CSHL cluster
 qsub -cwd -pe threads 20 -l m_mem_free=5G GMAP_sorgh_run.sh
 ```
 
-## count how many transcripts didn’t map to the reference
+## Count how many transcripts didn’t map to the reference
 
 ```
 grep 'No paths found' mapping.sam.log | wc -l
@@ -153,7 +153,7 @@ qsub -cwd -pe threads 8 -l m_mem_free=5G STARmap.sh
 gmap_build -d genome -D . -k 13 genome.fa
 ```
 
-## sugarcane orfeome vs SP80 genome
+## sugarcane orfeome *vs* SP80 genome
 
 ```
 /projects/augustold/SP80_genome
@@ -161,7 +161,7 @@ gmap_build -d genome -D . -k 13 genome.fa
 gmap -D . -d scga7 -f samse -t 20 -n 1 sugarcane.fulllength.analysis.all.fasta > mapping.sam 2> mapping.sam.log
 ```
 
-## sorghum full-length mRNA vs SP80 genome
+## sorghum full-length mRNA *vs* SP80 genome
 
 ```
 /projects/augustold/CSHL
