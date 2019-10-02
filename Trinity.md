@@ -9,11 +9,13 @@
 ```
 # FastQ file links in
 augustold@helix:/projects/augustold/fastq
+
+# Analysis will be parsed in
+augustold@helix:/projects/augustold/CSHL/Trinity/Trinity_denovo
 ```
 
 ### Running trinity
 ```
-Trinity --seqType fq --max_memory 100G --CPU 40 \
-         --left reads_1.fq.gz  --right reads_2.fq.gz --CPU 6
-
+cd /projects/augustold/CSHL/Trinity/Trinity_denovo
+/projects/augustold/CSHL/Trinity/trinityrnaseq-Trinity-v2.8.5/Trinity --seqType fq --max_memory 100G --CPU 40 --samples_file samples.txt --SS_lib_type RF 
 ```
