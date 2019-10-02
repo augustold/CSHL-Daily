@@ -19,3 +19,4 @@ augustold@helix:/projects/augustold/CSHL/Trinity/Trinity_denovo
 cd /projects/augustold/CSHL/Trinity/Trinity_denovo
 /projects/augustold/CSHL/Trinity/trinityrnaseq-Trinity-v2.8.5/Trinity --seqType fq --max_memory 100G --CPU 40 --samples_file samples.txt --SS_lib_type RF 
 ```
+Atention! unable to get fq.gz files from 3rd batch of samples. Running withiout theses samples for now.
