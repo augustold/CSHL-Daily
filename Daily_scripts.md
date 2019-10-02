@@ -1,3 +1,9 @@
+# Oct 2 2019
+
+## Running Trinity on Helix
+Please refer to Trinity.md
+
+
 # Oct 1 2019
 
 ## Running GMAP: 80% coverage and identity
