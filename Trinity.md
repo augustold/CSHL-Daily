@@ -13,7 +13,7 @@ Building the transcriptome using Trinity (v2.8.5) in a *de novo* approach for SP
 | *S. officinarum* | 3  | 3  | 3  | 3  |  12    |
 | **Total**        |    |    |    |    |**36**  |
 
-```R
+```
 # Result files in
 augustold@helix:/projects/augustold/CSHL/Trinity/Trinity_denovo/
 officinarum  SP80-3280  spontaneum
@@ -24,7 +24,7 @@ augustold@helix:/projects/augustold/fastq
 
 ## SP80-3280
 
-```python
+```
 cd /projects/augustold/CSHL/Trinity/Trinity_denovo/SP80-3280/
 # create the samples.txt file
 # cat > samples.txt
@@ -37,7 +37,7 @@ screen
 
 ## *S. spontaneum*
 
-```python
+```
 cd /projects/augustold/CSHL/Trinity/Trinity_denovo/spontaneum/
 # create the samples.txt file
 # cat > samples.txt
@@ -50,7 +50,7 @@ screen
 
 ## *S. officinarum*
 
-```python
+```
 cd /projects/augustold/CSHL/Trinity/Trinity_denovo/officinarum/
 # create the samples.txt file
 # cat > samples.txt
