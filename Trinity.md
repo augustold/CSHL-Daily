@@ -13,7 +13,7 @@ Building the transcriptome using Trinity (v2.8.5) in a *de novo* approach for SP
 | *S. officinarum* | 3  | 3  | 3  | 3  |  12    |
 | **Total**        |    |    |    |    |**36**  |
 
-```python
+```R
 # Result files in
 augustold@helix:/projects/augustold/CSHL/Trinity/Trinity_denovo/
 officinarum  SP80-3280  spontaneum
