@@ -120,32 +120,22 @@ do
 done
 ```
 
-### Merge BAM files
+### Merge BAM files and build Genome-guided Trinity
 
 ```
 # SP80-3280
+screen
 cd /projects/augustold/CSHL/Trinity/Trinity_guided/SP80-3280/
 
 samtools merge atlas_merged.bam aligned/*.bam
 samtools index atlas_merged.bam
-
-# S. spontaneum
-cd /projects/augustold/CSHL/Trinity/Trinity_guided/spontaneum/
-
-samtools merge atlas_merged.bam aligned/*.bam
-samtools index atlas_merged.bam
-```
-
-### Genome-guided Trinity
-
-```
-# SP80-3280
-cd /projects/augustold/CSHL/Trinity/Trinity_guided/SP80-3280/
-
 /projects/augustold/CSHL/Trinity/trinityrnaseq-Trinity-v2.8.5/TrinityTrinity --genome_guided_bam atlas_merged.bam --genome_guided_max_intron 10000 --max_memory 50G --CPU 10 --SS_lib_type RF
 
 # S. spontaneum
+screen
 cd /projects/augustold/CSHL/Trinity/Trinity_guided/spontaneum/
 
+samtools merge atlas_merged.bam aligned/*.bam
+samtools index atlas_merged.bam
 /projects/augustold/CSHL/Trinity/trinityrnaseq-Trinity-v2.8.5/TrinityTrinity --genome_guided_bam atlas_merged.bam --genome_guided_max_intron 10000 --max_memory 50G --CPU 10 --SS_lib_type RF
 ```
