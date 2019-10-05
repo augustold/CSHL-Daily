@@ -129,7 +129,7 @@ cd /projects/augustold/CSHL/Trinity/Trinity_guided/SP80-3280/
 
 samtools merge atlas_merged.bam aligned/*.bam
 samtools index atlas_merged.bam
-/projects/augustold/CSHL/Trinity/trinityrnaseq-Trinity-v2.8.5/TrinityTrinity --genome_guided_bam atlas_merged.bam --genome_guided_max_intron 10000 --max_memory 50G --CPU 10 --SS_lib_type RF
+/projects/augustold/CSHL/Trinity/trinityrnaseq-Trinity-v2.8.5/Trinity --genome_guided_bam atlas_merged.bam --genome_guided_max_intron 10000 --max_memory 50G --CPU 10
 
 # S. spontaneum
 screen
@@ -137,5 +137,5 @@ cd /projects/augustold/CSHL/Trinity/Trinity_guided/spontaneum/
 
 samtools merge atlas_merged.bam aligned/*.bam
 samtools index atlas_merged.bam
-/projects/augustold/CSHL/Trinity/trinityrnaseq-Trinity-v2.8.5/TrinityTrinity --genome_guided_bam atlas_merged.bam --genome_guided_max_intron 10000 --max_memory 50G --CPU 10 --SS_lib_type RF
+/projects/augustold/CSHL/Trinity/trinityrnaseq-Trinity-v2.8.5/Trinity --genome_guided_bam atlas_merged.bam --genome_guided_max_intron 10000 --max_memory 50G --CPU 10
 ```
