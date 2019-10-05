@@ -63,7 +63,7 @@ screen
 /projects/augustold/CSHL/Trinity/trinityrnaseq-Trinity-v2.8.5/Trinity --seqType fq --max_memory 50G --CPU 10 --samples_file samples.txt --SS_lib_type RF 
 ```
 
-## Genome-guided Trinity *De novo* Transcriptome Assembly
+## Genome-guided Trinity Transcriptome Assembly
 
 Users must provide read alignments to Trinity as a coordinate-sorted bam file. In order to do that, I'll use STAR.
 
@@ -118,4 +118,34 @@ for i in $(ls fastq | sed s/_[12].fq.gz// | sort -u)
 do
     /projects/augustold/CSHL/STAR-2.7.2c/bin/Linux_x86_64/STAR --genomeDir /projects/augustold/CSHL/Saccharum_genome_refs/Sspon/star_index --readFilesIn fastq/${i}_1.fq.gz,fastq/${i}_2.fq.gz --runThreadN 10 --outFileNamePrefix aligned/${i}. --outSAMtype BAM SortedByCoordinate --readFilesCommand zcat --outSAMunmapped Within --outFilterType BySJout --outSAMattributes All --chimSegmentMin 12 --chimSegmentReadGapMax 3 --outFilterMultimapNmax 20 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --alignSJoverhangMin 8 --alignSJDBoverhangMin 1 --outFilterIntronMotifs RemoveNoncanonical --clip5pNbases 0 --seedSearchStartLmax 50 --genomeLoad LoadAndKeep --limitBAMsortRAM 35000000000
 done
+```
+
+### Merge BAM files
+
+```
+# SP80-3280
+cd /projects/augustold/CSHL/Trinity/Trinity_guided/SP80-3280/
+
+samtools merge atlas_merged.bam aligned/*.bam
+samtools index atlas_merged.bam
+
+# S. spontaneum
+cd /projects/augustold/CSHL/Trinity/Trinity_guided/spontaneum/
+
+samtools merge atlas_merged.bam aligned/*.bam
+samtools index atlas_merged.bam
+```
+
+### Genome-guided Trinity
+
+```
+# SP80-3280
+cd /projects/augustold/CSHL/Trinity/Trinity_guided/SP80-3280/
+
+/projects/augustold/CSHL/Trinity/trinityrnaseq-Trinity-v2.8.5/TrinityTrinity --genome_guided_bam atlas_merged.bam --genome_guided_max_intron 10000 --max_memory 50G --CPU 10 --SS_lib_type RF
+
+# S. spontaneum
+cd /projects/augustold/CSHL/Trinity/Trinity_guided/spontaneum/
+
+/projects/augustold/CSHL/Trinity/trinityrnaseq-Trinity-v2.8.5/TrinityTrinity --genome_guided_bam atlas_merged.bam --genome_guided_max_intron 10000 --max_memory 50G --CPU 10 --SS_lib_type RF
 ```
