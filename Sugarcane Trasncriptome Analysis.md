@@ -139,3 +139,39 @@ samtools merge atlas_merged.bam aligned/*.bam
 samtools index atlas_merged.bam
 /projects/augustold/CSHL/Trinity/trinityrnaseq-Trinity-v2.8.5/Trinity --genome_guided_bam atlas_merged.bam --genome_guided_max_intron 10000 --max_memory 50G --CPU 10
 ```
+
+### CLASS2
+
+```
+cd /projects/augustold/CSHL/Class/
+screen
+perl /projects/augustold/CSHL/Class/CLASS-2.1.7/run_class.pl -a /projects/augustold/CSHL/Trinity/Trinity_guided/SP80-3280/atlas_merged.bam -o /projects/augustold/CSHL/Class/SP80-3280_atlas_cl.gtf -p 16 --wd /projects/augustold/CSHL/Class
+```
+
+### StringTie
+
+```
+cd /projects/augustold/CSHL/StringTie/
+screen
+/projects/augustold/CSHL/StringTie/stringtie/stringtie \
+/projects/augustold/CSHL/Trinity/Trinity_guided/SP80-3280/atlas_merged.bam \
+-G /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/sc.mlc.cns.utg.sgl_v2_without_mobile-element_prtn_coding_prim_transcrpt.gff \
+-A /projects/augustold/CSHL/StringTie/gene_abund.tab \
+-C /projects/augustold/CSHL/StringTie/cov_refs.gtf --rf \
+-B -e -p 16 \
+-o /projects/augustold/CSHL/StringTie/SP80-3280_atlas_ST.gtf
+```
+
+### Cufflinks - to run!
+
+```
+cd /projects/augustold/CSHL/Cufflinks/
+screen
+sonas-hs/ware/hpc/home/bwang/software/cufflinks-2.1.1.Linux_x86_64/cufflinks \
+-p 16 \
+-o /sonas-hs/ware/hpc_norepl/data/xwang/NAM/Sorg_newWF/assembly/subSmp/cufflinks_sub_2.1.1/picard \
+-g /sonas-hs/ware/hpc_norepl/data/xwang/NAM/Sorg_newWF/ref/Sorghum_bicolor.Sorghum_bicolor_NCBIv3.43.gff3 \
+-M /sonas-hs/ware/hpc_norepl/data/xwang/NAM/Sorg_newWF/ref/rRNA_mask.gff3 \
+--library-type fr-firststrand \
+-u atlas_merged_subSmp_picard.bam
+```
