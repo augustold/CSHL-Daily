@@ -164,14 +164,24 @@ screen
 
 ### Cufflinks - to run!
 
+Run on BNB!
+
 ```
-cd /projects/augustold/CSHL/Cufflinks/
-screen
-sonas-hs/ware/hpc/home/bwang/software/cufflinks-2.1.1.Linux_x86_64/cufflinks \
+cat > cufflinks.sh
+
+#Paste this
+cd /sonas-hs/ware/hpc/home/diniz/cufflinks/SP80-3280/
+
+/sonas-hs/ware/hpc/home/bwang/software/cufflinks-2.1.1.Linux_x86_64/cufflinks \
 -p 16 \
--o /sonas-hs/ware/hpc_norepl/data/xwang/NAM/Sorg_newWF/assembly/subSmp/cufflinks_sub_2.1.1/picard \
--g /sonas-hs/ware/hpc_norepl/data/xwang/NAM/Sorg_newWF/ref/Sorghum_bicolor.Sorghum_bicolor_NCBIv3.43.gff3 \
--M /sonas-hs/ware/hpc_norepl/data/xwang/NAM/Sorg_newWF/ref/rRNA_mask.gff3 \
+-o /sonas-hs/ware/hpc/home/diniz/cufflinks/SP80-3280/ \
+-g /sonas-hs/ware/hpc/home/diniz/Saccharum_genome_refs/SP803280/sc.mlc.cns.sgl.utg_scga7.sort.gff3 \
 --library-type fr-firststrand \
--u atlas_merged_subSmp_picard.bam
+-u atlas_merged.bam
+```
+
+Run on CSHL cluster
+
+```
+qsub -cwd -pe threads 16 -l m_mem_free=5G cufflinks.sh
 ```
