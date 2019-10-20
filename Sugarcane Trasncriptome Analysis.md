@@ -143,9 +143,15 @@ samtools index atlas_merged.bam
 ### CLASS2
 
 ```
+#SP80
 cd /projects/augustold/CSHL/Class/
 screen
 perl /projects/augustold/CSHL/Class/CLASS-2.1.7/run_class.pl -a /projects/augustold/CSHL/Trinity/Trinity_guided/SP80-3280/atlas_merged.bam -o /projects/augustold/CSHL/Class/SP80-3280_atlas_cl.gtf -p 16 --wd /projects/augustold/CSHL/Class
+
+#SP80
+cd /projects/augustold/CSHL/Class/
+screen
+perl /projects/augustold/CSHL/Class/CLASS-2.1.7/run_class.pl -a /projects/augustold/CSHL/Trinity/Trinity_guided/spontaneum/atlas_merged.bam -o /projects/augustold/CSHL/Class/spontaneum_atlas_cl.gtf -p 16 --wd /projects/augustold/CSHL/Class
 ```
 
 ### StringTie
