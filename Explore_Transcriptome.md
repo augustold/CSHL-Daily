@@ -10,7 +10,7 @@ https://github.com/trinityrnaseq/trinityrnaseq/wiki/Transcriptome-Assembly-Quali
 
 First, build a bowtie2 index for the transcriptome:
 ```
-bowtie2-build Trinity.fasta Trinity.fasta
+bowtie2-build --threads 20 Trinity.fasta Trinity.fasta
 ```
 
 ## Then perform the alignment to just capture the read alignment statistics:
@@ -18,7 +18,7 @@ bowtie2-build Trinity.fasta Trinity.fasta
 # Example using one sample
 # Need to write a for loop to parse multiple fastq files
 
-bowtie2 -p 10 -q --no-unal -k 20 -x Trinity.fasta \
+bowtie2 -p 40 -q --no-unal -k 20 -x Trinity.fasta \
 -1 /projects/augustold/fastq/SPI11_1.fq.gz \
 -2 /projects/augustold/fastq/SPI11_2.fq.gz \
 2>align_stats.txt| samtools view -@10 -Sb -o bowtie2.bam 
