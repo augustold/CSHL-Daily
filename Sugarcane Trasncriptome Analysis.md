@@ -142,7 +142,7 @@ samtools index atlas_merged.bam
 /projects/augustold/CSHL/Trinity/trinityrnaseq-Trinity-v2.8.5/Trinity --genome_guided_bam atlas_merged.bam --genome_guided_max_intron 10000 --max_memory 50G --CPU 10
 ```
 
-### CLASS2
+### CLASS2: takes too long! try psyCLASS
 
 ```
 #SP80
@@ -154,6 +154,16 @@ perl /projects/augustold/CSHL/Class/CLASS-2.1.7/run_class.pl -a /projects/august
 cd /projects/augustold/CSHL/Class/
 screen
 perl /projects/augustold/CSHL/Class/CLASS-2.1.7/run_class.pl -a /projects/augustold/CSHL/Trinity/Trinity_guided/spontaneum/atlas_merged.bam -o /projects/augustold/CSHL/Class/spontaneum_atlas_cl.gtf -p 16 --wd /projects/augustold/CSHL/Class
+```
+
+### psyCLASS
+
+```
+cd /projects/augustold/CSHL/psiclass/
+
+./psiclass \
+-b /projects/augustold/CSHL/Trinity/Trinity_guided/SP80-3280/atlas_merged.bam \
+-p 20
 ```
 
 ### StringTie
