@@ -188,8 +188,19 @@ cd /sonas-hs/ware/hpc/home/diniz/cufflinks/SP80-3280/
 -u atlas_merged.bam
 ```
 
-Run on CSHL cluster
-
 ```
 qsub -cwd -pe threads 16 -l m_mem_free=5G cufflinks.sh
+```
+
+Run on Helix
+
+```
+cd /projects/augustold/CSHL/Cufflinks/
+
+cufflinks \
+-p 20 \
+-o /projects/augustold/CSHL/Cufflinks/ \
+-g /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/sc.mlc.cns.sgl.utg_scga7.sort.gff3 \
+--library-type fr-firststrand \
+-u /projects/augustold/CSHL/Trinity/Trinity_guided/SP80-3280/atlas_merged.bam
 ```
