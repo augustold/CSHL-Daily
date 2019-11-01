@@ -142,6 +142,24 @@ samtools index atlas_merged.bam
 /projects/augustold/CSHL/Trinity/trinityrnaseq-Trinity-v2.8.5/Trinity --genome_guided_bam atlas_merged.bam --genome_guided_max_intron 10000 --max_memory 50G --CPU 10
 ```
 
+### Align Trinity transcripts back to the genome using STAR
+
+Running on CSHL cluster
+```
+# cat > GMAP_run.sh
+
+module load GCC/7.3.0-2.30
+module load OpenMPI/3.1.1
+module load GMAP-GSNAP/2019-03-15
+module load SAMtools/1.9
+
+gmap -D /sonas-hs/ware/hpc/home/diniz/Saccharum_genome_refs/SP803280/ -d gmap_index -f gff3_gene -t 16 -n 1 --min-trimmed-coverage=0.80 --min-identity=0.80 Trinity-GG.fasta > trinity.gff3
+
+# Running on CSHL cluster
+qsub -cwd -pe threads 16 -l m_mem_free=5G GMAP_run.sh
+```
+
+
 ### CLASS2: takes too long! try psyCLASS
 
 ```
