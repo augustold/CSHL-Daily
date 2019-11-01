@@ -173,7 +173,7 @@ cd /projects/augustold/CSHL/StringTie/
 screen
 /projects/augustold/CSHL/StringTie/stringtie/stringtie \
 /projects/augustold/CSHL/Trinity/Trinity_guided/SP80-3280/atlas_merged.bam \
--G /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/sc.mlc.cns.utg.sgl_v2_without_mobile-element_prtn_coding_prim_transcrpt.gff \
+-G /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/sc.mlc.cns.sgl.utg_scga7.sort.gff3 \
 -A /projects/augustold/CSHL/StringTie/gene_abund.tab \
 -C /projects/augustold/CSHL/StringTie/cov_refs.gtf --rf \
 -B -e -p 16 \
