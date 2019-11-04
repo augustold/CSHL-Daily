@@ -272,7 +272,7 @@ cd /sonas-hs/ware/hpc/home/diniz/mikado_SP80/
 #Creating the configuration file for Mikado
 /sonas-hs/ware/hpc/home/xwang/.local/bin/mikado/ configure \
 --list list.txt \
---reference sc.mlc.cns.sgl.utg.scga7.importdb.fa\
+--reference /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/sc.mlc.cns.sgl.utg.scga7.importdb.fa\
 -t 10 \
 --mode permissive \
 --scoring plant.yaml  \
