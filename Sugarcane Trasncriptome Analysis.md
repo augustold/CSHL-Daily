@@ -264,6 +264,8 @@ trinity.gff3        tr      False   -0.5
 
 Make a 'mikado_subSmp.sh' file. You can use 'vi'.
 ```
+module load GCC/7.3.0-2.30
+module load OpenMPI/3.1.1
 module load Python/3.6.6  
 module load TransDecoder/5.5.0-Perl-5.28.0
 
