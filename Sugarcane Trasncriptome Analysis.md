@@ -232,3 +232,68 @@ cufflinks \
 --library-type fr-firststrand \
 -u /projects/augustold/CSHL/Trinity/Trinity_guided/SP80-3280/atlas_merged.bam
 ```
+
+
+### PORTCULLIS
+
+Run on Helix
+```
+cd /projects/augustold/CSHL/mikado_SP80/
+
+portcullis full -t 40 sc.mlc.cns.sgl.utg.scga7.importdb.fa atlas_merged.bam
+```
+
+### MIKADO
+
+Run on BNB!
+```
+/sonas-hs/ware/hpc/home/diniz/mikado_SP80
+```
+
+```
+vi list.txt
+
+#Paste the following
+class.gtf   cl      True
+cufflinks.gtf       cuff    True
+stringtie.gtf       st      True    1
+trinity.gff3        tr      False   -0.5
+
+#save and quit!
+```
+
+Make a 'mikado_subSmp.sh' file.
+```
+module load Python/3.6.6  
+module load TransDecoder/5.5.0-Perl-5.28.0
+
+cd /sonas-hs/ware/hpc/home/diniz/mikado_SP80/
+
+#Creating the configuration file for Mikado
+mikado configure \
+--list list.txt \
+--reference sc.mlc.cns.sgl.utg.scga7.importdb.fa\
+-t 10 \
+--mode permissive \
+--scoring plant.yaml  \
+--copy-scoring plant.yaml \
+-bt uniprot_sprot_plants.fasta \
+configuration.yaml
+
+#Mikado prepare
+mikado prepare --json-conf configuration.yaml
+
+#BLAST of the candidate transcripts
+makeblastdb -in uniprot_sprot_plants.fasta -dbtype prot -parse_seqids > blast_prepare.log
+
+blastx -max_target_seqs 5 -num_threads 10 -query mikado_prepared.fasta -outfmt 5 -db uniprot_sprot_plants.fasta -evalue 0.000001 2> blast.log | sed '/^$/d' | gzip -c - > mikado.blast.xml.gz
+
+TransDecoder.LongOrfs -t mikado_prepared.fasta
+TransDecoder.Predict -t mikado_prepared.fasta
+
+#Mikado serialise
+mikado serialise --json-conf configuration.yaml --xml mikado.blast.xml.gz --orfs mikado_prepared.fasta.transdecoder.bed --blast_targets uniprot_sprot_plants.fasta --transcripts mikado_prepared.fasta
+
+#Mikado pick
+mikado pick --json-conf configuration.yaml --subloci-out mikado.subloci.gff3 --procs 10
+```
