@@ -297,3 +297,7 @@ TransDecoder.Predict -t mikado_prepared.fasta
 #Mikado pick
 /sonas-hs/ware/hpc/home/xwang/.local/bin/mikado/ pick --json-conf configuration.yaml --subloci-out mikado.subloci.gff3 --procs 10
 ```
+
+```
+qsub -cwd -pe threads 10 -l m_mem_free=5G mikado_subSmp.sh
+```
