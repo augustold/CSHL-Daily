@@ -272,7 +272,7 @@ module load TransDecoder/5.5.0-Perl-5.28.0
 cd /sonas-hs/ware/hpc/home/diniz/mikado_SP80/
 
 #Creating the configuration file for Mikado
-/sonas-hs/ware/hpc/home/xwang/.local/bin/mikado/ configure \
+/sonas-hs/ware/hpc/home/xwang/.local/bin/mikado configure \
 --list list.txt \
 --reference /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/sc.mlc.cns.sgl.utg.scga7.importdb.fa\
 -t 10 \
@@ -283,7 +283,7 @@ cd /sonas-hs/ware/hpc/home/diniz/mikado_SP80/
 configuration.yaml
 
 #Mikado prepare
-/sonas-hs/ware/hpc/home/xwang/.local/bin/mikado/ prepare --json-conf configuration.yaml
+/sonas-hs/ware/hpc/home/xwang/.local/bin/mikado prepare --json-conf configuration.yaml
 
 #BLAST of the candidate transcripts
 makeblastdb -in uniprot_sprot_plants.fasta -dbtype prot -parse_seqids > blast_prepare.log
@@ -294,10 +294,10 @@ TransDecoder.LongOrfs -t mikado_prepared.fasta
 TransDecoder.Predict -t mikado_prepared.fasta
 
 #Mikado serialise
-/sonas-hs/ware/hpc/home/xwang/.local/bin/mikado/ serialise --json-conf configuration.yaml --xml mikado.blast.xml.gz --orfs mikado_prepared.fasta.transdecoder.bed --blast_targets uniprot_sprot_plants.fasta --transcripts mikado_prepared.fasta
+/sonas-hs/ware/hpc/home/xwang/.local/bin/mikado serialise --json-conf configuration.yaml --xml mikado.blast.xml.gz --orfs mikado_prepared.fasta.transdecoder.bed --blast_targets uniprot_sprot_plants.fasta --transcripts mikado_prepared.fasta
 
 #Mikado pick
-/sonas-hs/ware/hpc/home/xwang/.local/bin/mikado/ pick --json-conf configuration.yaml --subloci-out mikado.subloci.gff3 --procs 10
+/sonas-hs/ware/hpc/home/xwang/.local/bin/mikado pick --json-conf configuration.yaml --subloci-out mikado.subloci.gff3 --procs 10
 ```
 
 ```
