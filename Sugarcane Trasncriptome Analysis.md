@@ -264,21 +264,22 @@ trinity.gff3        tr      False   -0.5
 
 Make a 'mikado_subSmp.sh' file. You can use 'vi'.
 ```
+cd /sonas-hs/ware/hpc/home/diniz/mikado_SP80/
+
 module load GCC/7.3.0-2.30
 module load OpenMPI/3.1.1
 module load Python/3.6.6  
 module load TransDecoder/5.5.0-Perl-5.28.0
 
-cd /sonas-hs/ware/hpc/home/diniz/mikado_SP80/
-
 #Creating the configuration file for Mikado
-/sonas-hs/ware/hpc/home/xwang/.local/bin/mikado configure \
+mikado configure \
 --list list.txt \
---reference /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/sc.mlc.cns.sgl.utg.scga7.importdb.fa\
+--reference /sonas-hs/ware/hpc/home/diniz/Saccharum_genome_refs/SP803280/sc.mlc.cns.sgl.utg.scga7.importdb.fa \
 -t 10 \
 --mode permissive \
 --scoring plant.yaml  \
 --copy-scoring plant.yaml \
+--junctions portcullis_all.junctions.bed \
 -bt uniprot_sprot_plants.fasta \
 configuration.yaml
 
