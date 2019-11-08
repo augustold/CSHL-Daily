@@ -284,7 +284,7 @@ mikado configure \
 configuration.yaml
 
 #Mikado prepare
-/sonas-hs/ware/hpc/home/xwang/.local/bin/mikado prepare --json-conf configuration.yaml
+mikado prepare --json-conf configuration.yaml
 
 #BLAST of the candidate transcripts
 makeblastdb -in uniprot_sprot_plants.fasta -dbtype prot -parse_seqids > blast_prepare.log
@@ -295,10 +295,10 @@ TransDecoder.LongOrfs -t mikado_prepared.fasta
 TransDecoder.Predict -t mikado_prepared.fasta
 
 #Mikado serialise
-/sonas-hs/ware/hpc/home/xwang/.local/bin/mikado serialise --json-conf configuration.yaml --xml mikado.blast.xml.gz --orfs mikado_prepared.fasta.transdecoder.bed --blast_targets uniprot_sprot_plants.fasta --transcripts mikado_prepared.fasta
+mikado serialise --json-conf configuration.yaml --xml mikado.blast.xml.gz --orfs mikado_prepared.fasta.transdecoder.bed --blast_targets uniprot_sprot_plants.fasta --transcripts mikado_prepared.fasta
 
 #Mikado pick
-/sonas-hs/ware/hpc/home/xwang/.local/bin/mikado pick --json-conf configuration.yaml --subloci-out mikado.subloci.gff3 --procs 10
+mikado pick --json-conf configuration.yaml --subloci-out mikado.subloci.gff3 --procs 10
 ```
 
 ```
