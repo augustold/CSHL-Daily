@@ -120,6 +120,7 @@ done
 # RUNING it again (nov 11th 2019)
 # unsing star_index_2ndPass
 
+cd /projects/augustold/CSHL/Trinity/Trinity_guided/SP80-3280/
 mkdir aligned_2
 
 # 1st pass
