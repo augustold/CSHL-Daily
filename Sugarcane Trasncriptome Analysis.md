@@ -106,7 +106,7 @@ augustold@helix:/projects/augustold/CSHL/Trinity/Trinity_guided/
 officinarum  SP80-3280  spontaneum
 ```
 
-```
+
 # SP80-3280
 cd /projects/augustold/CSHL/Trinity/Trinity_guided/SP80-3280/
 mkdir aligned
@@ -116,17 +116,17 @@ do
     /projects/augustold/CSHL/STAR-2.7.2c/bin/Linux_x86_64/STAR --genomeDir /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/star_index --readFilesIn fastq/${i}_1.fq.gz,fastq/${i}_2.fq.gz --runThreadN 10 --outFileNamePrefix aligned/${i}. --outSAMtype BAM SortedByCoordinate --readFilesCommand zcat --outSAMunmapped Within --outFilterType BySJout --outSAMattributes All --chimSegmentMin 12 --chimSegmentReadGapMax 3 --outFilterMultimapNmax 20 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --alignSJoverhangMin 8 --alignSJDBoverhangMin 1 --outFilterIntronMotifs RemoveNoncanonical --clip5pNbases 0 --seedSearchStartLmax 50 --genomeLoad LoadAndKeep --limitBAMsortRAM 35000000000
 done
 
+```
 # RUNING it again (nov 11th 2019)
+# unsing star_index_2ndPass
 
 mkdir aligned_2
 
 # 1st pass
 for i in $(ls fastq | sed s/_[12].fq.gz// | sort -u)
 do
-    /projects/augustold/CSHL/STAR-2.7.2c/bin/Linux_x86_64/STAR --genomeDir /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/star_index --readFilesIn fastq/${i}_1.fq.gz,fastq/${i}_2.fq.gz --outSAMunmapped Within --outFilterType BySJout --outSAMattributes All --outFilterMultimapNmax 20 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --alignSJoverhangMin 8 --alignSJDBoverhangMin 1 --outSAMtype BAM SortedByCoordinate --readFilesCommand zcat --outFilterIntronMotifs RemoveNoncanonical --outFileNamePrefix aligned_2/${i}. --clip5pNbases 0 --seedSearchStartLmax 50 --runThreadN 50 --genomeLoad LoadAndKeep --limitBAMsortRAM 35000000000
+    /projects/augustold/CSHL/STAR-2.7.2c/bin/Linux_x86_64/STAR --genomeDir /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/star_index_2ndPass --readFilesIn fastq/${i}_1.fq.gz,fastq/${i}_2.fq.gz --outSAMunmapped Within --outFilterType BySJout --outSAMattributes All --outFilterMultimapNmax 20 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --alignSJoverhangMin 8 --alignSJDBoverhangMin 1 --outSAMtype BAM SortedByCoordinate --readFilesCommand zcat --outFilterIntronMotifs RemoveNoncanonical --outFileNamePrefix aligned_2/${i}. --clip5pNbases 0 --seedSearchStartLmax 50 --runThreadN 50 --genomeLoad LoadAndKeep --limitBAMsortRAM 35000000000
 done
-
-# 2nd pass
 
 ```
 
