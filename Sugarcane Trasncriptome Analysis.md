@@ -74,11 +74,19 @@ cd /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/
 mkdir star_index
 screen
 
-/projects/augustold/CSHL/STAR-2.7.2c/bin/Linux_x86_64/STAR --runThreadN 20 --runMode genomeGenerate --genomeDir /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/star_index --genomeFastaFiles /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/sc.mlc.cns.sgl.utg.scga7.importdb.fa --sjdbGTFfile /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/sc.mlc.cns.utg.sgl_v2_without_mobile-element_prtn_coding_prim_transcrpt.gff --sjdbGTFtagExonParentTranscript Parent --sjdbOverhang 150 --limitGenomeGenerateRAM 350000000000
+# generate genome for 1-pass
+
+/projects/augustold/CSHL/STAR-2.7.2c/bin/Linux_x86_64/STAR --runThreadN 40 --runMode genomeGenerate --genomeDir /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/star_index --genomeFastaFiles /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/sc.mlc.cns.sgl.utg.scga7.importdb.fa --sjdbGTFfile /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/sc.mlc.cns.sgl.utg_scga7.sort.gff3 --sjdbGTFtagExonParentTranscript Parent --sjdbOverhang 150 --limitGenomeGenerateRAM 350000000000
 
 # specify '--limitGenomeGenerateRAM' as 350000000000 due to error message:
 # EXITING because of FATAL PARAMETER ERROR: limitGenomeGenerateRAM=200000000000is too small for your genome
 # SOLUTION: please specify --limitGenomeGenerateRAM not less than 315007636181 and make that much RAM available
+
+# re-generate genome for 2-pass
+
+cd /projects/augustold/CSHL/Trinity/Trinity_guided/SP80-3280/aligned/
+
+/projects/augustold/CSHL/STAR-2.7.2c/bin/Linux_x86_64/STAR --runThreadN 40 --runMode genomeGenerate --genomeDir /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/star_index_2ndPass --genomeFastaFiles /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/sc.mlc.cns.sgl.utg.scga7.importdb.fa --sjdbGTFfile /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/sc.mlc.cns.sgl.utg_scga7.sort.gff3 --sjdbGTFtagExonParentTranscript Parent --sjdbOverhang 150 --limitGenomeGenerateRAM 350000000000 --sjdbFileChrStartEnd SPI11.SJ.out.tab SPI51.SJ.out.tab SPI91.SJ.out.tab SPL11.SJ.out.tab SPI12.SJ.out.tab SPI52.SJ.out.tab SPI92.SJ.out.tab SPL12.SJ.out.tab SPI13.SJ.out.tab SPI53.SJ.out.tab SPI93.SJ.out.tab SPL13.SJ.out.tab
 
 #########################################################
 
@@ -107,6 +115,19 @@ for i in $(ls fastq | sed s/_[12].fq.gz// | sort -u)
 do
     /projects/augustold/CSHL/STAR-2.7.2c/bin/Linux_x86_64/STAR --genomeDir /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/star_index --readFilesIn fastq/${i}_1.fq.gz,fastq/${i}_2.fq.gz --runThreadN 10 --outFileNamePrefix aligned/${i}. --outSAMtype BAM SortedByCoordinate --readFilesCommand zcat --outSAMunmapped Within --outFilterType BySJout --outSAMattributes All --chimSegmentMin 12 --chimSegmentReadGapMax 3 --outFilterMultimapNmax 20 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --alignSJoverhangMin 8 --alignSJDBoverhangMin 1 --outFilterIntronMotifs RemoveNoncanonical --clip5pNbases 0 --seedSearchStartLmax 50 --genomeLoad LoadAndKeep --limitBAMsortRAM 35000000000
 done
+
+# RUNING it again (nov 11th 2019)
+
+mkdir aligned_2
+
+# 1st pass
+for i in $(ls fastq | sed s/_[12].fq.gz// | sort -u)
+do
+    /projects/augustold/CSHL/STAR-2.7.2c/bin/Linux_x86_64/STAR --genomeDir /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/star_index --readFilesIn fastq/${i}_1.fq.gz,fastq/${i}_2.fq.gz --outSAMunmapped Within --outFilterType BySJout --outSAMattributes All --outFilterMultimapNmax 20 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --alignSJoverhangMin 8 --alignSJDBoverhangMin 1 --outSAMtype BAM SortedByCoordinate --readFilesCommand zcat --outFilterIntronMotifs RemoveNoncanonical --outFileNamePrefix aligned_2/${i}. --clip5pNbases 0 --seedSearchStartLmax 50 --runThreadN 50 --genomeLoad LoadAndKeep --limitBAMsortRAM 35000000000
+done
+
+# 2nd pass
+
 ```
 
 ```
