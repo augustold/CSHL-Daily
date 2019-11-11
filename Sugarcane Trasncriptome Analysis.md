@@ -72,6 +72,7 @@ Users must provide read alignments to Trinity as a coordinate-sorted bam file. I
 # SP80-3280
 cd /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/
 mkdir star_index
+mkdir star_index_2ndPass
 screen
 
 # generate genome for 1-pass
