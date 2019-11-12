@@ -153,7 +153,7 @@ done
 screen
 cd /projects/augustold/CSHL/Trinity/Trinity_guided/SP80-3280/
 
-samtools merge atlas_merged.bam aligned/*.bam
+samtools merge atlas_merged.bam aligned_2/*.bam
 samtools index atlas_merged.bam
 
 # New run 30 Oct 2019
