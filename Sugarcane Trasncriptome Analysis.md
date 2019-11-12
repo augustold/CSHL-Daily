@@ -101,7 +101,7 @@ do
 done
 ```
 
-# Re-generate genome index for 2nd-pass
+### Re-generate genome index for 2nd-pass
 
 ```
 cd /projects/augustold/CSHL/Trinity/Trinity_guided/SP80-3280/aligned/
