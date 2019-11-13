@@ -270,7 +270,15 @@ Run on Helix
 ```
 cd /projects/augustold/CSHL/mikado_SP80/
 
-portcullis full -t 40 sc.mlc.cns.sgl.utg.scga7.importdb.fa atlas_merged.bam
+/home/linuxbrew/.linuxbrew/bin/portcullis full \
+   --threads 50 \
+   --verbose \
+   --use_csi \
+   --output portcullis_out \
+   /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/sc.mlc.cns.sgl.utg.scga7.importdb.fa /projects/augustold/CSHL/Trinity/Trinity_guided/SP80-3280/old_bam/atlas_merged.bam
+
+# short option
+/home/linuxbrew/.linuxbrew/bin/portcullis full -t 40 /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/sc.mlc.cns.sgl.utg.scga7.importdb.fa /projects/augustold/CSHL/Trinity/Trinity_guided/SP80-3280/old_bam/atlas_merged.bam
 ```
 
 ### MIKADO
