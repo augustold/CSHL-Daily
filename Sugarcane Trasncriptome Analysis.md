@@ -266,19 +266,67 @@ cufflinks \
 
 ### PORTCULLIS
 
-Run on Helix
-```
-cd /projects/augustold/CSHL/mikado_SP80/
+Installing following Peter's instructions:
 
-/home/linuxbrew/.linuxbrew/bin/portcullis full \
+1) download and install miniconda. In a shell, run these commands:
+```
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+bash Miniconda3-latest-Linux-x86_64.sh  #(you'll need to answer "yes" to the license agreement and accept some default parameters)
+```
+
+2) Log out and then log back in so miniconda becomes your default python
+
+3) run these commands:
+```
+conda create -n portcullis #just once
+source activate portcullis
+
+conda install portcullis --channel=bioconda
+conda install pandas=0.24.2
+```
+
+Testing Portcullis step by step
+
+```
+#Prepare
+
+portcullis prep \
    --threads 50 \
    --verbose \
-   --use_csi \
-   --output portcullis_out \
-   /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/sc.mlc.cns.sgl.utg.scga7.importdb.fa /projects/augustold/CSHL/Trinity/Trinity_guided/SP80-3280/old_bam/atlas_merged.bam
+   /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/sc.mlc.cns.sgl.utg.scga7.importdb.fa /projects/augustold/CSHL/Trinity/Trinity_guided/SP80-3280/aligned_2/SPI12.Aligned.sortedByCoord.out.bam
 
-# short option
-/home/linuxbrew/.linuxbrew/bin/portcullis full -t 40 /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/sc.mlc.cns.sgl.utg.scga7.importdb.fa /projects/augustold/CSHL/Trinity/Trinity_guided/SP80-3280/old_bam/atlas_merged.bam
+#Junction
+
+portcullis junc \
+   --threads 50 \
+   --verbose \
+   --orientation RF \
+   --strandedness firststrand \
+   portcullis_prep
+
+#Junction Filtering
+
+portcullis filter \
+   --threads 50 \
+   --verbose \
+   portcullis_prep portcullis_prep/portcullis.junctions.tab
+```
+
+Note: The filter step needs python 3.7!
+
+Run on Helix
+```
+screen
+source activate portcullis
+
+cd /projects/augustold/CSHL/mikado_SP80/
+
+portcullis full \
+   --threads 50 \
+   --verbose \
+   --output portcullis_out \
+   /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/sc.mlc.cns.sgl.utg.scga7.importdb.fa /projects/augustold/CSHL/Trinity/Trinity_guided/SP80-3280/atlas_merged.bam
+
 ```
 
 ### MIKADO
