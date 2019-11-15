@@ -291,14 +291,14 @@ Testing Portcullis step by step
 #Prepare
 
 portcullis prep \
-   --threads 50 \
+   --threads 32 \
    --verbose \
    /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/sc.mlc.cns.sgl.utg.scga7.importdb.fa /projects/augustold/CSHL/Trinity/Trinity_guided/SP80-3280/aligned_2/SPI12.Aligned.sortedByCoord.out.bam
 
 #Junction
 
 portcullis junc \
-   --threads 50 \
+   --threads 32 \
    --verbose \
    --orientation RF \
    --strandedness firststrand \
@@ -307,7 +307,7 @@ portcullis junc \
 #Junction Filtering
 
 portcullis filter \
-   --threads 50 \
+   --threads 32 \
    --verbose \
    portcullis_prep portcullis_prep/portcullis.junctions.tab
 ```
@@ -322,8 +322,7 @@ source activate portcullis
 cd /projects/augustold/CSHL/mikado_SP80/
 
 portcullis full \
-   --threads 50 \
-   --verbose \
+   --threads 32 \
    --output portcullis_out \
    /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/sc.mlc.cns.sgl.utg.scga7.importdb.fa /projects/augustold/CSHL/Trinity/Trinity_guided/SP80-3280/atlas_merged.bam
 
