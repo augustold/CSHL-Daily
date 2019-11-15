@@ -1,4 +1,4 @@
-cd /sonas-hs/ware/hpc/home/diniz/mikado_SP80/
+cd /sonas-hs/ware/hpc/home/diniz/mikado_2nd_test
 
 module load GCC/7.3.0-2.30
 module load OpenMPI/3.1.1
