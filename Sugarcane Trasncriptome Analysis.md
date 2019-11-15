@@ -224,7 +224,7 @@ screen
 -G /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/sc.mlc.cns.sgl.utg_scga7.sort.gff3 \
 -A /projects/augustold/CSHL/StringTie/gene_abund.tab \
 -C /projects/augustold/CSHL/StringTie/cov_refs.gtf --rf \
--B -e -p 16 \
+-B -e -p 20 \
 -o /projects/augustold/CSHL/StringTie/SP80-3280_atlas_ST.gtf
 ```
 
