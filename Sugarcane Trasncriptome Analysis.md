@@ -228,7 +228,28 @@ screen
 -o /projects/augustold/CSHL/StringTie/SP80-3280_atlas_ST.gtf
 ```
 
-### Cufflinks - to run!
+### StringTie on BNB
+
+cd /sonas-hs/ware/hpc/home/diniz/stringtie
+vi stringtie.sh
+
+```
+cd /sonas-hs/ware/hpc/home/diniz/stringtie
+
+module load GCC/7.3.0-2.30
+module load OpenMPI/3.1.1
+module load StringTie/1.3.5
+
+stringtie /sonas-hs/ware/hpc/home/diniz/SP80_bam/atlas_merged.bam \
+-G /sonas-hs/ware/hpc/home/diniz/Saccharum_genome_refs/SP803280/sc.mlc.cns.sgl.utg_scga7.sort.gff3 \
+-A /sonas-hs/ware/hpc/home/diniz/stringtie/gene_abund.tab \
+-C /sonas-hs/ware/hpc/home/diniz/stringtie/cov_refs.gtf --rf \
+-B -e -p 16 -o /sonas-hs/ware/hpc/home/diniz/stringtie/atlas_ST.gtf
+```
+
+qsub -cwd -pe threads 16 -l m_mem_free=5G stringtie.sh
+
+### Cufflinks
 
 Run on BNB!
 
