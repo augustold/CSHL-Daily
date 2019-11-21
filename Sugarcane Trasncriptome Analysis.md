@@ -157,6 +157,8 @@ done
 screen
 cd /projects/augustold/CSHL/Trinity/Trinity_guided/SP80-3280/
 
+# Attention: Portcullis and Stringtie fails when using SPI11!
+
 samtools merge atlas_merged.bam aligned_2/*.bam
 samtools index atlas_merged.bam
 
