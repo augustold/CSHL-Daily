@@ -355,14 +355,14 @@ portcullis full \
 
 Run on BNB!
 ```
-/sonas-hs/ware/hpc/home/diniz/mikado_SP80
+/sonas-hs/ware/hpc/home/diniz/mikado_3rd_test
 ```
 
 ```
 vi list.txt
 
 #Paste the following
-class.gtf   cl      True
+psiclass.gtf   cl      True
 cufflinks.gtf       cuff    True
 stringtie.gtf       st      True    1
 trinity.gff3        tr      False   -0.5
@@ -372,7 +372,7 @@ trinity.gff3        tr      False   -0.5
 
 Make a 'mikado_subSmp.sh' file. You can use 'vi'.
 ```
-cd /sonas-hs/ware/hpc/home/diniz/mikado_SP80/
+/sonas-hs/ware/hpc/home/diniz/mikado_3rd_test
 
 module load GCC/7.3.0-2.30
 module load OpenMPI/3.1.1
