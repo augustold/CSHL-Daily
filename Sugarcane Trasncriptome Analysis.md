@@ -383,11 +383,11 @@ module load TransDecoder/5.5.0-Perl-5.28.0
 mikado configure \
 --list list.txt \
 --reference /sonas-hs/ware/hpc/home/diniz/Saccharum_genome_refs/SP803280/sc.mlc.cns.sgl.utg.scga7.importdb.fa \
--t 10 \
+-t 16 \
 --mode permissive \
 --scoring plant.yaml  \
 --copy-scoring plant.yaml \
---junctions portcullis_all.junctions.bed \
+--junctions portcullis_filtered.pass.junctions.bed \
 -bt uniprot_sprot_plants.fasta \
 configuration.yaml
 
@@ -397,7 +397,7 @@ mikado prepare --json-conf configuration.yaml
 #BLAST of the candidate transcripts
 makeblastdb -in uniprot_sprot_plants.fasta -dbtype prot -parse_seqids > blast_prepare.log
 
-blastx -max_target_seqs 5 -num_threads 10 -query mikado_prepared.fasta -outfmt 5 -db uniprot_sprot_plants.fasta -evalue 0.000001 2> blast.log | sed '/^$/d' | gzip -c - > mikado.blast.xml.gz
+blastx -max_target_seqs 5 -num_threads 16 -query mikado_prepared.fasta -outfmt 5 -db uniprot_sprot_plants.fasta -evalue 0.000001 2> blast.log | sed '/^$/d' | gzip -c - > mikado.blast.xml.gz
 
 TransDecoder.LongOrfs -t mikado_prepared.fasta
 TransDecoder.Predict -t mikado_prepared.fasta
@@ -406,9 +406,9 @@ TransDecoder.Predict -t mikado_prepared.fasta
 mikado serialise --json-conf configuration.yaml --xml mikado.blast.xml.gz --orfs mikado_prepared.fasta.transdecoder.bed --blast_targets uniprot_sprot_plants.fasta --transcripts mikado_prepared.fasta
 
 #Mikado pick
-mikado pick --json-conf configuration.yaml --subloci-out mikado.subloci.gff3 --procs 10
+mikado pick --json-conf configuration.yaml --subloci-out mikado.subloci.gff3 --procs 16
 ```
 
 ```
-qsub -cwd -pe threads 10 -l m_mem_free=5G mikado_subSmp.sh
+qsub -cwd -pe threads 16 -l m_mem_free=5G mikado_subSmp.sh
 ```
