@@ -218,6 +218,20 @@ cd /projects/augustold/CSHL/psiclass/
 
 ### StringTie
 
+Atention!
+Do not use 'sc.mlc.cns.sgl.utg_scga7.sort.gff3' to run stringtie. It gives an error while running 'mikado prepare' step.
+
+```
+cd /sonas-hs/ware/hpc/home/diniz/stringtie
+
+module load GCC/7.3.0-2.30
+module load OpenMPI/3.1.1
+module load StringTie/1.3.5
+
+stringtie /sonas-hs/ware/hpc/home/diniz/SP80_bam/atlas_merged.bam \
+--rf -p 16 -o /sonas-hs/ware/hpc/home/diniz/stringtie/atlas_ST.gtf
+```
+
 ```
 cd /projects/augustold/CSHL/StringTie/
 screen
