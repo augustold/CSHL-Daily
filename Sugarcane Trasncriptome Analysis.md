@@ -24,6 +24,10 @@ officinarum  SP80-3280  spontaneum
 augustold@helix:/projects/augustold/fastq
 ```
 
+# Atention!
+
+Files on BNB were moved to /sonas-hs/ware/hpc_norepl/data/diniz/analysis/
+
 ## SP80-3280
 
 ```
