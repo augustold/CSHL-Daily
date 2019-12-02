@@ -436,8 +436,5 @@ qsub -cwd -pe threads 16 -l m_mem_free=5G mikado_subSmp.sh
 ```
 cd /sonas-hs/ware/hpc_norepl/data/diniz/analysis/mikado_3rd_test
 
-/sonas-hs/ware/hpc/home/steinj/scripts/gff2fasta.pl \
-/sonas-hs/ware/hpc_norepl/data/diniz/Saccharum_genome_refs/SP80-3280/sc.mlc.cns.sgl.utg.scga7.importdb.fa \
-mikado.loci.gff3 \
+gffread mikado.loci.gff3 -g /sonas-hs/ware/hpc_norepl/data/diniz/Saccharum_genome_refs/SP80-3280/sc.mlc.cns.sgl.utg.scga7.importdb.fa -x mikado.loci.cds.fasta -y mikado.loci.protein.fasta
 ```
-mikado.loci
