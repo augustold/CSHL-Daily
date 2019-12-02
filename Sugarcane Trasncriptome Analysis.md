@@ -430,3 +430,14 @@ mikado pick --json-conf configuration.yaml --subloci-out mikado.subloci.gff3 --p
 ```
 qsub -cwd -pe threads 16 -l m_mem_free=5G mikado_subSmp.sh
 ```
+
+### GFF to fasta
+
+```
+cd /sonas-hs/ware/hpc_norepl/data/diniz/analysis/mikado_3rd_test
+
+/sonas-hs/ware/hpc/home/steinj/scripts/gff2fasta.pl \
+/sonas-hs/ware/hpc_norepl/data/diniz/Saccharum_genome_refs/SP80-3280/sc.mlc.cns.sgl.utg.scga7.importdb.fa \
+mikado.loci.gff3 \
+```
+mikado.loci
