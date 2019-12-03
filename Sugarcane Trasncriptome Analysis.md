@@ -105,25 +105,33 @@ do
 done
 ```
 
+Including samples from roots
+
+samples in /projects/augustold/fastq/
+
+FCH3C3HBBXX_L7_HKRDSUGgatEAAGRAAPEI-207
+
+FCH3C3HBBXX_L7_HKRDSUGgatEAAHRAAPEI-208
+
+FCH3C3HBBXX_L7_HKRDSUGgatEAAIRAAPEI-209
+
+```
+/projects/augustold/CSHL/STAR-2.7.2c/bin/Linux_x86_64/STAR --genomeDir /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/star_index --readFilesIn \
+/projects/augustold/fastq/FCH3C3HBBXX_L7_HKRDSUGgatEAAIRAAPEI-209_1.fq.gz,/projects/augustold/fastq/FCH3C3HBBXX_L7_HKRDSUGgatEAAIRAAPEI-209_2.fq.gz \
+--runThreadN 15 --outFileNamePrefix aligned_1/SPR3. --outSAMtype BAM SortedByCoordinate --readFilesCommand zcat --outSAMunmapped Within --outFilterType BySJout --outSAMattributes All --chimSegmentMin 12 --chimSegmentReadGapMax 3 --outFilterMultimapNmax 20 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --alignSJoverhangMin 8 --alignSJDBoverhangMin 1 --outFilterIntronMotifs RemoveNoncanonical --clip5pNbases 0 --seedSearchStartLmax 50 --genomeLoad LoadAndKeep --limitBAMsortRAM 35000000000
+```
+
 ### Re-generate genome index for 2nd-pass
 
 ```
 cd /projects/augustold/CSHL/Trinity/Trinity_guided/SP80-3280/aligned_1/
 
-/projects/augustold/CSHL/STAR-2.7.2c/bin/Linux_x86_64/STAR --runThreadN 40 --runMode genomeGenerate --genomeDir /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/star_index_2ndPass --genomeFastaFiles /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/sc.mlc.cns.sgl.utg.scga7.importdb.fa --sjdbGTFfile /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/sc.mlc.cns.sgl.utg_scga7.sort.gff3 --sjdbGTFtagExonParentTranscript Parent --sjdbOverhang 150 --limitGenomeGenerateRAM 350000000000 --limitSjdbInsertNsj 2000000 --sjdbFileChrStartEnd SPI11.SJ.out.tab SPI12.SJ.out.tab SPI13.SJ.out.tab SPI51.SJ.out.tab SPI52.SJ.out.tab SPI53.SJ.out.tab SPI91.SJ.out.tab SPI92.SJ.out.tab SPI93.SJ.out.tab SPL11.SJ.out.tab SPL12.SJ.out.tab SPL13.SJ.out.tab
+/projects/augustold/CSHL/STAR-2.7.2c/bin/Linux_x86_64/STAR --runThreadN 40 --runMode genomeGenerate --genomeDir /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/star_index_2ndPass --genomeFastaFiles /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/sc.mlc.cns.sgl.utg.scga7.importdb.fa --sjdbGTFfile /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/sc.mlc.cns.sgl.utg_scga7.sort.gff3 --sjdbGTFtagExonParentTranscript Parent --sjdbOverhang 150 --limitGenomeGenerateRAM 350000000000 --limitSjdbInsertNsj 2000000 --sjdbFileChrStartEnd SPI11.SJ.out.tab SPI12.SJ.out.tab SPI13.SJ.out.tab SPI51.SJ.out.tab SPI52.SJ.out.tab SPI53.SJ.out.tab SPI91.SJ.out.tab SPI92.SJ.out.tab SPI93.SJ.out.tab SPL11.SJ.out.tab SPL12.SJ.out.tab SPL13.SJ.out.tab SPR1.SJ.out.tab SPR2.SJ.out.tab SPR3.SJ.out.tab
 
 # Fatal LIMIT error: the number of junctions to be inserted on the fly =1924868 is larger than the limitSjdbInsertNsj=1000000
 # SOLUTION: re-run with at least --limitSjdbInsertNsj 1924868
 # added: --limitSjdbInsertNsj 2000000
 
-#########################################################
-
-# S. spontaneum
-cd projects/augustold/CSHL/Saccharum_genome_refs/Sspon/
-mkdir star_index
-screen
-
-/projects/augustold/CSHL/STAR-2.7.2c/bin/Linux_x86_64/STAR --runThreadN 10 --runMode genomeGenerate --genomeDir /projects/augustold/CSHL/Saccharum_genome_refs/Sspon/star_index --genomeFastaFiles /projects/augustold/CSHL/Saccharum_genome_refs/Sspon/Sspon.HiC_chr_asm.fasta --sjdbGTFfile /projects/augustold/CSHL/Saccharum_genome_refs/Sspon/Sspon.v20190103.gff3 --sjdbGTFtagExonParentTranscript Parent --sjdbOverhang 150
 ```
 
 
