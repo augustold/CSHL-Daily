@@ -60,7 +60,7 @@ conda activate hisat2
 for SAMPLE in $(ls /projects/augustold/fastq/ | sed s/_[12].fq.gz// | sort -u); do
     hisat2 \
     -p 20 \
-    -x /projects/augustold/CSHL/Saccharum_genome_refs/SP80-3280/hisat2_index/hisat2_index \
+    -x /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/hisat2_index/hisat2_index \
     -1 /projects/augustold/fastq/${SAMPLE}_1.fq.gz \
     -2 /projects/augustold/fastq/${SAMPLE}_2.fq.gz \
     -S ${SAMPLE}.sam \
