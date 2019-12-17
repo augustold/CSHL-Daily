@@ -99,7 +99,7 @@ STAR --runThreadN 16 \
 --sjdbOverhang 150 \
 --limitGenomeGenerateRAM 350000000000 \
 --limitSjdbInsertNsj 2000000 \
---sjdbFileChrStartEnd INI11.SJ.out.tab INI12.SJ.out.tab INI13.SJ.out.tab INI51.SJ.out.tab INI52.SJ.out.tab INI53.SJ.out.tab INI91.SJ.out.tab INI92.SJ.out.tab INI93.SJ.out.tab INL11.SJ.out.tab INL12.SJ.out.tab INL13.SJ.out.tab
+--sjdbFileChrStartEnd SPI11.SJ.out.tab SPI12.SJ.out.tab SPI13.SJ.out.tab SPI51.SJ.out.tab SPI52.SJ.out.tab SPI53.SJ.out.tab SPI91.SJ.out.tab SPI92.SJ.out.tab SPI93.SJ.out.tab SPL11.SJ.out.tab SPL12.SJ.out.tab SPL13.SJ.out.tab
 ```
 ```
 qsub -cwd -pe threads 16 -l m_mem_free=5G star_2ndpass.sh
