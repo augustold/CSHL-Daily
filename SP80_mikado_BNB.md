@@ -45,11 +45,11 @@ module load GCC/7.3.0-2.30
 module load OpenMPI/3.1.1
 module load STAR/2.7.0d
 
-for i in $(ls /sonas-hs/ware/hpc_norepl/data/diniz/fastq/spont | sed s/_[12].fq.gz// | sort -u)
+for i in $(ls /sonas-hs/ware/hpc_norepl/data/diniz/fastq/SP80 | sed s/_[12].fq.gz// | sort -u)
 do
     STAR \
     --genomeDir /sonas-hs/ware/hpc_norepl/data/diniz/analysis/SP80-3280/star_index \
-    --readFilesIn /sonas-hs/ware/hpc_norepl/data/diniz/fastq/spont/${i}_1.fq.gz,/sonas-hs/ware/hpc_norepl/data/diniz/fastq/spont/${i}_2.fq.gz \
+    --readFilesIn /sonas-hs/ware/hpc_norepl/data/diniz/fastq/SP80/${i}_1.fq.gz,/sonas-hs/ware/hpc_norepl/data/diniz/fastq/SP80/${i}_2.fq.gz \
     --runThreadN 16 \
     --outFileNamePrefix aligned_1/${i}. \
     --outSAMtype BAM SortedByCoordinate \
@@ -116,11 +116,11 @@ module load GCC/7.3.0-2.30
 module load OpenMPI/3.1.1
 module load STAR/2.7.0d
 
-for i in $(ls /sonas-hs/ware/hpc_norepl/data/diniz/fastq/spont | sed s/_[12].fq.gz// | sort -u)
+for i in $(ls /sonas-hs/ware/hpc_norepl/data/diniz/fastq/SP80 | sed s/_[12].fq.gz// | sort -u)
 do
     STAR \
     --genomeDir /sonas-hs/ware/hpc_norepl/data/diniz/analysis/SP80-3280/star_index_2ndPass \
-    --readFilesIn /sonas-hs/ware/hpc_norepl/data/diniz/fastq/spont/${i}_1.fq.gz,/sonas-hs/ware/hpc_norepl/data/diniz/fastq/spont/${i}_2.fq.gz \
+    --readFilesIn /sonas-hs/ware/hpc_norepl/data/diniz/fastq/SP80/${i}_1.fq.gz,/sonas-hs/ware/hpc_norepl/data/diniz/fastq/SP80/${i}_2.fq.gz \
     --runThreadN 16 \
     --outFileNamePrefix aligned_2/${i}. \
     --outSAMtype BAM SortedByCoordinate \
@@ -354,7 +354,6 @@ cufflinks.gtf	cuff	True		False
 psiclass.gtf	cl	False		False
 stringtie.gtf	st	True	1	False
 trinity.gff3	tr	False	-0.5	False
-sc.mlc.cns.sgl.utg_scga7.sort.gff3	spont	True	2	True
 ```
 
 ### Running MIKADO pipeline
