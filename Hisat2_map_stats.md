@@ -86,5 +86,10 @@ for SAMPLE in $(ls /projects/augustold/fastq/ | sed s/_[12].fq.gz// | sort -u); 
     rm -rf ${SAMPLE}.sam
 done
 
+# Get summary tables
 
+#R570
+cd /projects/augustold/CSHL/Hisat2_map_stats/R570
+
+python3 /projects/aliemelo/resources/scripts/make_hisat2_table.py -l summary_list.txt -o R570_map_summary.csv
 ```
