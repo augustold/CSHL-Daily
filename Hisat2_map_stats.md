@@ -91,5 +91,5 @@ done
 #R570
 cd /projects/augustold/CSHL/Hisat2_map_stats/R570
 
-python3 /projects/aliemelo/resources/scripts/make_hisat2_table.py -l summary_list.txt -o R570_map_summary.csv
+python3 /projects/aliemelo/resources/scripts/make_hisat2_table.py -l summary_list2.txt -o R570_map_summary.csv
 ```
