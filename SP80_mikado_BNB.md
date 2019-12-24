@@ -400,3 +400,59 @@ mikado pick --json-conf configuration.yaml --subloci-out mikado.subloci.gff3 --p
 ```
 qsub -cwd -pe threads 32 -l m_mem_free=2G mikado.sh
 ```
+
+# Insert Mikado downstream analysis here
+
+### BRAKER
+
+script: braker.sh
+```
+cd /sonas-hs/ware/hpc_norepl/data/diniz/analysis/SP80-3280
+module load foss/2018b
+module load Python/3.6.6
+
+/sonas-hs/ware/hpc/home/diniz/software/BRAKER/scripts/braker.pl \
+--DIAMOND_PATH=/sonas-hs/ware/hpc/home/diniz/software/diamond \
+--genome=/sonas-hs/ware/hpc_norepl/data/diniz/Saccharum_genome_refs/SP80-3280/sc.mlc.cns.sgl.utg.scga7.importdb.fa \
+--bam=/sonas-hs/ware/hpc_norepl/data/diniz/analysis/SP80-3280/aligned_2/INI11.Aligned.sortedByCoord.out.bam,\
+/sonas-hs/ware/hpc_norepl/data/diniz/analysis/SP80-3280/aligned_2/INI51.Aligned.sortedByCoord.out.bam,\
+/sonas-hs/ware/hpc_norepl/data/diniz/analysis/SP80-3280/aligned_2/INI91.Aligned.sortedByCoord.out.bam,\
+/sonas-hs/ware/hpc_norepl/data/diniz/analysis/SP80-3280/aligned_2/INL11.Aligned.sortedByCoord.out.bam \
+--softmasking
+```
+```
+qsub -cwd -pe threads 16 -l m_mem_free=2G braker.sh
+```
+
+Using 'Hints' instead of 'bam'
+
+Convert the bam files to RNA-seq hints file 
+```
+cd /sonas-hs/ware/hpc_norepl/data/diniz/analysis/SP80-3280
+
+module load GCC/7.3.0-2.30
+module load OpenMPI/3.1.1
+module load SAMtools/1.9
+
+samtools sort atlas_merged.bam -o atlas_merged_sorted.bam
+
+/sonas-hs/ware/hpc/home/diniz/software/Augustus/bin/bam2hints --intronsonly --in=atlas_merged_sorted.bam --out=SP80-3280.RNAseq.hints;
+```
+
+script: braker_2nd_test.sh
+```
+cd /sonas-hs/ware/hpc_norepl/data/diniz/analysis/SP80-3280/braker_2nd_test
+
+module load foss/2018b
+module load Python/3.6.6
+
+/sonas-hs/ware/hpc/home/diniz/software/BRAKER/scripts/braker.pl \
+--DIAMOND_PATH=/sonas-hs/ware/hpc/home/diniz/software/diamond \
+--genome=/sonas-hs/ware/hpc_norepl/data/diniz/Saccharum_genome_refs/SP80-3280/sc.mlc.cns.sgl.utg.scga7.importdb.fa \
+--AUGUSTUS_ab_initio \
+--hints=/sonas-hs/ware/hpc_norepl/data/diniz/analysis/SP80-3280/SP80-3280.RNAseq.hints
+```
+```
+qsub -cwd -pe threads 16 -l m_mem_free=2G braker_2nd_test.sh
+```
+
