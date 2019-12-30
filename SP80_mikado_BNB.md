@@ -428,11 +428,12 @@ module load foss/2018b
 module load Python/3.6.6
 
 /sonas-hs/ware/hpc/home/diniz/software/BRAKER/scripts/braker.pl \
+--cores 32 \
 --DIAMOND_PATH=/sonas-hs/ware/hpc/home/diniz/software/diamond \
 --genome=/sonas-hs/ware/hpc_norepl/data/diniz/Saccharum_genome_refs/SP80-3280/sc.mlc.cns.sgl.utg.scga7.importdb.fa \
 --hints=/sonas-hs/ware/hpc_norepl/data/diniz/analysis/SP80-3280/SP80-3280.RNAseq.hints
 ```
 ```
-qsub -cwd -pe threads 16 -l m_mem_free=2G braker.sh
+qsub -cwd -pe threads 32 -l m_mem_free=1G braker.sh
 ```
 
