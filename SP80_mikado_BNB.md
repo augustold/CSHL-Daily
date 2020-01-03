@@ -446,9 +446,8 @@ Prepare mikado proteins fasta
 cd /sonas-hs/ware/hpc_norepl/data/diniz/analysis/mikado_3rd_test
 
 #Simplify fasta headers
-sed -e 's/ .*//g' mikado.loci.protein.fasta > mikado.loci.protein_newheaderv1.fasta
-sed -r 's/\s+//g' mikado.loci.protein_newheaderv1.fasta > mikado.loci.protein_newheader.fasta
-sed -r 's/\s+//g' mikado.loci.protein_newheader.fasta > mikado.loci.protein_newheader.v2.fasta
+sed -e 's/ .*//g' mikado.loci.protein.fasta > mikado.loci.protein_newheader.v1.fasta
+sed -r 's/\s+//g' mikado.loci.protein_newheader.v1.fasta > mikado.loci.protein_newheader.v2.fasta
 sed -r 's/\.//g' mikado.loci.protein_newheader.v2.fasta > mikado.loci.protein_newheader.v3.fasta
 ```
 
