@@ -438,3 +438,37 @@ module load Python/3.6.6
 qsub -cwd -pe threads 32 -l m_mem_free=1G braker.sh
 ```
 
+### BRAKER - RNAseq hints + mikado proteins
+
+Prepare mikado proteins fasta
+
+```
+cd /sonas-hs/ware/hpc_norepl/data/diniz/analysis/mikado_3rd_test
+
+#Simplify fasta headers
+sed -e 's/ .*//g' mikado.loci.protein.fasta > mikado.loci.protein_newheaderv1.fasta
+sed -r 's/\s+//g' mikado.loci.protein_newheaderv1.fasta > mikado.loci.protein_newheader.fasta
+sed -r 's/\s+//g' mikado.loci.protein_newheader.fasta > mikado.loci.protein_newheader.v2.fasta
+sed -r 's/\.//g' mikado.loci.protein_newheader.v2.fasta > mikado.loci.protein_newheader.v3.fasta
+```
+
+script: braker_prot.sh
+```
+cd /sonas-hs/ware/hpc_norepl/data/diniz/analysis/SP80-3280
+
+module load foss/2018b
+module load Python/3.6.6
+
+/sonas-hs/ware/hpc/home/diniz/software/BRAKER/scripts/braker.pl \
+--cores 32 \
+--min_contig=10000 \
+--DIAMOND_PATH=/sonas-hs/ware/hpc/home/diniz/software/diamond \
+--genome=/sonas-hs/ware/hpc_norepl/data/diniz/Saccharum_genome_refs/SP80-3280/sc.mlc.cns.sgl.utg.scga7.importdb.fa \
+--hints=/sonas-hs/ware/hpc_norepl/data/diniz/analysis/SP80-3280/SP80-3280.RNAseq.hints \
+--AUGUSTUS_ab_initio \
+--prot_seq=/sonas-hs/ware/hpc_norepl/data/diniz/analysis/mikado_3rd_test/mikado.loci.protein_newheader.v3.fasta \
+--prg=gth --gth2traingenes
+```
+```
+qsub -cwd -pe threads 32 -l m_mem_free=1G braker_prot.sh
+```
