@@ -438,6 +438,24 @@ module load Python/3.6.6
 qsub -cwd -pe threads 32 -l m_mem_free=1G braker.sh
 ```
 
+script: braker_masked.sh
+```
+cd /sonas-hs/ware/hpc_norepl/data/diniz/analysis/SP80-3280
+
+module load foss/2018b
+module load Python/3.6.6
+
+/sonas-hs/ware/hpc/home/diniz/software/BRAKER/scripts/braker.pl \
+--cores 32 \
+--min_contig=10000 \
+--DIAMOND_PATH=/sonas-hs/ware/hpc/home/diniz/software/diamond \
+--genome=/sonas-hs/ware/hpc_norepl/data/diniz/Saccharum_genome_refs/SP80-3280/sc.mlc.cns.sgl.utg.scga7.importdb.masked.fa \
+--hints=/sonas-hs/ware/hpc_norepl/data/diniz/analysis/SP80-3280/SP80-3280.RNAseq.hints
+```
+```
+qsub -cwd -pe threads 32 -l m_mem_free=1G braker_masked.sh
+```
+
 ### BRAKER - RNAseq hints + mikado proteins
 
 Prepare mikado proteins fasta
