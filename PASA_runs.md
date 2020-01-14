@@ -113,12 +113,14 @@ module load GCC/7.3.0-2.30
 module load OpenMPI/3.1.1
 module load Python/3.6.6
 module load Anaconda2/5.3.0
+module load GMAP-GSNAP/2019-03-15
+module load SAMtools/1.9
 source activate pasa
 
 /sonas-hs/ware/hpc/home/diniz/software/PASApipeline.v2.4.1/Launch_PASA_pipeline.pl \
 -c alignAssembly.config \
 -C -R -T \
--g /sonas-hs/ware/hpc_norepl/data/diniz/Saccharum_genome_refs/SP80-3280/sc.mlc.cns.sgl.utg.scga7.importdb.masked.fa \
+-g /sonas-hs/ware/hpc_norepl/data/diniz/Saccharum_genome_refs/SP80-3280/sc.mlc.cns.sgl.utg.scga7.importdb.fa \
 -t SP80.est.flc.mikado.combined.fasta.clean \
 -u SP80.est.flc.mikado.combined.fasta \
 --ALIGNERS blat,gmap \
