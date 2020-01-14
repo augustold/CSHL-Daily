@@ -62,6 +62,21 @@ qsub -cwd -pe threads 16 -l m_mem_free=1G seqclean.sh
 Output summary:
 
 ```
+**************************************************
+Sequences analyzed:    577771
+-----------------------------------
+                   valid:    577694  (5503 trimmed)
+                 trashed:        77
+**************************************************
+----= Trashing summary =------
+            by 'low_qual':        4
+               by 'short':       33
+              by 'shortq':       24
+                by 'dust':       16
+------------------------------
+Output file containing only valid and trimmed sequences: SP80.est.flc.mikado.combined.fasta.clean
+For trimming and trashing details see cleaning report  : SP80.est.flc.mikado.combined.fasta.cln
+--------------------------------------------------
 ```
 
 ## Step 3: Transcript alignments followed by alignment assembly
