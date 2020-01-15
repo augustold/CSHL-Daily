@@ -64,7 +64,7 @@ sugarcane.fulllength.analysis.all.fasta \
 > /sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run/SP80.est.flc.mikado.combined.fasta
 ```
 
-## Step 2: cleaning the transcript sequencesqs
+## Step 2: cleaning the transcript sequences
 
 script: seqclean.sh
 ```
