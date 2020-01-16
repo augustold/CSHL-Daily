@@ -36,7 +36,9 @@ conda create -n pasa
 source activate pasa
 conda install -c bioconda pasa
 conda install -c bioconda/label/cf201901 gmap
-conda install -c bioconda/label/cf201901 ucsc-blat 
+conda install -c bioconda/label/cf201901 blat
+conda install openssl=1.0
+conda install -c bioconda/label/cf201901 perl-dbi
 
 wget https://github.com/PASApipeline/PASApipeline/releases/download/pasa-v2.4.1/PASApipeline.v2.4.1.FULL.tar.gz
 
@@ -61,14 +63,14 @@ cat \
 ESTs_SP80-3280.fasta \
 sugarcane.fulllength.analysis.all.fasta \
 /sonas-hs/ware/hpc_norepl/data/diniz/analysis/mikado_3rd_test/mikado.loci.cds.fasta \
-> /sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run/SP80.est.flc.mikado.combined.fasta
+> /sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run_2/SP80.est.flc.mikado.combined.fasta
 ```
 
 ## Step 2: cleaning the transcript sequences
 
 script: seqclean.sh
 ```
-cd /sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run 
+cd /sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run_2
  
 module load GCC/7.3.0-2.30
 module load OpenMPI/3.1.1
@@ -79,7 +81,7 @@ source activate pasa
 PASApipeline.v2.4.1/bin/seqclean SP80.est.flc.mikado.combined.fasta -c 16
 
 mkdir cleaning
-mv cleaning_* /cleaning
+mv cleaning_* cleaning/
 ```
 ```
 qsub -cwd -pe threads 16 -l m_mem_free=1G seqclean.sh 
@@ -122,7 +124,7 @@ Edit the database path :
 
 ```
 # database settings
-DATABASE=/sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run/sqlite/SP80.sqlite
+DATABASE=/sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run_2/sqlite/SP80.sqlite
 ```
 
 Create a sqlite folder and set the permission
@@ -135,7 +137,7 @@ Run the PASA alignment assembly pipeline
 
 script: alignAssembly.sh
 ```
-cd /sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run 
+cd /sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run_2
  
 module load GCC/7.3.0-2.30
 module load OpenMPI/3.1.1
@@ -151,11 +153,11 @@ PASApipeline.v2.4.1/Launch_PASA_pipeline.pl \
 -g /sonas-hs/ware/hpc_norepl/data/diniz/Saccharum_genome_refs/SP80-3280/sc.mlc.cns.sgl.utg.scga7.importdb.masked.fa \
 -t SP80.est.flc.mikado.combined.fasta.clean \
 -u SP80.est.flc.mikado.combined.fasta \
---ALIGNERS gmap \
+--ALIGNERS blat,gmap \
 --CPU 16
 ```
 ```
-qsub -cwd -pe threads 16 -l m_mem_free=2G alignAssembly.sh 
+qsub -cwd -pe threads 32 -l m_mem_free=1G alignAssembly.sh 
 ```
 
 ## Step 4: Annotation Comparisons and Annotation Updates
