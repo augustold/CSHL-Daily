@@ -3,24 +3,6 @@
 ## Install PASA
 
 ```
-module load GCC/7.3.0-2.30
-module load OpenMPI/3.1.1
-module load Python/3.6.6
-module load Anaconda2/5.3.0
-
-cd /sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run
-cp /mnt/grid/ware/hpc_norepl/data/data/kapeel/NAM/NAM_Canu1.8_new_runs/PASA_runs/environment.yml .
-conda env create -f environment.yml
-source activate mypasa
-conda install gmap
-
-wget https://github.com/PASApipeline/PASApipeline/releases/download/pasa-v2.3.3/PASApipeline-v2.3.3.tar.gz
-tar -zxvf PASApipeline-v2.3.3.tar.gz
-rm -rf PASApipeline-v2.3.3.tar.gz
-cd PASApipeline-v2.3.3; make
-```
-
-```
 # Prepare working directory
 
 cd /sonas-hs/ware/hpc_norepl/data/diniz/analysis
@@ -54,7 +36,7 @@ cd PASApipeline.v2.4.1; make
 - Repeatmasked genome
 - Trasncripts
 	- ESTs
-	- Full-Lengths
+	- Full-Lengths (Nishiyama 2014)
 	- Mikado CDS
 
 ## Step 1: combine transcripts
@@ -65,15 +47,20 @@ cd /sonas-hs/ware/hpc_norepl/data/diniz/Saccharum_genome_refs/SP80-3280
 cat \
 ESTs_SP80-3280.fasta \
 sugarcane.fulllength.analysis.all.fasta \
-/sonas-hs/ware/hpc_norepl/data/diniz/analysis/mikado_3rd_test/mikado.loci.cds.fasta \
-> /sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run_2/SP80.est.flc.mikado.combined.fasta
+/sonas-hs/ware/hpc_norepl/data/diniz/analysis/mikado_3rd_test/mikado.loci.TErmv.cds.fasta \
+> /sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run/SP80.est.flc.mikado.combined.fasta
+```
+
+Also get the full-lengths IDs in a different file
+```
+grep -e ">" sugarcane.fulllength.analysis.all.fasta | sed 's/>//' > /sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run/FL_accs.txt
 ```
 
 ## Step 2: cleaning the transcript sequences
 
 script: seqclean.sh
 ```
-cd /sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run_2
+cd /sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run
  
 module load GCC/7.3.0-2.30
 module load OpenMPI/3.1.1
@@ -127,7 +114,7 @@ Edit the database path :
 
 ```
 # database settings
-DATABASE=/sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run_2/sqlite/SP80.sqlite
+DATABASE=/sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run/sqlite/SP80.sqlite
 ```
 
 Create a sqlite folder and set the permission
@@ -140,7 +127,7 @@ Run the PASA alignment assembly pipeline
 
 script: alignAssembly.sh
 ```
-cd /sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run_2
+cd /sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run
  
 module load GCC/7.3.0-2.30
 module load OpenMPI/3.1.1
@@ -152,15 +139,16 @@ source activate pasa
 
 PASApipeline.v2.4.1/Launch_PASA_pipeline.pl \
 -c alignAssembly.config \
--C -R -T \
+-C -R \
 -g /sonas-hs/ware/hpc_norepl/data/diniz/Saccharum_genome_refs/SP80-3280/sc.mlc.cns.sgl.utg.scga7.importdb.masked.fa \
--t SP80.est.flc.mikado.combined.fasta.clean \
+-t SP80.est.flc.mikado.combined.fasta.clean -T \
 -u SP80.est.flc.mikado.combined.fasta \
---ALIGNERS blat,gmap \
+-f FL_accs.txt \
+--ALIGNERS gmap \
 --CPU 16
 ```
 ```
-qsub -cwd -pe threads 32 -l m_mem_free=1G alignAssembly.sh 
+qsub -cwd -pe threads 16 -l m_mem_free=1G alignAssembly.sh 
 ```
 
 ## Step 4: Annotation Comparisons and Annotation Updates
@@ -190,4 +178,9 @@ PASApipeline.v2.4.1/Launch_PASA_pipeline.pl \
 ```
 ```
 qsub -cwd -pe threads 1 -l m_mem_free=16G annotLoadandCompare.sh 
+```
+
+## Step 5: consider run this
+```
+https://github.com/PASApipeline/PASApipeline/wiki/PASA_abinitio_training_sets
 ```
