@@ -39,6 +39,9 @@ conda install -c bioconda/label/cf201901 gmap
 conda install -c bioconda/label/cf201901 blat
 conda install openssl=1.0
 conda install -c bioconda/label/cf201901 perl-dbi
+conda install -c bioconda perl-dbd-sqlite
+conda install -c bioconda perl-uri
+conda install -c bioconda perl-db-file
 
 wget https://github.com/PASApipeline/PASApipeline/releases/download/pasa-v2.4.1/PASApipeline.v2.4.1.FULL.tar.gz
 
