@@ -1,0 +1,10 @@
+```
+# run RepeatMasker, which will generate a *.out file.
+RepeatMasker [options] genome.fa
+
+# extract sequences
+python /projects/augustold/CSHL/TEsorter/bin/RepeatMasker.py out2seqs sc.mlc.cns.sgl.utg.scga7.importdb.fa.out sc.mlc.cns.sgl.utg.scga7.importdb.fa > whole_genome_te.fa
+
+# classify
+python /projects/augustold/CSHL/TEsorter/TEsorter.py whole_genome_te.fa -p 32
+```
