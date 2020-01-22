@@ -42,13 +42,15 @@ module load Python/3.6.6
 module load Anaconda2/5.3.0
 source activate EDTA
 
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/sonas-hs/ware/hpc/home/diniz/.conda/envs/EDTA/lib
+
 perl /sonas-hs/ware/hpc_norepl/data/diniz/analysis/EDTA/EDTA/EDTA_raw.pl \
--genome	/sonas-hs/ware/hpc_norepl/data/diniz/Saccharum_genome_refs/SP80-3280/sc.mlc.cns.sgl.utg.scga7.importdb.fa \
--type ltr \
--threads 16
+--genome	/sonas-hs/ware/hpc_norepl/data/diniz/Saccharum_genome_refs/SP80-3280/sc.mlc.cns.sgl.utg.scga7.importdb.fa \
+--type ltr \
+--threads 30
 ```
 ```
-qsub -cwd -pe threads 16 -l m_mem_free=1G EDTA_ltr.sh
+qsub -cwd -pe threads 30 -l m_mem_free=0.5G EDTA_ltr.sh
 ```
 
 ### TIR
