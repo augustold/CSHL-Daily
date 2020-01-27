@@ -32,7 +32,7 @@ cd /projects/augustold/SSPACE/SSPACE-LongRead_v1-1
 ```
 cd /projects/augustold/SSPACE/SSPACE-LongRead_v1-1 
 perl SSPACE-LongRead.pl \
--c /sonas-hs/ware/hpc_norepl/data/diniz/Saccharum_genome_refs/SP80-3280/sc.mlc.cns.sgl.utg.scga7.importdb.fa \
+-c /projects/augustold/SP80_genome/sc.mlc.cns.sgl.utg.scga7.importdb.fa \
 -p SP80_filtered_subreads.fastq \
 -t 50
 ```
