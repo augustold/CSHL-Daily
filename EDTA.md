@@ -15,9 +15,9 @@ module load Anaconda2/5.3.0
 module load git/2.19.1
 
 conda create -n EDTA
-source activate EDTA
-conda config --env --add channels anaconda --add channels conda-forge --add channels biocore --add channels bioconda --add channels cyclus
-conda install -n EDTA -y cd-hit repeatmodeler muscle mdust blast-legacy java-jdk perl perl-text-soundex multiprocess regex tensorflow=1.14.0 keras=2.2.4 scikit-learn=0.19.0 biopython pandas glob2 python=3.6 tesorter
+conda activate EDTA
+conda config --env --add channels anaconda --add channels conda-forge --add channels bioconda
+conda install -n EDTA -y cd-hit repeatmodeler muscle mdust blast java-jdk perl perl-text-soundex multiprocess regex tensorflow=1.14.0 keras=2.2.4 scikit-learn=0.19.0 biopython pandas glob2 python=3.6 tesorter genericrepeatfinder genometools-genometools ltr_retriever
 git clone https://github.com/oushujun/EDTA
 ./EDTA/EDTA.pl
 ```
