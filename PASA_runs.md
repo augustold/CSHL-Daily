@@ -19,6 +19,7 @@ source activate pasa
 conda install -c bioconda pasa
 conda install -c bioconda/label/cf201901 gmap
 conda install -c bioconda/label/cf201901 blat
+conda install cdbtools
 conda install openssl=1.0
 conda install -c bioconda/label/cf201901 perl-dbi
 conda install -c bioconda perl-dbd-sqlite
