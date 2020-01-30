@@ -5,7 +5,7 @@
 ```
 # Prepare working directory
 
-cd /sonas-hs/ware/hpc/home/diniz
+cd /sonas-hs/ware/hpc_norepl/data/diniz/analysis/
 mkdir PASA_run; cd PASA_run; mkdir scripts
 
 module load GCC/7.3.0-2.30
@@ -51,19 +51,19 @@ ESTs_SP80-3280.fasta \
 sugarcane.fulllength.analysis.all.fasta \
 pacbio_hq_transcripts.fasta \
 /sonas-hs/ware/hpc_norepl/data/diniz/analysis/mikado_3rd_test/mikado.loci.TErmv.cds.fasta \
-> /sonas-hs/ware/hpc/home/diniz/PASA_run/SP80.est.flc.mikado.combined.fasta
+> /sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run/SP80.est.flc.mikado.combined.fasta
 ```
 
 Also get the full-lengths IDs in a different file
 ```
-grep -e ">" pacbio_hq_transcripts.fasta | sed 's/>//' > /sonas-hs/ware/hpc/home/diniz/PASA_run/FL_accs.txt
+grep -e ">" pacbio_hq_transcripts.fasta | sed 's/>//' > /sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run/FL_accs.txt
 ```
 
 ## Step 2: cleaning the transcript sequences
 
 script: seqclean.sh
 ```
-cd /sonas-hs/ware/hpc/home/diniz/PASA_run
+cd /sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run
 
 date
 
@@ -96,10 +96,10 @@ Sequences analyzed:    838049
                  trashed:       175
 **************************************************
 ----= Trashing summary =------
-              by 'shortq':       24
             by 'low_qual':        4
-               by 'short':      131
                 by 'dust':       16
+               by 'short':      131
+              by 'shortq':       24
 ------------------------------
 Output file containing only valid and trimmed sequences: SP80.est.flc.mikado.combined.fasta.clean
 For trimming and trashing details see cleaning report  : SP80.est.flc.mikado.combined.fasta.cln
@@ -111,7 +111,7 @@ For trimming and trashing details see cleaning report  : SP80.est.flc.mikado.com
 Before running the transcript alignment step, copy and edit the copy files annotCompare.config and alignAssembly.config from PASA installation folder.
 
 ```
-#cd cd /sonas-hs/ware/hpc/home/diniz/PASA_run
+#cd /sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run
 
 cp /sonas-hs/ware/hpc_norepl/data/kapeel/NAM/NAM_Canu1.8_new_runs/PASA_runs/B97/alignAssembly.config .
 cp /sonas-hs/ware/hpc_norepl/data/kapeel/NAM/NAM_Canu1.8_new_runs/PASA_runs/B97/annotCompare.config .
@@ -134,7 +134,7 @@ Run the PASA alignment assembly pipeline
 
 script: alignAssembly.sh
 ```
-cd /sonas-hs/ware/hpc/home/diniz/PASA_run
+cd /sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run
  
 module load GCC/7.3.0-2.30
 module load OpenMPI/3.1.1
@@ -168,7 +168,7 @@ Loading your preexisting protein-coding gene annotations and performing an annot
 
 script: annotLoadandCompare.sh
 ```
-cd /sonas-hs/ware/hpc/home/diniz/PASA_run 
+cd /sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run
  
 module load GCC/7.3.0-2.30
 module load OpenMPI/3.1.1
@@ -202,7 +202,7 @@ https://github.com/PASApipeline/PASApipeline/wiki/PASA_abinitio_training_sets
 
 script: abinitiotraining.sh
 ```
-cd /sonas-hs/ware/hpc/home/diniz/PASA_run 
+cd /sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run
  
 module load GCC/7.3.0-2.30
 module load OpenMPI/3.1.1
