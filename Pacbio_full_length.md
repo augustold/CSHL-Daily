@@ -1,9 +1,9 @@
 ## Map full-length unique isoforms back to the genome reference
 
-script: GMAP_run.sh
+script: GMAP_pacbio_hq_transcripts_run.sh
 
 ```
-cd /sonas-hs/ware/hpc_norepl/data/diniz/analysis/SP80-3280
+cd /sonas-hs/ware/hpc_norepl/data/diniz/Saccharum_genome_refs/SP80-3280
 
 module load GCC/7.3.0-2.30
 module load OpenMPI/3.1.1
@@ -20,11 +20,10 @@ gmap \
 -n 1 \
 --min-trimmed-coverage=0.70 \
 --min-identity=0.95 \
-/sonas-hs/ware/hpc_norepl/data/diniz/Saccharum_genome_refs/SP80-3280/
 pacbio_hq_transcripts.fasta > pacbio_hq_transcripts.gff3
 
 date
 ```
 ```
-qsub -cwd -pe threads 16 -l m_mem_free=2G GMAP_run.sh
+qsub -cwd -pe threads 16 -l m_mem_free=2G GMAP_pacbio_hq_transcripts_run.sh
 ```
