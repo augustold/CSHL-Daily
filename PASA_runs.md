@@ -90,15 +90,15 @@ Output summary:
 less seqcl_SP80.est.flc.mikado.combined.fasta.log
 
 **************************************************
-Sequences analyzed:    577771
+Sequences analyzed:    838049
 -----------------------------------
-                   valid:    577694  (5503 trimmed)
-                 trashed:        77
+                   valid:    837874  (6470 trimmed)
+                 trashed:       175
 **************************************************
 ----= Trashing summary =------
-            by 'low_qual':        4
-               by 'short':       33
               by 'shortq':       24
+            by 'low_qual':        4
+               by 'short':      131
                 by 'dust':       16
 ------------------------------
 Output file containing only valid and trimmed sequences: SP80.est.flc.mikado.combined.fasta.clean
