@@ -35,15 +35,31 @@ Protein databases on Helix:
 
 ```
 #SwissProt
-/projects/ftencaten/database/uniprot_sprot/uniprot_sprot.fasta
+cd /projects/augustold/CSHL/Trinity/Trinity_denovo
+wget ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz
+gunzip uniprot_sprot.fasta.gz 
+makeblastdb -in uniprot_sprot.fasta -dbtype prot
 ```
 
 Running BLAST
 
 ```
+cd /projects/augustold/CSHL/Trinity/Trinity_denovo/SP80-3280/trinity_out_dir
+
 blastx \
 -query Trinity.fasta \
--db /projects/ftencaten/database/uniprot_sprot/uniprot_sprot.fasta \
+-db /projects/augustold/CSHL/Trinity/Trinity_denovo/uniprot_sprot.fasta \
 -out blastx.outfmt6 \
--evalue 1e-20 -num_threads 20 -max_target_seqs 1 -outfmt 6
+-evalue 1e-20 -num_threads 40 -max_target_seqs 1 -outfmt 6
+```
+
+Next, examine the percent of the target being aligned to by the best matching Trinity transcript, like so:
+
+```
+cd /projects/augustold/CSHL/Trinity/Trinity_denovo/SP80-3280/trinity_out_dir
+
+/projects/augustold/CSHL/Trinity/trinityrnaseq-Trinity-v2.8.5/util/analyze_blastPlus_topHit_coverage.pl \
+blastx.outfmt6 \
+Trinity.fasta \
+/projects/augustold/CSHL/Trinity/Trinity_denovo/uniprot_sprot.fasta
 ```
