@@ -89,3 +89,25 @@ assembly_stats scaffolds.fasta
   }
 }
 ```
+
+## BUSCO
+
+### Instaling
+```
+## Instaling
+conda create -n busco
+conda activate busco
+
+conda install -c bioconda -c conda-forge busco=4.0.2
+```
+
+### Running BUSCO
+```
+conda activate busco
+cd /projects/augustold/SSPACE/SSPACE-LongRead_v1-1/PacBio_scaffolder_results
+
+date # Tue Feb  4 15:13:52 -02 2020
+busco -m genome -i scaffolds.fasta -o busco_results --auto-lineage-euk --cpu 20
+date #
+
+```
