@@ -80,7 +80,7 @@ Trinity.fasta \
 
 Statements we can make based on this table include:
 
-    There are 1540 proteins that each match a Trinity transcript by >80% and <= 90% of their protein lengths.
-    There are 5825 proteins that are represented by nearly full-length transcripts, having >80% alignment coverage.
-    There are 4285 proteins that are covered by more than 90% of their protein lengths.
+- There are 1540 proteins that each match a Trinity transcript by >80% and <= 90% of their protein lengths.
+- There are 5825 proteins that are represented by nearly full-length transcripts, having >80% alignment coverage.
+- There are 4285 proteins that are covered by more than 90% of their protein lengths.
 
