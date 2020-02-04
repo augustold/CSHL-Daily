@@ -109,5 +109,53 @@ cd /projects/augustold/SSPACE/SSPACE-LongRead_v1-1/PacBio_scaffolder_results
 date # Tue Feb  4 15:13:52 -02 2020
 busco -m genome -i scaffolds.fasta -o busco_results --auto-lineage-euk --cpu 20
 date #
+```
+
+## BLAST mitochondria and chloroplast
+
+```
+# Subfiles in
+/projects/yutaka/Analysis/Genome/AlignmentSugarcaneGenomevsChloroplastMitochondria/
+- Chloroplast.contigs.NC_005878.2.fa  
+- Mitochondrial.contigs.LC107874.1.fa
+- Mitochondrial.contigs.LC107875.1.fa
+```
+
+### BLAST conda install
+
+```
+mkdir -p ~/blast
+cd ~/blast
+conda create -n blast
+conda activate blast
+conda install -y blast
+```
+
+### Make data base: pacbio scaffold
+
+```
+conda activate blast
+cd /projects/augustold/SSPACE/SSPACE-LongRead_v1-1/PacBio_scaffolder_results
+makeblastdb -in scaffolds.fasta -dbtype nucl -parse_seqids > blast_prepare.log
+```
+
+### Run BLASTx
+
+```
+conda activate blast
+#Chloroplast
+blastn -query /projects/yutaka/Analysis/Genome/AlignmentSugarcaneGenomevsChloroplastMitochondria/Chloroplast.contigs.NC_005878.2.fa -db scaffolds.fasta -outfmt 7 -num_threads 12 -out Chloroplast_blast_output.txt
+
+cat Chloroplast_blast_output.txt |awk '/hits found/{getline;print}' | grep -v "#" > Chloroplast_top_hits.txt
+
+#Mitochondrial_1
+blastn -query /projects/yutaka/Analysis/Genome/AlignmentSugarcaneGenomevsChloroplastMitochondria/Mitochondrial.contigs.LC107874.1.fa -db scaffolds.fasta -outfmt 7 -num_threads 12 -out Mitochondrial_1_blast_output.txt
+
+cat Mitochondrial_1_blast_output.txt |awk '/hits found/{getline;print}' | grep -v "#" > Mitochondrial_1_top_hits.txt
+
+Mitochondrial_2
+blastn -query /projects/yutaka/Analysis/Genome/AlignmentSugarcaneGenomevsChloroplastMitochondria/Mitochondrial.contigs.LC107875.1.fa -db scaffolds.fasta -outfmt 7 -num_threads 12 -out Mitochondrial_2_blast_output.txt
+
+cat Mitochondrial_2_blast_output.txt |awk '/hits found/{getline;print}' | grep -v "#" > Mitochondrial_2_top_hits.txt
 
 ```
