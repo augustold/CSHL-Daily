@@ -36,3 +36,56 @@ perl SSPACE-LongRead.pl \
 -p SP80_filtered_subreads.fastq \
 -t 50
 ```
+
+### Scaffold Stats
+
+```
+pip install assembly_stats
+
+cd /projects/augustold/SSPACE/SSPACE-LongRead_v1-1/PacBio_scaffolder_results
+
+assembly_stats scaffolds.fasta
+```
+
+```
+{
+  "Contig Stats": {
+    "L10": 1478,
+    "L20": 3951,
+    "L30": 7175,
+    "L40": 11095,
+    "L50": 15693,
+    "N10": 75345,
+    "N20": 54499,
+    "N30": 43541,
+    "N40": 36628,
+    "N50": 31578,
+    "gc_content": 43.68660190391076,
+    "longest": 468011,
+    "mean": 21532.10471666851,
+    "median": 16240.5,
+    "sequence_count": 72424,
+    "shortest": 1427,
+    "total_bps": 1559441152
+  },
+  "Scaffold Stats": {
+    "L10": 927,
+    "L20": 2275,
+    "L30": 3932,
+    "L40": 5884,
+    "L50": 8156,
+    "N10": 140957,
+    "N20": 109479,
+    "N30": 91658,
+    "N40": 78812,
+    "N50": 67675,
+    "gc_content": 43.68660190391076,
+    "longest": 589528,
+    "mean": 58781.60309626105,
+    "median": 49154.0,
+    "sequence_count": 28163,
+    "shortest": 22753,
+    "total_bps": 1655466288
+  }
+}
+```
