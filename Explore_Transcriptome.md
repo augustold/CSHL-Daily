@@ -63,3 +63,24 @@ blastx.outfmt6 \
 Trinity.fasta \
 /projects/augustold/CSHL/Trinity/Trinity_denovo/uniprot_sprot.fasta
 ```
+
+```
+#hit_pct_cov_bin        count_in_bin    >bin_below
+100     4285    4285
+90      1540    5825
+80      1088    6913
+70      858     7771
+60      758     8529
+50      796     9325
+40      823     10148
+30      774     10922
+20      624     11546
+10      184     11730
+```
+
+Statements we can make based on this table include:
+
+    There are 1540 proteins that each match a Trinity transcript by >80% and <= 90% of their protein lengths.
+    There are 5825 proteins that are represented by nearly full-length transcripts, having >80% alignment coverage.
+    There are 4285 proteins that are covered by more than 90% of their protein lengths.
+
