@@ -18,5 +18,4 @@ circlator all \
 Mitochondrial_1_directory \
 --threads 20 \
 --verbose
-
 ```
