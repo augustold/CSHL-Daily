@@ -111,6 +111,37 @@ busco -m genome -i scaffolds.fasta -o busco_results --auto-lineage-euk --cpu 20
 date #
 ```
 
+### Results
+
+```
+INFO:   
+
+        --------------------------------------------------
+        |Results from generic domain eukaryota_odb10      |
+        --------------------------------------------------
+        |C:78.8%[S:29.0%,D:49.8%],F:3.5%,M:17.7%,n:255    |
+        |201    Complete BUSCOs (C)                       |
+        |74     Complete and single-copy BUSCOs (S)       |
+        |127    Complete and duplicated BUSCOs (D)        |
+        |9      Fragmented BUSCOs (F)                     |
+        |45     Missing BUSCOs (M)                        |
+        |255    Total BUSCO groups searched               |
+        --------------------------------------------------
+
+        --------------------------------------------------
+        |Results from dataset eudicots_odb10              |
+        --------------------------------------------------
+        |C:64.3%[S:34.4%,D:29.9%],F:3.7%,M:32.0%,n:2326   |
+        |1495   Complete BUSCOs (C)                       |
+        |800    Complete and single-copy BUSCOs (S)       |
+        |695    Complete and duplicated BUSCOs (D)        |
+        |85     Fragmented BUSCOs (F)                     |
+        |746    Missing BUSCOs (M)                        |
+        |2326   Total BUSCO groups searched               |
+        --------------------------------------------------
+INFO:   BUSCO analysis done. Total running time: 56254 seconds
+```
+
 ## BLAST mitochondria and chloroplast
 
 ```
