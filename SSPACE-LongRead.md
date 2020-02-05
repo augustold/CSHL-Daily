@@ -190,3 +190,19 @@ blastn -query /projects/yutaka/Analysis/Genome/AlignmentSugarcaneGenomevsChlorop
 cat Mitochondrial_2_blast_output.txt |awk '/hits found/{getline;print}' | grep -v "#" > Mitochondrial_2_top_hits.txt
 
 ```
+
+### Get unique scaffold IDs using R
+
+```
+#Expample for Mitochondrial_1
+
+R
+data = read.table("Mitochondrial_1_top_hits.txt")
+data2 = as.data.frame(table(data$V2))
+data3 = data2$Var1
+write.table(data3, file = "Mitochondrial_1_scaffold_unique_IDs.txt", row.names = F, col.names = F)
+quit()
+
+#remove "!
+sed -i 's/"//g' Mitochondrial_1_scaffold_unique_IDs.txt 
+```
