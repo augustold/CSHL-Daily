@@ -50,6 +50,7 @@ source activate anaCogent5.2
 conda install -n anaCogent5.2 biopython
 conda install -n anaCogent5.2 -c bioconda bx-python
 conda install -n anaCogent5.2 -c bioconda pbccs=4.0
+conda install -c bioconda pbccs
 conda install -n anaCogent5.2 -c bioconda isoseq3=3.2
 
 #Optional
@@ -58,7 +59,7 @@ conda install -n anaCogent5.2 -c bioconda bamtools    # for converting BAM to fa
 conda install -n anaCogent5.2 -c bioconda pysam       # for making CSV reports
 
 #Check version
-isoseq3 --version # isoseq3 3.2.x (commit v3.2.x)
+isoseq3 --version # isoseq3 3.2.2 (commit v3.2.2)
 ccs --version # ccs 4.0.x (commit v4.0.x)
 lima --version # lima 1.9.0 (commit v1.9.0)
 ```
@@ -66,8 +67,22 @@ lima --version # lima 1.9.0 (commit v1.9.0)
 ### Raw files in:
 ```
 /isilon/seq/smrt3/data_root/runs/54333U/r54333U_20200123_202438/1_A01/
+
+# Sara's results are in:
+/isilon/seq/smrt4/smrtlink/userdata/jobs_root/0000/0000001/0000001589
 ```
 
 ### Running Iso-Seq 3
+#### 0. Generate CCS
 ```
+cd /sonas-hs/ware/hpc/home/diniz/FL_Pacbio
+
+ccs \
+/isilon/seq/smrt3/data_root/runs/54333U/r54333U_20200123_202438/1_A01/m54333U_200123_203332.subreads.bam \
+m54333U_200123_203332.ccs.bam --min-rq 0.9
+```
+
+#### 1. Classify full-length reads:
+```
+lima --isoseq --dump-clips --no-pbi --peek-guess -j 24 ccs.bam primers.fasta demux.bam       
 ```
