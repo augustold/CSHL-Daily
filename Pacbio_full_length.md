@@ -30,6 +30,57 @@ date
 qsub -cwd -pe threads 16 -l m_mem_free=2G GMAP_pacbio_hq_transcripts_run.sh
 ```
 
+## Map full-length unique isoforms back to the genome reference - Scaffolds from pacbio data
+
+### Build GMPA index
+script: GMAP_build.sh
+```
+#!/bin/bash
+cd /sonas-hs/ware/hpc_norepl/data/diniz/Saccharum_genome_refs/SP80-3280/scaffolds
+
+module load GCC/7.3.0-2.30
+module load OpenMPI/3.1.1
+module load GMAP-GSNAP/2019-03-15
+module load SAMtools/1.9
+
+date
+
+gmap_build -d gmap_index -D . -k 13 scaffolds.fasta
+
+date
+```
+```
+qsub -cwd -pe threads 1 -l m_mem_free=16G GMAP_build.sh
+```
+### Map to scaffolds
+script: GMAP_pacbio_hq_transcripts_run.sh
+```
+#!/bin/bash
+cd /sonas-hs/ware/hpc_norepl/data/diniz/Saccharum_genome_refs/SP80-3280/scaffolds
+
+module load GCC/7.3.0-2.30
+module load OpenMPI/3.1.1
+module load GMAP-GSNAP/2019-03-15
+module load SAMtools/1.9
+
+date
+
+gmap \
+-D /sonas-hs/ware/hpc_norepl/data/diniz/Saccharum_genome_refs/SP80-3280/scaffolds \
+-d gmap_index \
+-f gff3_gene \
+-t 16 \
+-n 1 \
+--min-trimmed-coverage=0.80 \
+--min-identity=0.90 \
+../pacbio_hq_transcripts.fasta > pacbio_hq_transcripts_to_scaffolds.gff3
+
+date
+```
+```
+qsub -cwd -pe threads 16 -l m_mem_free=2G GMAP_pacbio_hq_transcripts_run.sh
+```
+
 # Running Iso-Seq 3 from scratch
 
 Instructions: https://github.com/PacificBiosciences/IsoSeq_SA3nUP/wiki/Tutorial:-Installing-and-Running-Iso-Seq-3-using-Conda
