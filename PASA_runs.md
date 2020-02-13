@@ -49,14 +49,14 @@ cd /sonas-hs/ware/hpc_norepl/data/diniz/Saccharum_genome_refs/SP80-3280
 cat \
 ESTs_SP80-3280.fasta \
 sugarcane.fulllength.analysis.all.fasta \
-pacbio_hq_transcripts.fasta \
+pacbio_hq_transcripts.v2.fasta \
 /sonas-hs/ware/hpc_norepl/data/diniz/analysis/mikado_3rd_test/mikado.loci.TErmv.cds.fasta \
 > /sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run/SP80.est.flc.mikado.combined.fasta
 ```
 
 Also get the full-lengths IDs in a different file
 ```
-grep -e ">" pacbio_hq_transcripts.fasta | sed 's/>//' > /sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run/FL_accs.txt
+grep -e ">" pacbio_hq_transcripts.v2.fasta | sed 's/>//' > /sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run/FL_accs.txt
 ```
 
 ## Step 2: cleaning the transcript sequences
@@ -154,12 +154,12 @@ PASApipeline.v2.4.1/Launch_PASA_pipeline.pl \
 -u SP80.est.flc.mikado.combined.fasta \
 -f FL_accs.txt \
 --ALIGNERS gmap \
---CPU 16
+--CPU 30
 
 date
 ```
 ```
-qsub -cwd -pe threads 16 -l m_mem_free=1G alignAssembly.sh 
+qsub -cwd -pe threads 30 -l m_mem_free=0.5G alignAssembly.sh 
 ```
 
 ## Step 4: Annotation Comparisons and Annotation Updates
