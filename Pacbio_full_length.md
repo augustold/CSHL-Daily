@@ -125,12 +125,28 @@ lima --version # lima 1.9.0 (commit v1.9.0)
 
 ### Running Iso-Seq 3
 #### 0. Generate CCS
+script: generate_ccs.sh
 ```
+#!/bin/bash
 cd /sonas-hs/ware/hpc/home/diniz/FL_Pacbio
 
-ccs \
+module load GCC/7.3.0-2.30
+module load OpenMPI/3.1.1
+module load IntelPython/2.7.14
+module load Anaconda2/5.3.0
+
+source activate anaCogent5.2
+
+date
+
+/seq/smrt4/smrtlink/smrtcmds/bin/ccs \
 /isilon/seq/smrt3/data_root/runs/54333U/r54333U_20200123_202438/1_A01/m54333U_200123_203332.subreads.bam \
 m54333U_200123_203332.ccs.bam --min-rq 0.9
+
+date
+```
+```
+qsub -cwd -pe threads 16 -l m_mem_free=2G generate_ccs.sh
 ```
 
 #### 1. Classify full-length reads:
