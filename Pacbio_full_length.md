@@ -150,6 +150,28 @@ qsub -cwd -pe threads 16 -l m_mem_free=2G generate_ccs.sh
 ```
 
 #### 1. Classify full-length reads:
+Script: lima.sh
 ```
-lima --isoseq --dump-clips --no-pbi --peek-guess -j 24 ccs.bam primers.fasta demux.bam       
+#!/bin/bash
+cd /sonas-hs/ware/hpc/home/diniz/FL_Pacbio
+
+module load GCC/7.3.0-2.30
+module load OpenMPI/3.1.1
+module load IntelPython/2.7.14
+module load Anaconda2/5.3.0
+
+source activate anaCogent5.2
+
+date
+
+/seq/smrt4/smrtlink/smrtcmds/bin/lima \
+--isoseq --dump-clips --no-pbi --peek-guess -j 16 \
+m54333U_200123_203332.ccs.bam \
+IsoSeq_Primers_12_Barcodes_v1.fasta \
+m54333U_200123_203332.demux.bam       
+
+date
+```
+```
+qsub -cwd -pe threads 16 -l m_mem_free=2G generate_ccs.sh
 ```
