@@ -49,3 +49,60 @@ sed 's/"//g' Nuclear.scga7.contigs.v1.txt > Nuclear.scga7.contigs.txt
 
 /sonas-hs/ware/hpc_norepl/data/programs/maker_v3_updated/maker/bin/fasta_tool --select Nuclear.scga7.contigs.txt sc.mlc.cns.sgl.utg.scga7.importdb.fa > Nuclear.scga7.fa
 ```
+
+## Map full-length unique isoforms back to the NEW genome reference
+
+### Build GMPA index
+script: GMAP_build.sh
+```
+#!/bin/bash
+cd /sonas-hs/ware/hpc_norepl/data/diniz/Saccharum_genome_refs/SP80-3280/Nuclear.scga7
+
+module load GCC/7.3.0-2.30
+module load OpenMPI/3.1.1
+module load GMAP-GSNAP/2019-03-15
+module load SAMtools/1.9
+
+date
+
+gmap_build -d gmap_index -D . -k 13 ../Nuclear.scga7.fa
+
+date
+```
+```
+qsub -cwd -pe threads 1 -l m_mem_free=16G GMAP_build.sh
+```
+
+### Considering unique high-quality isoforms across all samples 
+
+script: GMAP_pacbio_hq_transcripts_run.sh
+
+```
+#!/bin/bash
+cd /sonas-hs/ware/hpc_norepl/data/diniz/Saccharum_genome_refs/SP80-3280/Nuclear.scga7
+
+module load GCC/7.3.0-2.30
+module load OpenMPI/3.1.1
+module load GMAP-GSNAP/2019-03-15
+module load SAMtools/1.9
+
+date
+
+gmap \
+-D /sonas-hs/ware/hpc_norepl/data/diniz/analysis/SP80-3280/Nuclear.scga7 \
+-d gmap_index \
+-f gff3_gene \
+-t 16 \
+-n 1 \
+--min-trimmed-coverage=0.70 \
+--min-identity=0.95 \
+../pacbio_hq_transcripts.fasta > pacbio_hq_transcripts.gff3
+
+date
+```
+```
+qsub -cwd -pe threads 16 -l m_mem_free=2G GMAP_pacbio_hq_transcripts_run.sh
+```
+
+## Map full-length unique isoforms back to the genome reference - Scaffolds from pacbio data
+
