@@ -108,3 +108,6 @@ bash ./run_maker.sh 2>&1 | tee run_maker.log
 
 4. 
 
+Great tutorial here:
+
+https://gist.github.com/darencard/bb1001ac1532dd4225b030cf0cd61ce2
