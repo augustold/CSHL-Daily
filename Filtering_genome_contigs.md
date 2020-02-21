@@ -89,7 +89,7 @@ module load SAMtools/1.9
 date
 
 gmap \
--D /sonas-hs/ware/hpc_norepl/data/diniz/analysis/SP80-3280/Nuclear.scga7 \
+-D /sonas-hs/ware/hpc_norepl/data/diniz/Saccharum_genome_refs/SP80-3280/Nuclear.scga7 \
 -d gmap_index \
 -f gff3_gene \
 -t 16 \
