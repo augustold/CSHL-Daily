@@ -1,5 +1,5 @@
-#MAKER
-##Getting EAD scores
+# MAKER
+## Getting EAD scores
 
 Runing on Helix
 
