@@ -247,8 +247,23 @@ SP80.sqlite.gene_structures_post_PASA_updates.xaa.gff3 \
 SP80.sqlite.gene_structures_post_PASA_updates.xab.gff3 \
 SP80.sqlite.gene_structures_post_PASA_updates.xad.gff3 \
 SP80.sqlite.gene_structures_post_PASA_updates.xaf.gff3 \
-> SP80.sqlite.gene_structures_post_PASA_updates.gff3
+> MIKADO_PASA.gff3
+
+# Get fasta
+gffread MIKADO_PASA.gff3 -g /sonas-hs/ware/hpc_norepl/data/diniz/Saccharum_genome_refs/SP80-3280/sc.mlc.cns.sgl.utg.scga7.importdb.fa -x MIKADO_PASA.gff3.cds.fasta
 
 # Summary stats
-/sonas-hs/ware/hpc/home/steinj/scripts/gff2gene_stats_canonical.pl SP80.sqlite.gene_structures_post_PASA_updates.gff3
+/sonas-hs/ware/hpc/home/steinj/scripts/gff2gene_stats_canonical.pl MIKADO_PASA.gff3
+```
+
+## TE-filtering
+
+```
+#Copy fasta to Helix
+
+cd /projects/augustold/CSHL/TEsorter/SP80_mikado
+conda activate py2
+python ../TEsorter.py MIKADO_PASA.gff3.cds.fasta -eval 1e-6 -p 30
+
+
 ```
