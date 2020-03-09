@@ -264,6 +264,19 @@ gffread MIKADO_PASA.gff3 -g /sonas-hs/ware/hpc_norepl/data/diniz/Saccharum_genom
 cd /projects/augustold/CSHL/TEsorter/SP80_mikado
 conda activate py2
 python ../TEsorter.py MIKADO_PASA.gff3.cds.fasta -eval 1e-6 -p 30
+```
 
+## Filtering MIKADO gff3
+```
+cd /mnt/grid/ware/hpc_norepl/data/data/diniz/analysis/PASA_run/gene_structures_post_PASA_updates
+# get TEsorter output from HELIX
+scp -r augustold@143.107.54.134:/projects/augustold/CSHL/TEsorter/SP80_mikado/MIKADO_PASA.gff3.cds.fasta.rexdb.cls.tsv .
+
+grep -v "^#" MIKADO_PASA.gff3.cds.fasta.rexdb.cls.tsv | cut -f 1 | sort | uniq | cut -d "." -f 1-2 | sort |uniq > TE-genes.txt
+grep -Fwvf TE-genes.txt MIKADO_PASA.gff3 | awk '$3 !~ /superlocus/' > temp.gff3
+#grep -Fwf TE-genes.txt MIKADO_PASA.gff3 | awk '$3 !~ /superlocus/' > temp.other.gff3
+
+#gt gff3 -sort -tidy -retainids temp.gff3  > mikado.loci.TErmv.gff3
+#gt gff3 -sort -tidy -retainids temp.other.gff3  > mikado.loci.maker.withTE.gff3
 
 ```
