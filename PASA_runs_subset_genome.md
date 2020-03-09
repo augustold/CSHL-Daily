@@ -217,3 +217,38 @@ date
 ```
 qsub -cwd -pe threads 16 -l m_mem_free=3G annotLoadandCompare.sh 
 ```
+
+## Combine 'gene_structures_post_PASA_updates' files
+```
+# mkdir gene_structures_post_PASA_updates
+
+cd /mnt/grid/ware/hpc_norepl/data/data/diniz/analysis/PASA_run/gene_structures_post_PASA_updates
+
+cp ../xaa/SP80.sqlite.gene_structures_post_PASA_updates.11491.gff3 .
+mv SP80.sqlite.gene_structures_post_PASA_updates.11491.gff3 SP80.sqlite.gene_structures_post_PASA_updates.xaa.gff3
+
+cp ../xab/SP80.sqlite.gene_structures_post_PASA_updates.17768.gff3 .
+mv SP80.sqlite.gene_structures_post_PASA_updates.17768.gff3 SP80.sqlite.gene_structures_post_PASA_updates.xab.gff3
+
+#cp ../xac/SP80.sqlite.gene_structures_post_PASA_updates.11491.gff3 .
+#mv SP80.sqlite.gene_structures_post_PASA_updates.11491.gff3 SP80.sqlite.gene_structures_post_PASA_updates.xac.gff3
+
+cp ../xad/SP80.sqlite.gene_structures_post_PASA_updates.22009.gff3 .
+mv SP80.sqlite.gene_structures_post_PASA_updates.22009.gff3 SP80.sqlite.gene_structures_post_PASA_updates.xad.gff3
+
+#cp ../xae/SP80.sqlite.gene_structures_post_PASA_updates.11491.gff3 .
+#mv SP80.sqlite.gene_structures_post_PASA_updates.11491.gff3 SP80.sqlite.gene_structures_post_PASA_updates.xae.gff3
+
+cp ../xaf/SP80.sqlite.gene_structures_post_PASA_updates.4381.gff3 .
+mv SP80.sqlite.gene_structures_post_PASA_updates.4381.gff3 SP80.sqlite.gene_structures_post_PASA_updates.xaf.gff3
+
+cat \
+SP80.sqlite.gene_structures_post_PASA_updates.xaa.gff3 \
+SP80.sqlite.gene_structures_post_PASA_updates.xab.gff3 \
+SP80.sqlite.gene_structures_post_PASA_updates.xad.gff3 \
+SP80.sqlite.gene_structures_post_PASA_updates.xaf.gff3 \
+> SP80.sqlite.gene_structures_post_PASA_updates.gff3
+
+# Summary stats
+/sonas-hs/ware/hpc/home/steinj/scripts/gff2gene_stats_canonical.pl SP80.sqlite.gene_structures_post_PASA_updates.gff3
+```
