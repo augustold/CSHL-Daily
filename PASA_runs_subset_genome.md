@@ -230,14 +230,23 @@ mv SP80.sqlite.gene_structures_post_PASA_updates.11491.gff3 SP80.sqlite.gene_str
 cp ../xab/SP80.sqlite.gene_structures_post_PASA_updates.17768.gff3 .
 mv SP80.sqlite.gene_structures_post_PASA_updates.17768.gff3 SP80.sqlite.gene_structures_post_PASA_updates.xab.gff3
 
-#cp ../xac/SP80.sqlite.gene_structures_post_PASA_updates.11491.gff3 .
-#mv SP80.sqlite.gene_structures_post_PASA_updates.11491.gff3 SP80.sqlite.gene_structures_post_PASA_updates.xac.gff3
+cp ../xac.1/SP80.sqlite.gene_structures_post_PASA_updates.12198.gff3 .
+mv SP80.sqlite.gene_structures_post_PASA_updates.12198.gff3 SP80.sqlite.gene_structures_post_PASA_updates.xac.1.gff3
+
+cp ../xac.2/SP80.sqlite.gene_structures_post_PASA_updates.32373.gff3 .
+mv SP80.sqlite.gene_structures_post_PASA_updates.32373.gff3 SP80.sqlite.gene_structures_post_PASA_updates.xac.2.gff3
+
+cp ../xac.3/SP80.sqlite.gene_structures_post_PASA_updates.1707.gff3 .
+mv SP80.sqlite.gene_structures_post_PASA_updates.1707.gff3 SP80.sqlite.gene_structures_post_PASA_updates.xac.3.gff3
+
+cp ../xac.4/SP80.sqlite.gene_structures_post_PASA_updates.23598.gff3 .
+mv SP80.sqlite.gene_structures_post_PASA_updates.23598.gff3 SP80.sqlite.gene_structures_post_PASA_updates.xac.4.gff3
 
 cp ../xad/SP80.sqlite.gene_structures_post_PASA_updates.22009.gff3 .
 mv SP80.sqlite.gene_structures_post_PASA_updates.22009.gff3 SP80.sqlite.gene_structures_post_PASA_updates.xad.gff3
 
-#cp ../xae/SP80.sqlite.gene_structures_post_PASA_updates.11491.gff3 .
-#mv SP80.sqlite.gene_structures_post_PASA_updates.11491.gff3 SP80.sqlite.gene_structures_post_PASA_updates.xae.gff3
+cp ../xae/SP80.sqlite.gene_structures_post_PASA_updates.4418.gff3 .
+mv SP80.sqlite.gene_structures_post_PASA_updates.4418.gff3 SP80.sqlite.gene_structures_post_PASA_updates.xae.gff3
 
 cp ../xaf/SP80.sqlite.gene_structures_post_PASA_updates.4381.gff3 .
 mv SP80.sqlite.gene_structures_post_PASA_updates.4381.gff3 SP80.sqlite.gene_structures_post_PASA_updates.xaf.gff3
@@ -245,7 +254,12 @@ mv SP80.sqlite.gene_structures_post_PASA_updates.4381.gff3 SP80.sqlite.gene_stru
 cat \
 SP80.sqlite.gene_structures_post_PASA_updates.xaa.gff3 \
 SP80.sqlite.gene_structures_post_PASA_updates.xab.gff3 \
+SP80.sqlite.gene_structures_post_PASA_updates.xac.1.gff3 \
+SP80.sqlite.gene_structures_post_PASA_updates.xac.2.gff3 \
+SP80.sqlite.gene_structures_post_PASA_updates.xac.3.gff3 \
+SP80.sqlite.gene_structures_post_PASA_updates.xac.4.gff3 \
 SP80.sqlite.gene_structures_post_PASA_updates.xad.gff3 \
+SP80.sqlite.gene_structures_post_PASA_updates.xae.gff3 \
 SP80.sqlite.gene_structures_post_PASA_updates.xaf.gff3 \
 > MIKADO_PASA.gff3
 
