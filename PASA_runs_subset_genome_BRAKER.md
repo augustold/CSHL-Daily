@@ -77,22 +77,13 @@ grep -c "^>" genome/${i}.fasta
 done
 ```
 
-## Step 1: combine transcripts
+## Step 1: Get transcripts files
 
 ```
-cd /sonas-hs/ware/hpc_norepl/data/diniz/Saccharum_genome_refs/SP80-3280
+cd /mnt/grid/ware/hpc_norepl/data/data/diniz/analysis/SP80-3280/braker_masked_RNA/PASA_run
 
-cat \
-ESTs_SP80-3280.fasta \
-sugarcane.fulllength.analysis.all.fasta \
-pacbio_hq_transcripts.v2.fasta \
-/sonas-hs/ware/hpc_norepl/data/diniz/analysis/mikado_3rd_test/mikado.loci.cds.fasta \
-> /sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run/SP80.est.flc.mikado.combined.fasta
-```
-
-Also get the full-lengths IDs in a different file
-```
-grep -e ">" pacbio_hq_transcripts.v2.fasta | sed 's/>//' > /sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run/FL_accs.txt
+cp /sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run/SP80.est.flc.mikado.combined.fasta .
+cp /sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run/FL_accs.txt .
 ```
 
 ## Step 2: cleaning the transcript sequences
@@ -100,8 +91,8 @@ grep -e ">" pacbio_hq_transcripts.v2.fasta | sed 's/>//' > /sonas-hs/ware/hpc_no
 script: seqclean.sh
 ```
 #!/bin/bash
-cd /sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run
- 
+cd /mnt/grid/ware/hpc_norepl/data/data/diniz/analysis/SP80-3280/braker_masked_RNA/PASA_run
+
 module load GCC/7.3.0-2.30
 module load OpenMPI/3.1.1
 module load Python/3.6.6
@@ -125,13 +116,17 @@ qsub -cwd -pe threads 16 -l m_mem_free=1G seqclean.sh
 
 Make separete directories for running the aligment for each subset of contigs
 ```
-mkdir xaa xab xac xad xae xaf
+cd /mnt/grid/ware/hpc_norepl/data/data/diniz/analysis/SP80-3280/braker_masked_RNA/PASA_run
+for i in $(ls x* | sort -u)
+do
+mkdir PASA_${i}
+done
 ```
 
 Before running the transcript alignment step, copy and edit the copy files annotCompare.config and alignAssembly.config from PASA installation folder.
 
 ```
-#cd /sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run/xaa
+cd /mnt/grid/ware/hpc_norepl/data/data/diniz/analysis/SP80-3280/braker_masked_RNA/PASA_run
 
 cp /sonas-hs/ware/hpc_norepl/data/kapeel/NAM/NAM_Canu1.8_new_runs/PASA_runs/B97/alignAssembly.config .
 cp /sonas-hs/ware/hpc_norepl/data/kapeel/NAM/NAM_Canu1.8_new_runs/PASA_runs/B97/annotCompare.config .
@@ -141,7 +136,7 @@ Edit the database path :
 
 ```
 # database settings
-DATABASE=/sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run/xaa/sqlite/SP80.sqlite
+DATABASE=/sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run/PASA_xaa/sqlite/SP80.sqlite
 ```
 
 Create a sqlite folder and set the permission
