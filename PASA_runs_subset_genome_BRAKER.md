@@ -148,7 +148,7 @@ cd PASA_${i}
 cp ../alignAssembly.config .
 cp ../annotCompare.config .
 cp ../alignAssembly.sh .
-cd ../annotLoadandCompare.sh .
+cp ../annotLoadandCompare.sh .
 mkdir sqlite; chmod -R 777 sqlite
 cd ..
 done
@@ -159,7 +159,7 @@ Run the PASA alignment assembly pipeline
 script: alignAssembly.sh
 ```
 #!/bin/bash
-cd /sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run/PASA_xaa
+cd /mnt/grid/ware/hpc_norepl/data/data/diniz/analysis/SP80-3280/braker_masked_RNA/PASA_run/PASA_xaa
  
 module load GCC/7.3.0-2.30
 module load OpenMPI/3.1.1
@@ -194,7 +194,7 @@ Loading your preexisting protein-coding gene annotations and performing an annot
 script: annotLoadandCompare.sh
 ```
 #!/bin/bash
-cd /sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run/xaa
+cd /mnt/grid/ware/hpc_norepl/data/data/diniz/analysis/SP80-3280/braker_masked_RNA/PASA_run/PASA_xaa
 
 module load GCC/7.3.0-2.30
 module load OpenMPI/3.1.1
@@ -207,7 +207,7 @@ date
 /sonas-hs/ware/hpc/home/diniz/.conda/envs/pasa/opt/pasa-2.4.1/scripts/Load_Current_Gene_Annotations.dbi \
 -c alignAssembly.config \
 -g ../genome/xaa.fasta \
--P /sonas-hs/ware/hpc_norepl/data/diniz/analysis/mikado_3rd_test/xaa.gff3
+-P ../gff3/xaa.gff3
 
 /sonas-hs/ware/hpc/home/diniz/.conda/envs/pasa/opt/pasa-2.4.1/Launch_PASA_pipeline.pl \
 -c annotCompare.config \
@@ -220,6 +220,45 @@ date
 ```
 qsub -cwd -pe threads 32 -l m_mem_free=1G annotLoadandCompare.sh 
 ```
+
+## Replace path for each subset folder
+```
+cd /mnt/grid/ware/hpc_norepl/data/data/diniz/analysis/SP80-3280/braker_masked_RNA/PASA_run
+for i in $(ls x* | sort -u)
+do
+cd PASA_${i}
+sed -i "s/xaa/${i}/g" alignAssembly.config
+sed -i "s/xaa/${i}/g" alignAssembly.sh
+sed -i "s/xaa/${i}/g" annotCompare.config
+sed -i "s/xaa/${i}/g" annotLoadandCompare.sh
+cd ..
+done
+```
+
+```
+#1st batch
+qsub -cwd -pe threads 16 -l m_mem_free=1G PASA_xaa/alignAssembly.sh
+qsub -cwd -pe threads 16 -l m_mem_free=1G PASA_xab/alignAssembly.sh
+qsub -cwd -pe threads 16 -l m_mem_free=1G PASA_xac/alignAssembly.sh
+qsub -cwd -pe threads 16 -l m_mem_free=1G PASA_xad/alignAssembly.sh
+qsub -cwd -pe threads 16 -l m_mem_free=1G PASA_xae/alignAssembly.sh
+qsub -cwd -pe threads 16 -l m_mem_free=1G PASA_xaf/alignAssembly.sh
+qsub -cwd -pe threads 16 -l m_mem_free=1G PASA_xag/alignAssembly.sh
+qsub -cwd -pe threads 16 -l m_mem_free=1G PASA_xah/alignAssembly.sh
+qsub -cwd -pe threads 16 -l m_mem_free=1G PASA_xai/alignAssembly.sh
+qsub -cwd -pe threads 16 -l m_mem_free=1G PASA_xaj/alignAssembly.sh
+
+#2nd batch
+qsub -cwd -pe threads 16 -l m_mem_free=1G PASA_xak/alignAssembly.sh
+qsub -cwd -pe threads 16 -l m_mem_free=1G PASA_xal/alignAssembly.sh
+qsub -cwd -pe threads 16 -l m_mem_free=1G PASA_xam/alignAssembly.sh
+qsub -cwd -pe threads 16 -l m_mem_free=1G PASA_xan/alignAssembly.sh
+qsub -cwd -pe threads 16 -l m_mem_free=1G PASA_xao/alignAssembly.sh
+qsub -cwd -pe threads 16 -l m_mem_free=1G PASA_xap/alignAssembly.sh
+qsub -cwd -pe threads 16 -l m_mem_free=1G PASA_xaq/alignAssembly.sh
+qsub -cwd -pe threads 16 -l m_mem_free=1G PASA_xar/alignAssembly.sh
+```
+
 
 ## Combine 'gene_structures_post_PASA_updates' files
 ```
