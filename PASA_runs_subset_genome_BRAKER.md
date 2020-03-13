@@ -136,12 +136,22 @@ Edit the database path :
 
 ```
 # database settings
-DATABASE=/sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run/PASA_xaa/sqlite/SP80.sqlite
+DATABASE=/mnt/grid/ware/hpc_norepl/data/data/diniz/analysis/SP80-3280/braker_masked_RNA/PASA_run/PASA_xaa/sqlite/SP80.sqlite
 ```
 
-Create a sqlite folder and set the permission
+Copy files and create a sqlite folder and set the permission
 ```
+cd /mnt/grid/ware/hpc_norepl/data/data/diniz/analysis/SP80-3280/braker_masked_RNA/PASA_run
+for i in $(ls x* | sort -u)
+do
+cd PASA_${i}
+cp ../alignAssembly.config .
+cp ../annotCompare.config .
+cp ../alignAssembly.sh .
+cd ../annotLoadandCompare.sh .
 mkdir sqlite; chmod -R 777 sqlite
+cd ..
+done
 ```
 
 Run the PASA alignment assembly pipeline
@@ -149,7 +159,7 @@ Run the PASA alignment assembly pipeline
 script: alignAssembly.sh
 ```
 #!/bin/bash
-cd /sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run/xaa
+cd /sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run/PASA_xaa
  
 module load GCC/7.3.0-2.30
 module load OpenMPI/3.1.1
@@ -184,8 +194,8 @@ Loading your preexisting protein-coding gene annotations and performing an annot
 script: annotLoadandCompare.sh
 ```
 #!/bin/bash
-cd /sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run 
- 
+cd /sonas-hs/ware/hpc_norepl/data/diniz/analysis/PASA_run/xaa
+
 module load GCC/7.3.0-2.30
 module load OpenMPI/3.1.1
 module load Python/3.6.6
@@ -196,19 +206,19 @@ date
 
 /sonas-hs/ware/hpc/home/diniz/.conda/envs/pasa/opt/pasa-2.4.1/scripts/Load_Current_Gene_Annotations.dbi \
 -c alignAssembly.config \
--g ../genome/xaf.fasta \
--P /sonas-hs/ware/hpc_norepl/data/diniz/analysis/mikado_3rd_test/xaf.gff3
+-g ../genome/xaa.fasta \
+-P /sonas-hs/ware/hpc_norepl/data/diniz/analysis/mikado_3rd_test/xaa.gff3
 
 /sonas-hs/ware/hpc/home/diniz/.conda/envs/pasa/opt/pasa-2.4.1/Launch_PASA_pipeline.pl \
 -c annotCompare.config \
 -A \
--g ../genome/xaf.fasta \
---CPU 16 -t SP80.est.flc.mikado.combined.fasta.clean
+-g ../genome/xaa.fasta \
+--CPU 32 -t ../SP80.est.flc.mikado.combined.fasta.clean
 
 date
 ```
 ```
-qsub -cwd -pe threads 16 -l m_mem_free=3G annotLoadandCompare.sh 
+qsub -cwd -pe threads 32 -l m_mem_free=1G annotLoadandCompare.sh 
 ```
 
 ## Combine 'gene_structures_post_PASA_updates' files
