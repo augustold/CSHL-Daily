@@ -269,6 +269,26 @@ cd ..
 done
 ```
 
+```
+cd PASA_xaa/ ; qsub -cwd -pe threads 32 -l m_mem_free=1G annotLoadandCompare.sh
+cd ../PASA_xab/ ; qsub -cwd -pe threads 32 -l m_mem_free=1G annotLoadandCompare.sh
+cd ../PASA_xac/ ; qsub -cwd -pe threads 32 -l m_mem_free=1G annotLoadandCompare.sh
+cd ../PASA_xad/ ; qsub -cwd -pe threads 32 -l m_mem_free=1G annotLoadandCompare.sh
+cd ../PASA_xae/ ; qsub -cwd -pe threads 32 -l m_mem_free=1G annotLoadandCompare.sh
+cd ../PASA_xaf/ ; qsub -cwd -pe threads 32 -l m_mem_free=1G annotLoadandCompare.sh
+cd ../PASA_xag/ ; qsub -cwd -pe threads 32 -l m_mem_free=1G annotLoadandCompare.sh
+cd ../PASA_xah/ ; qsub -cwd -pe threads 32 -l m_mem_free=1G annotLoadandCompare.sh
+cd ../PASA_xai/ ; qsub -cwd -pe threads 32 -l m_mem_free=1G annotLoadandCompare.sh
+cd ../PASA_xaj/ ; qsub -cwd -pe threads 32 -l m_mem_free=1G annotLoadandCompare.sh
+cd ../PASA_xak/ ; qsub -cwd -pe threads 32 -l m_mem_free=1G annotLoadandCompare.sh
+cd ../PASA_xal/ ; qsub -cwd -pe threads 32 -l m_mem_free=1G annotLoadandCompare.sh
+cd ../PASA_xam/ ; qsub -cwd -pe threads 32 -l m_mem_free=1G annotLoadandCompare.sh
+cd ../PASA_xan/ ; qsub -cwd -pe threads 32 -l m_mem_free=1G annotLoadandCompare.sh
+cd ../PASA_xao/ ; qsub -cwd -pe threads 32 -l m_mem_free=1G annotLoadandCompare.sh
+cd ../PASA_xap/ ; qsub -cwd -pe threads 32 -l m_mem_free=1G annotLoadandCompare.sh
+cd ../PASA_xaq/ ; qsub -cwd -pe threads 32 -l m_mem_free=1G annotLoadandCompare.sh
+cd ../PASA_xar/ ; qsub -cwd -pe threads 32 -l m_mem_free=1G annotLoadandCompare.sh
+```
 
 ## Combine 'gene_structures_post_PASA_updates' files
 ```
