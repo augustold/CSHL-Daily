@@ -237,26 +237,36 @@ done
 
 ```
 #1st batch
-qsub -cwd -pe threads 16 -l m_mem_free=1G PASA_xaa/alignAssembly.sh
-qsub -cwd -pe threads 16 -l m_mem_free=1G PASA_xab/alignAssembly.sh
-qsub -cwd -pe threads 16 -l m_mem_free=1G PASA_xac/alignAssembly.sh
-qsub -cwd -pe threads 16 -l m_mem_free=1G PASA_xad/alignAssembly.sh
-qsub -cwd -pe threads 16 -l m_mem_free=1G PASA_xae/alignAssembly.sh
-qsub -cwd -pe threads 16 -l m_mem_free=1G PASA_xaf/alignAssembly.sh
-qsub -cwd -pe threads 16 -l m_mem_free=1G PASA_xag/alignAssembly.sh
-qsub -cwd -pe threads 16 -l m_mem_free=1G PASA_xah/alignAssembly.sh
-qsub -cwd -pe threads 16 -l m_mem_free=1G PASA_xai/alignAssembly.sh
-qsub -cwd -pe threads 16 -l m_mem_free=1G PASA_xaj/alignAssembly.sh
+cd PASA_xaa/ ; qsub -cwd -pe threads 16 -l m_mem_free=1G alignAssembly.sh
+cd ../PASA_xab/ ; qsub -cwd -pe threads 16 -l m_mem_free=1G alignAssembly.sh
+cd ../PASA_xac/ ; qsub -cwd -pe threads 16 -l m_mem_free=1G alignAssembly.sh
+cd ../PASA_xad/ ; qsub -cwd -pe threads 16 -l m_mem_free=1G alignAssembly.sh
+cd ../PASA_xae/ ; qsub -cwd -pe threads 16 -l m_mem_free=1G alignAssembly.sh
+cd ../PASA_xaf/ ; qsub -cwd -pe threads 16 -l m_mem_free=1G alignAssembly.sh
+cd ../PASA_xag/ ; qsub -cwd -pe threads 16 -l m_mem_free=1G alignAssembly.sh
+cd ../PASA_xah/ ; qsub -cwd -pe threads 16 -l m_mem_free=1G alignAssembly.sh
+cd ../PASA_xai/ ; qsub -cwd -pe threads 16 -l m_mem_free=1G alignAssembly.sh
+cd ../PASA_xaj/ ; qsub -cwd -pe threads 16 -l m_mem_free=1G alignAssembly.sh
 
 #2nd batch
-qsub -cwd -pe threads 16 -l m_mem_free=1G PASA_xak/alignAssembly.sh
-qsub -cwd -pe threads 16 -l m_mem_free=1G PASA_xal/alignAssembly.sh
-qsub -cwd -pe threads 16 -l m_mem_free=1G PASA_xam/alignAssembly.sh
-qsub -cwd -pe threads 16 -l m_mem_free=1G PASA_xan/alignAssembly.sh
-qsub -cwd -pe threads 16 -l m_mem_free=1G PASA_xao/alignAssembly.sh
-qsub -cwd -pe threads 16 -l m_mem_free=1G PASA_xap/alignAssembly.sh
-qsub -cwd -pe threads 16 -l m_mem_free=1G PASA_xaq/alignAssembly.sh
-qsub -cwd -pe threads 16 -l m_mem_free=1G PASA_xar/alignAssembly.sh
+cd PASA_xak/ ; qsub -cwd -pe threads 16 -l m_mem_free=1G alignAssembly.sh
+cd ../PASA_xal/ ; qsub -cwd -pe threads 16 -l m_mem_free=1G alignAssembly.sh
+cd ../PASA_xam/ ; qsub -cwd -pe threads 16 -l m_mem_free=1G alignAssembly.sh
+cd ../PASA_xan/ ; qsub -cwd -pe threads 16 -l m_mem_free=1G alignAssembly.sh
+cd ../PASA_xao/ ; qsub -cwd -pe threads 16 -l m_mem_free=1G alignAssembly.sh
+cd ../PASA_xap/ ; qsub -cwd -pe threads 16 -l m_mem_free=1G alignAssembly.sh
+cd ../PASA_xaq/ ; qsub -cwd -pe threads 16 -l m_mem_free=1G alignAssembly.sh
+cd ../PASA_xar/ ; qsub -cwd -pe threads 16 -l m_mem_free=1G alignAssembly.sh
+```
+
+```
+cd /mnt/grid/ware/hpc_norepl/data/data/diniz/analysis/SP80-3280/braker_masked_RNA/PASA_run
+for i in $(ls x* | sort -u)
+do
+cd PASA_${i}
+sed -i "s/#source/source/g" alignAssembly.sh
+cd ..
+done
 ```
 
 
