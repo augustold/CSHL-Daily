@@ -345,7 +345,7 @@ python ../TEsorter.py BRAKER_PASA.gff3.cds.fasta -eval 1e-6 -p 30
 ```
 cd /mnt/grid/ware/hpc_norepl/data/data/diniz/analysis/SP80-3280/braker_masked_RNA/PASA_run/gene_structures_post_PASA_updates
 # get TEsorter output from HELIX
-scp -r augustold@143.107.54.134:/projects/augustold/CSHL/TEsorter/SP80_mikado/BRAKER_PASA.gff3.cds.fasta.rexdb.cls.tsv .
+scp -r augustold@143.107.54.134:/projects/augustold/CSHL/TEsorter/SP80_braker/BRAKER_PASA.gff3.cds.fasta.rexdb.cls.tsv .
 
 grep -v "^#" BRAKER_PASA.gff3.cds.fasta.rexdb.cls.tsv | cut -f 1 | sort | uniq | cut -d "." -f 1-2 | sort |uniq > TE-genes.txt
 grep -Fwvf TE-genes.txt BRAKER_PASA.gff3 | awk '$3 !~ /superlocus/' > temp.gff3
