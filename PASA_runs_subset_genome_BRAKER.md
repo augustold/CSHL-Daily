@@ -292,54 +292,43 @@ cd ../PASA_xar/ ; qsub -cwd -pe threads 32 -l m_mem_free=1G annotLoadandCompare.
 
 ## Combine 'gene_structures_post_PASA_updates' files
 ```
+
+cd /mnt/grid/ware/hpc_norepl/data/data/diniz/analysis/SP80-3280/braker_masked_RNA/PASA_run
+
 # mkdir gene_structures_post_PASA_updates
 
-cd /mnt/grid/ware/hpc_norepl/data/data/diniz/analysis/PASA_run/gene_structures_post_PASA_updates
-
-cp ../xaa/SP80.sqlite.gene_structures_post_PASA_updates.11491.gff3 .
-mv SP80.sqlite.gene_structures_post_PASA_updates.11491.gff3 SP80.sqlite.gene_structures_post_PASA_updates.xaa.gff3
-
-cp ../xab/SP80.sqlite.gene_structures_post_PASA_updates.17768.gff3 .
-mv SP80.sqlite.gene_structures_post_PASA_updates.17768.gff3 SP80.sqlite.gene_structures_post_PASA_updates.xab.gff3
-
-cp ../xac.1/SP80.sqlite.gene_structures_post_PASA_updates.12198.gff3 .
-mv SP80.sqlite.gene_structures_post_PASA_updates.12198.gff3 SP80.sqlite.gene_structures_post_PASA_updates.xac.1.gff3
-
-cp ../xac.2/SP80.sqlite.gene_structures_post_PASA_updates.32373.gff3 .
-mv SP80.sqlite.gene_structures_post_PASA_updates.32373.gff3 SP80.sqlite.gene_structures_post_PASA_updates.xac.2.gff3
-
-cp ../xac.3/SP80.sqlite.gene_structures_post_PASA_updates.1707.gff3 .
-mv SP80.sqlite.gene_structures_post_PASA_updates.1707.gff3 SP80.sqlite.gene_structures_post_PASA_updates.xac.3.gff3
-
-cp ../xac.4/SP80.sqlite.gene_structures_post_PASA_updates.23598.gff3 .
-mv SP80.sqlite.gene_structures_post_PASA_updates.23598.gff3 SP80.sqlite.gene_structures_post_PASA_updates.xac.4.gff3
-
-cp ../xad/SP80.sqlite.gene_structures_post_PASA_updates.22009.gff3 .
-mv SP80.sqlite.gene_structures_post_PASA_updates.22009.gff3 SP80.sqlite.gene_structures_post_PASA_updates.xad.gff3
-
-cp ../xae/SP80.sqlite.gene_structures_post_PASA_updates.4418.gff3 .
-mv SP80.sqlite.gene_structures_post_PASA_updates.4418.gff3 SP80.sqlite.gene_structures_post_PASA_updates.xae.gff3
-
-cp ../xaf/SP80.sqlite.gene_structures_post_PASA_updates.4381.gff3 .
-mv SP80.sqlite.gene_structures_post_PASA_updates.4381.gff3 SP80.sqlite.gene_structures_post_PASA_updates.xaf.gff3
+for i in $(ls x* | sort -u)
+do
+mv PASA_${i}/SP80.sqlite.gene_structures_post_PASA_updates.*.gff3 PASA_${i}/SP80.sqlite.gene_structures_post_PASA_updates.${i}.gff3
+cp PASA_${i}/SP80.sqlite.gene_structures_post_PASA_updates.${i}.gff3 gene_structures_post_PASA_updates/
+done
 
 cat \
 SP80.sqlite.gene_structures_post_PASA_updates.xaa.gff3 \
 SP80.sqlite.gene_structures_post_PASA_updates.xab.gff3 \
-SP80.sqlite.gene_structures_post_PASA_updates.xac.1.gff3 \
-SP80.sqlite.gene_structures_post_PASA_updates.xac.2.gff3 \
-SP80.sqlite.gene_structures_post_PASA_updates.xac.3.gff3 \
-SP80.sqlite.gene_structures_post_PASA_updates.xac.4.gff3 \
+SP80.sqlite.gene_structures_post_PASA_updates.xac.gff3 \
 SP80.sqlite.gene_structures_post_PASA_updates.xad.gff3 \
 SP80.sqlite.gene_structures_post_PASA_updates.xae.gff3 \
 SP80.sqlite.gene_structures_post_PASA_updates.xaf.gff3 \
-> MIKADO_PASA.gff3
+SP80.sqlite.gene_structures_post_PASA_updates.xag.gff3 \
+SP80.sqlite.gene_structures_post_PASA_updates.xah.gff3 \
+SP80.sqlite.gene_structures_post_PASA_updates.xai.gff3 \
+SP80.sqlite.gene_structures_post_PASA_updates.xaj.gff3 \
+SP80.sqlite.gene_structures_post_PASA_updates.xak.gff3 \
+SP80.sqlite.gene_structures_post_PASA_updates.xal.gff3 \
+SP80.sqlite.gene_structures_post_PASA_updates.xam.gff3 \
+SP80.sqlite.gene_structures_post_PASA_updates.xan.gff3 \
+SP80.sqlite.gene_structures_post_PASA_updates.xao.gff3 \
+SP80.sqlite.gene_structures_post_PASA_updates.xap.gff3 \
+SP80.sqlite.gene_structures_post_PASA_updates.xaq.gff3 \
+SP80.sqlite.gene_structures_post_PASA_updates.xar.gff3 \
+> BRAKER_PASA.gff3
 
 # Get fasta
-gffread MIKADO_PASA.gff3 -g /sonas-hs/ware/hpc_norepl/data/diniz/Saccharum_genome_refs/SP80-3280/sc.mlc.cns.sgl.utg.scga7.importdb.fa -x MIKADO_PASA.gff3.cds.fasta
+gffread BRAKER_PASA.gff3 -g /sonas-hs/ware/hpc_norepl/data/diniz/Saccharum_genome_refs/SP80-3280/sc.mlc.cns.sgl.utg.scga7.importdb.fa -x BRAKER_PASA.gff3.cds.fasta
 
 # Summary stats
-/sonas-hs/ware/hpc/home/steinj/scripts/gff2gene_stats_canonical.pl MIKADO_PASA.gff3
+/sonas-hs/ware/hpc_norepl/data/kapeel/scripts/gff2gene_stats_withUTRs_canonical.pl BRAKER_PASA.gff3
 ```
 
 ## TE-filtering
@@ -347,22 +336,18 @@ gffread MIKADO_PASA.gff3 -g /sonas-hs/ware/hpc_norepl/data/diniz/Saccharum_genom
 ```
 #Copy fasta to Helix
 
-cd /projects/augustold/CSHL/TEsorter/SP80_mikado
+cd /projects/augustold/CSHL/TEsorter/SP80_braker
 conda activate py2
-python ../TEsorter.py MIKADO_PASA.gff3.cds.fasta -eval 1e-6 -p 30
+python ../TEsorter.py BRAKER_PASA.gff3.cds.fasta -eval 1e-6 -p 30
 ```
 
 ## Filtering MIKADO gff3
 ```
-cd /mnt/grid/ware/hpc_norepl/data/data/diniz/analysis/PASA_run/gene_structures_post_PASA_updates
+cd /mnt/grid/ware/hpc_norepl/data/data/diniz/analysis/SP80-3280/braker_masked_RNA/PASA_run/gene_structures_post_PASA_updates
 # get TEsorter output from HELIX
-scp -r augustold@143.107.54.134:/projects/augustold/CSHL/TEsorter/SP80_mikado/MIKADO_PASA.gff3.cds.fasta.rexdb.cls.tsv .
+scp -r augustold@143.107.54.134:/projects/augustold/CSHL/TEsorter/SP80_mikado/BRAKER_PASA.gff3.cds.fasta.rexdb.cls.tsv .
 
-grep -v "^#" MIKADO_PASA.gff3.cds.fasta.rexdb.cls.tsv | cut -f 1 | sort | uniq | cut -d "." -f 1-2 | sort |uniq > TE-genes.txt
-grep -Fwvf TE-genes.txt MIKADO_PASA.gff3 | awk '$3 !~ /superlocus/' > temp.gff3
-#grep -Fwf TE-genes.txt MIKADO_PASA.gff3 | awk '$3 !~ /superlocus/' > temp.other.gff3
-
-#gt gff3 -sort -tidy -retainids temp.gff3  > mikado.loci.TErmv.gff3
-#gt gff3 -sort -tidy -retainids temp.other.gff3  > mikado.loci.maker.withTE.gff3
+grep -v "^#" BRAKER_PASA.gff3.cds.fasta.rexdb.cls.tsv | cut -f 1 | sort | uniq | cut -d "." -f 1-2 | sort |uniq > TE-genes.txt
+grep -Fwvf TE-genes.txt BRAKER_PASA.gff3 | awk '$3 !~ /superlocus/' > temp.gff3
 
 ```
