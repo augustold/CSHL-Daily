@@ -96,3 +96,91 @@ qsub -cwd -pe threads 16 -l m_mem_free=1G EDTA_helitron.sh
 ```
 perl EDTA.pl -overwrite 0 [options]
 ```
+
+## On Helix
+
+```
+cd /projects/augustold/CSHL/EDTA
+
+conda activate EDTA
+
+perl EDTA/EDTA_raw.pl \
+--genome scga7.fa \
+--species others \
+--type tir \
+--threads 50
+
+helitron
+
+
+#############
+
+awk -v size=10000 -v pre=subset -v pad=3 '
+   /^>/ { n++; if (n % size == 1) { close(fname); fname = sprintf("%s.%0" pad "d", pre, n) } }
+   { print >> fname }
+' scga7.fa
+
+ls subset* | sort -u > list
+
+for i in $(cat list)
+do
+mv ${i} ${i}.fa
+done
+
+for i in $(cat list)
+do
+mkdir ${i}
+done
+
+for i in $(cat list)
+do
+mv ${i}.fa ${i}
+done
+
+cd /projects/augustold/CSHL/EDTA/subset.001
+perl ../EDTA/EDTA_raw.pl \
+--genome subset.001.fa \
+--species others \
+--type tir \
+--threads 20
+
+for i in $(ls -d subset.1*)
+do
+cd /projects/augustold/CSHL/EDTA/${i}
+perl ../EDTA/EDTA_raw.pl \
+--genome ${i}.fa \
+--species others \
+--type tir \
+--threads 20
+done
+
+for i in $(ls -d subset.2*)
+do
+cd /projects/augustold/CSHL/EDTA/${i}
+perl ../EDTA/EDTA_raw.pl \
+--genome ${i}.fa \
+--species others \
+--type tir \
+--threads 20
+done
+
+for i in $(ls -d subset.3*)
+do
+cd /projects/augustold/CSHL/EDTA/${i}
+perl ../EDTA/EDTA_raw.pl \
+--genome ${i}.fa \
+--species others \
+--type tir \
+--threads 20
+done
+
+for i in $(ls -d subset.4*)
+do
+cd /projects/augustold/CSHL/EDTA/${i}
+perl ../EDTA/EDTA_raw.pl \
+--genome ${i}.fa \
+--species others \
+--type tir \
+--threads 20
+done
+```
