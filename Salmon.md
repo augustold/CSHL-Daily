@@ -4,10 +4,13 @@ conda activate salmon
 
 ```
 cd /projects/augustold/CSHL/salmon
+conda create -n salmon salmon
 ```
 
 ## building an index
 ```
+conda activate salmon # version salmon-1.2.0
+
 salmon index -t /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/sc.mlc.cns.sgl.utg.scga7.CDS.codingseq.fasta -i scga7_index
 
 mkdir quants 
@@ -15,16 +18,19 @@ mkdir quants
 
 ## Quantify!
 ```
-# vi salmon_quant.sh
+conda activate salmon # version salmon-1.2.0
 
-#!/bin/bash
-for i in $(ls /projects/augustold/fastq/SP* | sed s/_[12].fq.gz// | sort -u);
+mkdir quants
+
+cd /projects/augustold/fastq/
+for fn in ls SPL1* | sed s/_[12].fq.gz// | sort -u;
 do
-samp=`basename ${i}`
+samp=`basename ${fn}`
 echo "Processing sample ${samp}"
-salmon quant -i scga7_index -l A \
-         -1 ${i}_1.fq.gz \
-         -2 ${i}_2.fq.gz \
-         -p 30 --validateMappings -o quants/${samp}_quant
-done
+salmon quant -i /projects/augustold/salmon_energy/scga7.and.Sspon_index -l A \
+         -1 ${samp}_1.fq.gz \
+         -2 ${samp}_2.fq.gz \
+         -p 60 --validateMappings -o /projects/augustold/salmon_energy/quants/${samp}_quant
+done 
+
 ```
