@@ -23,7 +23,7 @@ conda activate salmon # version salmon-1.2.0
 mkdir quants
 
 cd /projects/augustold/fastq/
-for fn in ls SPL1* | sed s/_[12].fq.gz// | sort -u;
+for fn in $(ls SPL1* | sed s/_[12].fq.gz// | sort -u);
 do
 samp=`basename ${fn}`
 echo "Processing sample ${samp}"
