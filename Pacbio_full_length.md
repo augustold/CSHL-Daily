@@ -30,6 +30,40 @@ date
 qsub -cwd -pe threads 16 -l m_mem_free=2G GMAP_pacbio_hq_transcripts_run.sh
 ```
 
+## Step 2 SUPPA/astalavista
+
+
+This step is to identify the intron-retention isoforms using SUPPA/astalavista.
+
+### Convert GFF3 to GTF
+
+Note: An annotation file in GTF format is required.
+
+```
+gffread -E pacbio_hq_transcripts.gff3 -T -o pacbio_hq_transcripts.gtf
+```
+
+### Run suppa.py to identify the intron-retention isoforms
+
+script: suppa.sh
+```
+#!/bin/bash
+cd /sonas-hs/ware/hpc_norepl/data/diniz/Saccharum_genome_refs/SP80-3280
+
+module load GCC/7.3.0-2.30
+module load OpenMPI/3.1.1
+module load Python/3.6.6
+
+date
+
+python /sonas-hs/ware/hpc/home/bwang/software/SUPPA-BUILD/suppa.py generateEvents -i pacbio_hq_transcripts.gtf -o cdna_RI_p -e RI -p 
+
+date
+```
+```
+qsub -cwd -pe threads 1 -l m_mem_free=16G suppa.sh
+```
+
 ## Map full-length unique isoforms back to the genome reference - Scaffolds from pacbio data
 
 ### Build GMPA index
