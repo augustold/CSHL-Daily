@@ -64,6 +64,178 @@ date
 qsub -cwd -pe threads 1 -l m_mem_free=16G suppa.sh
 ```
 
+## Step 3 EMBOSS
+
+Identify ORF for each isoform, select the longest ORF, and define the 5'UTR, CDS, 3'UTR of.
+
+### Find ORF for each isoform
+```
+module load GCC/7.3.0-2.30
+module load OpenMPI/3.1.1
+module load EMBOSS/6.6.0
+
+getorf -sequence pacbio_hq_transcripts.fasta -outseq pacbio_hq_transcripts_orf_nc_3_NOreverse.fa -find 3 -reverse N
+
+```
+### Identify candidate NMDs
+
+script: find_longest_ORF_and_NMDs.py
+```
+#!/usr/bin/env python 
+# Created by: Xiaofei Wang
+# Date: 06/30/2020
+# Descript: find the longest orf for each isoform and find the distance to the last exon junction from stop codon
+# Inputs: fasta and annotation file (e.g. gff3)
+# Out: a fasta file for longest ORF, a TXT file for longest ORF information 
+# (id, length, lenght of exons exclude last exon), a TXT for potential NMDs 
+# (id, distance between stop codon and last exon junciton)
+
+# Usage: python ******.py input.txt output.fa
+# Example: python ******.py fragment_start_end.txt output.fa
+#----------------------------------------------------------------------------------------
+#===========================================================================================================
+#Imports:
+
+import sys
+import os
+import pyfasta
+import gffutils
+#===========================================================================================================
+# Functions:
+
+
+# posInput = open(sys.argv[1], 'rU')
+# scaffoldFa = open(sys.argv[2], 'rU')
+# scaffoldFa = 'test.fa'
+scaffoldFa = 'pacbio_hq_transcripts_orf_nc_3_NOreverse.fa'
+outFa = open(sys.argv[1], 'w')
+outLongestORFs = open(sys.argv[2], 'w')
+outNMDs = open(sys.argv[3], 'w')
+
+# start = int(sys.argv[2])
+# end = int(sys.argv[3])
+
+orfDict={}
+longestORFkeys=[]
+longestORFlengthDict={}
+NMDs=[]
+# 
+# attrList = []
+# attrList.append('KOS_ref_%s_%s' %(start, end))
+
+# print attrList
+
+# seqList = []
+
+# fastaSeq = pyfasta.Fasta(scaffoldFa, key_fn=lambda key: key.split('|')[3])
+fastaSeq = pyfasta.Fasta(scaffoldFa)
+
+
+# print fastaSeq.keys()
+# python 2
+# print len(fastaSeq.keys())
+# print 'The length of the sequence is', len(str(fastaSeq[fastaSeq.keys()[0]]))
+
+# python 3
+print(len(fastaSeq.keys()))
+print("The length of the sequence is", len(str(fastaSeq[sorted(fastaSeq.keys())[0]])))
+
+
+
+for item in sorted(fastaSeq.keys()):
+	# print item
+	orfDictKey=item.split()[0].rsplit('_',1)[0]
+	# print orfDictKey
+	if orfDictKey not in orfDict:
+		orfDict[orfDictKey]=[]
+	orfDict[orfDictKey].append([len(str(fastaSeq[item])),item])
+
+# print orfDict
+# print len(orfDict)
+print(len(orfDict))
+
+
+for item in orfDict:
+	# print item
+	# print max([x[0] for x in orfDict[item]]) 
+	longestORF=max(orfDict[item])
+	longestORFkeys.append(longestORF[1])
+	longestORFlengthDict[item]=[longestORF[0]]
+
+# print longestORFkeys
+print(len(longestORFkeys))
+# print(longestORFlengthDict)
+
+for i in longestORFkeys:
+	# print i
+	# print fastaSeq[i]
+	outFa.write('>'+i+'\n')
+	seq=fastaSeq[i]
+	outFa.write(seq[:]+'\n')
+
+
+# db3 = gffutils.create_db("Cab_reconstructed_transcriptome.gff3", dbfn='test3.db', force=True, keep_order=True,merge_strategy='merge', sort_attribute_values=True)
+db3 = gffutils.create_db("pacbio_hq_transcripts.gff3", dbfn='test3.db', force=True, keep_order=True,merge_strategy='merge', sort_attribute_values=True)
+
+for i in db3.features_of_type('gene'):
+	exons = list(db3.children(i, featuretype='exon'))
+	lengths=[len(j) for j in exons]
+	lastExonJunc=sum(lengths[:-1])
+	# print i
+	geneName=i.attributes['Name']
+	# print(geneName)
+	# print(geneName[0])
+	if geneName[0] in longestORFlengthDict:
+		longestORFlengthDict[geneName[0]].append(lastExonJunc)
+		stopToLastExonDis=lastExonJunc-longestORFlengthDict[geneName[0]][0]
+		# print(stopToLastExonDis)
+		# print(longestORFlengthDict[geneName[0]])
+		longestORFlengthDict[geneName[0]].append(stopToLastExonDis)
+		if stopToLastExonDis > 55:
+			NMDs.append([geneName[0], str(stopToLastExonDis)])
+	else:
+		print("%s not in longest ORF of input fasta" %(geneName[0],))
+
+# print(longestORFlengthDict)
+print("The length of the NMDs is", len(NMDs))
+# print(NMDs)
+
+for item in NMDs:
+	# print(item)
+	outNMDs.write("\t".join(item)+'\n')
+# 
+for item in longestORFlengthDict:
+	outLongestORFs.write(item+"\t"+"\t".join(str(i) for i in (longestORFlengthDict[item]))+"\n") 
+	# print("%s"+"\n") %(item,)
+
+
+
+print("Done!!!")
+```
+
+script: run_find_longest_ORF_and_NMDs.sh
+```
+#!/bin/bash
+cd /sonas-hs/ware/hpc_norepl/data/diniz/Saccharum_genome_refs/SP80-3280
+
+module load GCC/7.3.0-2.30
+module load OpenMPI/3.1.1
+module load EMBOSS/6.6.0
+module load Anaconda2/5.3.0
+#conda create -n gffutils
+source activate gffutils
+#conda install -c bioconda gffutils
+#conda install -c bioconda pyfasta
+
+date
+python find_longest_ORF_and_NMDs.py longestORF_FL_SP80.fa LongestORFinfo_FL_SP80.txt NMD_FL_SP80.txt
+date
+```
+```
+qsub -cwd -pe threads 1 -l m_mem_free=16G run_find_longest_ORF_and_NMDs.sh
+```
+
+
 ## Map full-length unique isoforms back to the genome reference - Scaffolds from pacbio data
 
 ### Build GMPA index
