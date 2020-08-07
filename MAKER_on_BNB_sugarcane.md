@@ -78,6 +78,9 @@ $ cd contig_fasta
 
 cp /sonas-hs/ware/hpc_norepl/data/diniz/Saccharum_genome_refs/SP80-3280/sc.mlc.cns.sgl.utg.scga7.importdb.masked.fa .
 
+# Get subset of genome fasta file for benchmarking computational resources
+
+cp /mnt/grid/ware/hpc_norepl/data/data/diniz/analysis/SP80-3280/braker_masked_RNA/PASA_run/genome/xae.fasta .
 ```
 
 ### Step 3. Creating maker control files
@@ -129,7 +132,7 @@ Note: most of the paths will be prefilled by MAKER when you run `maker -CTL` com
 maker_opts.ctl
 ```
 #-----Genome (these are always required)
-genome=/sonas-hs/ware/hpc_norepl/data/diniz/MAKER_SP80/contig_fasta/sc.mlc.cns.sgl.utg.scga7.importdb.masked.fa #genome sequence (fasta file or fasta embeded in GFF3 file)
+genome=/sonas-hs/ware/hpc_norepl/data/diniz/MAKER_SP80/contig_fasta/xae.fasta #genome sequence (fasta file or fasta embeded in GFF3 file)
 organism_type=eukaryotic #eukaryotic or prokaryotic. Default is eukaryotic
 
 #-----Re-annotation Using MAKER Derived GFF3
@@ -149,7 +152,7 @@ est_gff= #aligned ESTs or mRNA-seq from an external GFF3 file
 altest_gff= #aligned ESTs from a closly relate species in GFF3 format
 
 #-----Protein Homology Evidence (for best results provide a file for at least one)
-protein=/sonas-hs/ware/hpc_norepl/data/diniz/MAKER_SP80/sugarcane_evidence_set/Sspon.v20190103.protein.fasta.gz,/sonas-hs/ware/hpc_norepl/data/diniz/MAKER_SP80/sugarcane_evidence_set/Sorghum_bicolor.Sorghum_bicolor_NCBIv3.pep.all.fa.gz,/sonas-hs/ware/hpc_norepl/data/diniz/MAKER_SP80/sugarcane_evidence_set/Zea_mays.B73_RefGen_v4.pep.all.fa.gz,/sonas-hs/ware/hpc_norepl/data/diniz/MAKER_SP80/sugarcane_evidence_set/Oryza_sativa.IRGSP-1.0.pep.all.fa.gz,/sonas-hs/ware/hpc_norepl/data/diniz/MAKER_SP80/Brachypodium_distachyon.Brachypodium_distachyon_v3.0.pep.all.fa.gz,/sonas-hs/ware/hpc_norepl/data/diniz/MAKER_SP80/sugarcane_evidence_set/Arabidopsis_thaliana.TAIR10.pep.all.fa.gz #protein sequence file in fasta format (i.e. from mutiple organisms)
+protein=/sonas-hs/ware/hpc_norepl/data/diniz/MAKER_SP80/sugarcane_evidence_set/Sspon.v20190103.protein.fasta.gz,/sonas-hs/ware/hpc_norepl/data/diniz/MAKER_SP80/sugarcane_evidence_set/Sorghum_bicolor.Sorghum_bicolor_NCBIv3.pep.all.fa.gz,/sonas-hs/ware/hpc_norepl/data/diniz/MAKER_SP80/sugarcane_evidence_set/Zea_mays.B73_RefGen_v4.pep.all.fa.gz,/sonas-hs/ware/hpc_norepl/data/diniz/MAKER_SP80/sugarcane_evidence_set/Oryza_sativa.IRGSP-1.0.pep.all.fa.gz,/sonas-hs/ware/hpc_norepl/data/diniz/MAKER_SP80/sugarcane_evidence_set/Arabidopsis_thaliana.TAIR10.pep.all.fa.gz #protein sequence file in fasta format (i.e. from mutiple organisms)
 protein_gff=  #aligned protein homology evidence from an external GFF3 file
 
 #-----Repeat Masking (leave values blank to skip repeat masking)
@@ -163,7 +166,7 @@ softmask=1 #use soft-masking rather than hard-masking in BLAST (i.e. seg and dus
 #-----Gene Prediction
 snaphmm= #SNAP HMM file
 gmhmm= #GeneMark HMM file
-augustus_species=sugarcane_sp80 #Augustus gene prediction species model
+augustus_species= #Augustus gene prediction species model
 fgenesh_par_file= #FGENESH parameter file
 pred_gff= #ab-initio predictions from an external GFF3 file
 model_gff= #annotated gene models from an external GFF3 file (annotation pass-through)
@@ -223,34 +226,21 @@ cat submit_maker_here.sh
 #!/bin/bash
 # specify BASH shell
 #$ -S /bin/bash
-# run job in the current working directory where qsub is executed from
-#$ -cwd
-# Tell the SGE that this is an array job, with "tasks" to be numbered 
-#$ -t 1-53
-#  specify that the job requires 3GB of memory for each process
-#$ -pe mpi 16 -l m_mem_free=2G
 # make sure that there is at least 20G of tmp space on the node
 #$ -l tmp_free=200G
 
-module load openmpi-x86_64
 source /sonas-hs/ware/hpc/home/kchougul/.bash_profile
-export LD_PRELOAD=/sonas-hs/ware/hpc/home/mcampbel/applications/openmpi-1.8.8/build/lib/libmpi.so
 
-let i=$SGE_TASK_ID-1
-/sonas-hs/ware/hpc/home/mcampbel/applications/openmpi-1.8.8/build/bin/mpiexec -mca btl ^openib -n 16 /sonas-hs/ware/hpc/home/mcampbel/applications/maker/bin/maker -g contig_fasta/Contig$SGE_TASK_ID.fasta -fix_nucleotides -TMP $TMPDIR
+/sonas-hs/ware/hpc/home/mcampbel/applications/maker/bin/maker 
 ``` 
-array job specification is represernted by -t option. Here we use 1-53 instead of 0-52. 
-
-Note the -t parameter can be modified to submit 10 array jobs at a time to avoid overload on the system : 
-`-t 1-53:10`
 
 ### Step 5. submitting qsub job and monitoring status of the job.
 
 Submit qsub script
-` $ qsub submit_maker_here.sh `
+` $ qsub -cwd -pe threads 16 -l m_mem_free=2G submit_maker_here.sh `
 
 To check status of array jobs:
-`qstat -u kchougul`
+`qstat -u diniz`
 
 To check if MAKER finishes for each contig/array job there will 2 log file submit_maker_here.sh.e[0-9]* submit_maker_here.sh.oe[0-9]*. Once MAKER-P finishes check the status of submit_maker_here.sh.e[0-9]*  file. You should see the following message
 
