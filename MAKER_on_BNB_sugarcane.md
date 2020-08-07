@@ -129,7 +129,7 @@ Note: most of the paths will be prefilled by MAKER when you run `maker -CTL` com
 maker_opts.ctl
 ```
 #-----Genome (these are always required)
-genome=/sonas-hs/ware/hpc_norepl/data/diniz/MAKER_SP80/contig_fasta/Contig0.fasta #genome sequence (fasta file or fasta embeded in GFF3 file)
+genome=/sonas-hs/ware/hpc_norepl/data/diniz/MAKER_SP80/contig_fasta/sc.mlc.cns.sgl.utg.scga7.importdb.masked.fa #genome sequence (fasta file or fasta embeded in GFF3 file)
 organism_type=eukaryotic #eukaryotic or prokaryotic. Default is eukaryotic
 
 #-----Re-annotation Using MAKER Derived GFF3
@@ -143,13 +143,13 @@ pred_pass=0 #use ab-initio predictions in maker_gff: 1 = yes, 0 = no
 other_pass=0 #passthrough anyything else in maker_gff: 1 = yes, 0 = no
 
 #-----EST Evidence (for best results provide a file for at least one)
-est=/sonas-hs/ware/hpc_norepl/data/kapeel/b73_NAM/standarized_evidence_set/genbank_ests_ATCG.fasta:ATCG,/sonas-hs/ware/hpc_norepl/data/kapeel/b73_NAM/standarized_evidence_set/genbank_fl_cdnas_ATCG_only.fasta:flc,/sonas-hs/ware/hpc_norepl/data/kapeel/b73_NAM/standarized_evidence_set/jiao_w22_all.fasta:w22,/sonas-hs/ware/hpc_norepl/data/kapeel/b73_NAM/standarized_evidence_set/law_trinity_longer_than_300bp_cdhit_99.fasta:lcdh,/sonas-hs/ware/hpc_norepl/data/kapeel/b73_NAM/standarized_evidence_set/martin_nature_seedling_transcriptome_longer_than_300bp.fa:sdl,/sonas-hs/ware/hpc_norepl/data/kapeel/b73_NAM/standarized_evidence_set/wang_isoseq_maize.fa:wang_isoseq #set of ESTs or assembled mRNA-seq in fasta format
+est=/sonas-hs/ware/hpc_norepl/data/diniz/MAKER_SP80/sugarcane_evidence_set/ESTs_SP80-3280.fasta,/sonas-hs/ware/hpc_norepl/data/diniz/MAKER_SP80/sugarcane_evidence_set/sugarcane.fulllength.analysis.all.fasta #set of ESTs or assembled mRNA-seq in fasta format
 altest= #EST/cDNA sequence file in fasta format from an alternate organism
 est_gff= #aligned ESTs or mRNA-seq from an external GFF3 file
 altest_gff= #aligned ESTs from a closly relate species in GFF3 format
 
 #-----Protein Homology Evidence (for best results provide a file for at least one)
-protein=/sonas-hs/ware/hpc_norepl/data/kapeel/b73_NAM/standarized_evidence_set/protein/Arabidopsis_thaliana.TAIR10.27.pep.all.fa:AT,/sonas-hs/ware/hpc_norepl/data/kapeel/b73_NAM/standarized_evidence_set/protein/Brachypodium_distachyon.v1.0.27.pep.all.fa:BD,/sonas-hs/ware/hpc_norepl/data/kapeel/b73_NAM/standarized_evidence_set/protein/Oryza_sativa.IRGSP-1.0.27.pep.all.fa:OS,/sonas-hs/ware/hpc_norepl/data/kapeel/b73_NAM/standarized_evidence_set/protein/Setaria_italica.JGIv2.0.27.pep.all.fa:SI,/sonas-hs/ware/hpc_norepl/data/kapeel/b73_NAM/standarized_evidence_set/protein/Sorghum_bicolor.Sorbi1.27.pep.all.fa:SB  #protein sequence file in fasta format (i.e. from mutiple organisms)
+protein=/sonas-hs/ware/hpc_norepl/data/diniz/MAKER_SP80/sugarcane_evidence_set/Sspon.v20190103.protein.fasta.gz,/sonas-hs/ware/hpc_norepl/data/diniz/MAKER_SP80/sugarcane_evidence_set/Sorghum_bicolor.Sorghum_bicolor_NCBIv3.pep.all.fa.gz,/sonas-hs/ware/hpc_norepl/data/diniz/MAKER_SP80/sugarcane_evidence_set/Zea_mays.B73_RefGen_v4.pep.all.fa.gz,/sonas-hs/ware/hpc_norepl/data/diniz/MAKER_SP80/sugarcane_evidence_set/Oryza_sativa.IRGSP-1.0.pep.all.fa.gz,/sonas-hs/ware/hpc_norepl/data/diniz/MAKER_SP80/Brachypodium_distachyon.Brachypodium_distachyon_v3.0.pep.all.fa.gz,/sonas-hs/ware/hpc_norepl/data/diniz/MAKER_SP80/sugarcane_evidence_set/Arabidopsis_thaliana.TAIR10.pep.all.fa.gz #protein sequence file in fasta format (i.e. from mutiple organisms)
 protein_gff=  #aligned protein homology evidence from an external GFF3 file
 
 #-----Repeat Masking (leave values blank to skip repeat masking)
@@ -163,8 +163,8 @@ softmask=1 #use soft-masking rather than hard-masking in BLAST (i.e. seg and dus
 #-----Gene Prediction
 snaphmm= #SNAP HMM file
 gmhmm= #GeneMark HMM file
-augustus_species=maize5 #Augustus gene prediction species model
-fgenesh_par_file=/sonas-hs/ware/hpc_norepl/data/programs/fgenesh_latest/Zeamays.mpar.dat #FGENESH parameter file
+augustus_species=sugarcane_sp80 #Augustus gene prediction species model
+fgenesh_par_file= #FGENESH parameter file
 pred_gff= #ab-initio predictions from an external GFF3 file
 model_gff= #annotated gene models from an external GFF3 file (annotation pass-through)
 run_evm=0 #run EvidenceModeler, 1 = yes, 0 = no
@@ -204,7 +204,7 @@ correct_est_fusion=1 #limits use of ESTs in annotation to avoid fusion genes
 tries=2 #number of times to try a contig if there is a failure for some reason
 clean_try=0 #remove all data from previous run before retrying, 1 = yes, 0 = no
 clean_up=0 #removes theVoid directory with individual analysis files, 1 = yes, 0 = no
-TMP=/sonas-hs/ware/hpc_norepl/data/kapeel/NAM/temp #specify a directory other than the system default temporary directory for temporary files
+TMP=/sonas-hs/ware/hpc_norepl/data/diniz/temp #specify a directory other than the system default temporary directory for temporary files
 ```
 Note: 
 * Provide full paths somehoe MAKER-P on BNB does not recognize relative paths
