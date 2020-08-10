@@ -132,7 +132,7 @@ cp /sonas-hs/ware/hpc_norepl/data/kapeel/NAM/NAM_Canu1.8_new_runs/PASA_runs/B97/
 cp /sonas-hs/ware/hpc_norepl/data/kapeel/NAM/NAM_Canu1.8_new_runs/PASA_runs/B97/annotCompare.config .
 ```
 
-Edit the database path :
+Open the 'alignAssembly.config' and 'annotCompare.config' (using vi, for instance) and edit the database path manually:
 
 ```
 # database settings
