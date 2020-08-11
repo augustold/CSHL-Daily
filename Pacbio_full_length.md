@@ -79,7 +79,7 @@ getorf -sequence pacbio_hq_transcripts.fasta -outseq pacbio_hq_transcripts_orf_n
 ```
 ### Identify candidate NMDs
 
-script: find_longest_ORF_and_NMDs.py
+script: find_longest_ORF_and_NMDs_seqId_singleExonGeneNA.py
 ```
 #!/usr/bin/env python 
 # Created by: Xiaofei Wang
