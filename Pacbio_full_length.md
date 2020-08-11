@@ -90,8 +90,8 @@ script: find_longest_ORF_and_NMDs.py
 # (id, length, lenght of exons exclude last exon), a TXT for potential NMDs 
 # (id, distance between stop codon and last exon junciton)
 
-# Usage: python ******.py input.txt output.fa
-# Example: python ******.py fragment_start_end.txt output.fa
+# Usage: python ******.py input.fa input.gff3 out.fa out_info.txt NMD.txt
+# Example: python find_longest_ORF_and_NMDs_seqId_singleExonGeneNA.py test.fa t2.gff3 t2_out.fa t2_longestORFs.txt t2NMDs.txt
 #----------------------------------------------------------------------------------------
 #===========================================================================================================
 #Imports:
@@ -99,18 +99,25 @@ script: find_longest_ORF_and_NMDs.py
 import sys
 import os
 import pyfasta
+from operator import itemgetter, attrgetter
 import gffutils
 #===========================================================================================================
 # Functions:
 
 
 # posInput = open(sys.argv[1], 'rU')
-# scaffoldFa = open(sys.argv[2], 'rU')
 # scaffoldFa = 'test.fa'
-scaffoldFa = 'pacbio_hq_transcripts_orf_nc_3_NOreverse.fa'
-outFa = open(sys.argv[1], 'w')
-outLongestORFs = open(sys.argv[2], 'w')
-outNMDs = open(sys.argv[3], 'w')
+# scaffoldFa = 'CS_IsoSeq.CISIs_orf_nc_3_NOreverse.fa'
+scaffoldFa = str(sys.argv[1])
+anno = str(sys.argv[2])
+
+print(scaffoldFa)
+print(anno)
+
+
+outFa = open(sys.argv[3], 'w')
+outLongestORFs = open(sys.argv[4], 'w')
+outNMDs = open(sys.argv[5], 'w')
 
 # start = int(sys.argv[2])
 # end = int(sys.argv[3])
@@ -130,15 +137,10 @@ NMDs=[]
 # fastaSeq = pyfasta.Fasta(scaffoldFa, key_fn=lambda key: key.split('|')[3])
 fastaSeq = pyfasta.Fasta(scaffoldFa)
 
-
-# print fastaSeq.keys()
-# python 2
-# print len(fastaSeq.keys())
-# print 'The length of the sequence is', len(str(fastaSeq[fastaSeq.keys()[0]]))
-
-# python 3
 print(len(fastaSeq.keys()))
 print("The length of the sequence is", len(str(fastaSeq[sorted(fastaSeq.keys())[0]])))
+
+
 
 
 
@@ -174,25 +176,40 @@ for i in longestORFkeys:
 	outFa.write(seq[:]+'\n')
 
 
-# db3 = gffutils.create_db("Cab_reconstructed_transcriptome.gff3", dbfn='test3.db', force=True, keep_order=True,merge_strategy='merge', sort_attribute_values=True)
-db3 = gffutils.create_db("pacbio_hq_transcripts.gff3", dbfn='test3.db', force=True, keep_order=True,merge_strategy='merge', sort_attribute_values=True)
+# db3 = gffutils.create_db("CS_IsoSeq.CISIs.gff3", dbfn='test3.db', force=True, keep_order=True,merge_strategy='merge', sort_attribute_values=True)
+# db3 = gffutils.create_db("test.gff3", dbfn='test3.db', force=True, keep_order=True,merge_strategy='merge', sort_attribute_values=True)
+db3 = gffutils.create_db(anno, dbfn='test3.db', force=True, keep_order=True,merge_strategy='merge', sort_attribute_values=True)
 
+# sorted(exons, key= lambda exon: int(exon.start))
 for i in db3.features_of_type('gene'):
 	exons = list(db3.children(i, featuretype='exon'))
-	lengths=[len(j) for j in exons]
+	# print exons
+	if i.strand == '+':
+		sortedExons=sorted(exons, key=attrgetter('start'))
+	elif i.strand == '-':
+		sortedExons=sorted(exons, key=attrgetter('start'), reverse=True) # it should be end coordiates conceptly, but start is also fine
+	# print sortedExons
+	lengths=[len(j) for j in sortedExons]
+	# print lengths
 	lastExonJunc=sum(lengths[:-1])
 	# print i
 	geneName=i.attributes['Name']
 	# print(geneName)
 	# print(geneName[0])
-	if geneName[0] in longestORFlengthDict:
+	if geneName[0] in longestORFlengthDict and len(lengths)>1:
+		longestORFlengthDict[geneName[0]].append(str(i.seqid))
 		longestORFlengthDict[geneName[0]].append(lastExonJunc)
 		stopToLastExonDis=lastExonJunc-longestORFlengthDict[geneName[0]][0]
 		# print(stopToLastExonDis)
 		# print(longestORFlengthDict[geneName[0]])
 		longestORFlengthDict[geneName[0]].append(stopToLastExonDis)
 		if stopToLastExonDis > 55:
-			NMDs.append([geneName[0], str(stopToLastExonDis)])
+			NMDs.append([geneName[0], str(stopToLastExonDis),str(i.seqid)])
+	elif geneName[0] in longestORFlengthDict and len(lengths)==1:
+		longestORFlengthDict[geneName[0]].append(str(i.seqid))
+		longestORFlengthDict[geneName[0]].append("NA")
+		longestORFlengthDict[geneName[0]].append("NA")
+
 	else:
 		print("%s not in longest ORF of input fasta" %(geneName[0],))
 
