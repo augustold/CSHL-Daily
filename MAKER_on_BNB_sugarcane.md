@@ -152,13 +152,13 @@ est_gff= #aligned ESTs or mRNA-seq from an external GFF3 file
 altest_gff= #aligned ESTs from a closly relate species in GFF3 format
 
 #-----Protein Homology Evidence (for best results provide a file for at least one)
-protein=/sonas-hs/ware/hpc_norepl/data/diniz/MAKER_SP80/sugarcane_evidence_set/Sspon.v20190103.protein.fasta.gz,/sonas-hs/ware/hpc_norepl/data/diniz/MAKER_SP80/sugarcane_evidence_set/Sorghum_bicolor.Sorghum_bicolor_NCBIv3.pep.all.fa.gz,/sonas-hs/ware/hpc_norepl/data/diniz/MAKER_SP80/sugarcane_evidence_set/Zea_mays.B73_RefGen_v4.pep.all.fa.gz,/sonas-hs/ware/hpc_norepl/data/diniz/MAKER_SP80/sugarcane_evidence_set/Oryza_sativa.IRGSP-1.0.pep.all.fa.gz,/sonas-hs/ware/hpc_norepl/data/diniz/MAKER_SP80/sugarcane_evidence_set/Arabidopsis_thaliana.TAIR10.pep.all.fa.gz #protein sequence file in fasta format (i.e. from mutiple organisms)
+protein=/sonas-hs/ware/hpc_norepl/data/diniz/MAKER_SP80/sugarcane_evidence_set/Sspon.v20190103.protein.fasta,/sonas-hs/ware/hpc_norepl/data/diniz/MAKER_SP80/sugarcane_evidence_set/Sorghum_bicolor.Sorghum_bicolor_NCBIv3.pep.all.fa,/sonas-hs/ware/hpc_norepl/data/diniz/MAKER_SP80/sugarcane_evidence_set/Zea_mays.B73_RefGen_v4.pep.all.fa,/sonas-hs/ware/hpc_norepl/data/diniz/MAKER_SP80/sugarcane_evidence_set/Oryza_sativa.IRGSP-1.0.pep.all.fa,/sonas-hs/ware/hpc_norepl/data/diniz/MAKER_SP80/sugarcane_evidence_set/Arabidopsis_thaliana.TAIR10.pep.all.fa #protein sequence file in fasta format (i.e. from mutiple organisms)
 protein_gff=  #aligned protein homology evidence from an external GFF3 file
 
 #-----Repeat Masking (leave values blank to skip repeat masking)
 model_org= #select a model organism for RepBase masking in RepeatMasker
-rmlib=/sonas-hs/ware/hpc_norepl/data/kapeel/b73_NAM/standarized_evidence_set/Wessler-Bennetzen_2.fasta #provide an organism specific repeat library in fasta format for RepeatMasker
-repeat_protein=/sonas-hs/ware/hpc_norepl/data/programs/maker_v3_updated/maker/data/te_proteins.fasta #provide a fasta file of transposable element proteins for RepeatRunner
+rmlib= #provide an organism specific repeat library in fasta format for RepeatMasker
+repeat_protein= #provide a fasta file of transposable element proteins for RepeatRunner
 rm_gff= #pre-identified repeat elements from an external GFF3 file
 prok_rm=0 #forces MAKER to repeatmask prokaryotes (no reason to change this), 1 = yes, 0 = no
 softmask=1 #use soft-masking rather than hard-masking in BLAST (i.e. seg and dust filtering)
