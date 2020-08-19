@@ -255,6 +255,26 @@ date
 qsub -cwd -pe threads 1 -l m_mem_free=16G run_find_longest_ORF_and_NMDs.sh
 ```
 
+## Step 4 Cleaning up 
+
+Purge potential IR and NMD targets
+
+#### 4.1 Extract transcript ids with IR and NMD
+
+```
+cut -f 4 CS_IsoSeq.CISIs_RI_b_RI_strict.ioe | sed 's/,/\n/g' | cut -f 1 -d '.' | sort | uniq |  sed '1 d' > CS_IsoSeq.CISIs_IR.txt
+cut -f 1 CS_IsoSeq.CISIs_NMDs_2.txt | sort | uniq > CS_IsoSeq.CISIs_NMD.txt
+cat CS_IsoSeq.CISIs_IR.txt CS_IsoSeq.CISIs_NMD.txt | sort | uniq > CS_IsoSeq.CISIs_IR_NMD.txt
+
+```
+
+#### 4.2 Remove the transcripts with IR and NMD
+
+```
+/sonas-hs/ware/hpc_norepl/data/programs/maker_v3_updated/maker/bin/fasta_tool --remove CS_IsoSeq.CISIs_IR_NMD.txt CS_IsoSeq.CISIs.fasta > CS_IsoSeq.CISIs_NMD_IR_rm.fasta 
+
+```
+
 
 ## Map full-length unique isoforms back to the genome reference - Scaffolds from pacbio data
 
