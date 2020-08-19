@@ -281,22 +281,28 @@ theVoid.Contig0
 
 To merge gff's and extract only gene features and remove nucleotide seq
 
-`$ gff3_merge -g -n -o CML33.maker.gene_only.gff Contig*/*out*/*data*/*/*/*/*gff`
+```
+cd /sonas-hs/ware/hpc_norepl/data/diniz/MAKER_SP80
+```
+
+`$ /sonas-hs/ware/hpc/home/mcampbel/applications/maker/bin/gff3_merge -g -n -o uti.xae.maker.gene_only.gff *out*/*data*/*/*/*/*gff`
+
+xae.maker.output/xae_datastore/00/43/uni_338083
 
 To merge gff's and extract all features and remove nucleotide seq
 
-`$ gff3_merge -n -o CML33.maker.all.gff Contig*/*out*/*data*/*/*/*/*gff`
+`$ /sonas-hs/ware/hpc/home/mcampbel/applications/maker/bin/gff3_merge -n -o uti.xae.maker.all.gff *out*/*data*/*/*/*/*gff`
 
 To merge fasta
 ```
-$ cat Contig*/*out*/*data*/*/*/*/*maker.augustus_masked.proteins.fasta > CML333.maker.augustus_masked.proteins.fasta
-$ cat Contig*/*out*/*data*/*/*/*/*maker.augustus_masked.transcripts.fasta > CML333.maker.augustus_masked.transcripts.fasta
-$ cat Contig*/*out*/*data*/*/*/*/*maker.fgenesh_masked.proteins.fasta > CML333.maker.fgenesh_masked.proteins.fasta
-$ cat Contig*/*out*/*data*/*/*/*/*maker.fgenesh_masked.transcripts.fasta > CML333.maker.fgenesh_masked.transcripts.fasta
-$ cat Contig*/*out*/*data*/*/*/*/*maker.non_overlapping_ab_initio.proteins.fasta > CML333.maker.non_overlapping_ab_initio.proteins.fasta
-$ cat Contig*/*out*/*data*/*/*/*/*maker.non_overlapping_ab_initio.transcripts.fasta > CML333.maker.non_overlapping_ab_initio.transcripts.fasta
-$ cat Contig*/*out*/*data*/*/*/*/*maker.proteins.fasta > CML333.maker.proteins.fasta
-$ cat Contig*/*out*/*data*/*/*/*/*maker.transcripts.fasta > CML333.maker.transcripts.fasta
+$ cat Contig*/*out*/*data*/*/*/*/*maker.augustus_masked.proteins.fasta > SP80.maker.augustus_masked.proteins.fasta
+$ cat Contig*/*out*/*data*/*/*/*/*maker.augustus_masked.transcripts.fasta > SP80.maker.augustus_masked.transcripts.fasta
+$ cat Contig*/*out*/*data*/*/*/*/*maker.fgenesh_masked.proteins.fasta > SP80.maker.fgenesh_masked.proteins.fasta
+$ cat Contig*/*out*/*data*/*/*/*/*maker.fgenesh_masked.transcripts.fasta > SP80.maker.fgenesh_masked.transcripts.fasta
+$ cat Contig*/*out*/*data*/*/*/*/*maker.non_overlapping_ab_initio.proteins.fasta > SP80.maker.non_overlapping_ab_initio.proteins.fasta
+$ cat Contig*/*out*/*data*/*/*/*/*maker.non_overlapping_ab_initio.transcripts.fasta > SP80.maker.non_overlapping_ab_initio.transcripts.fasta
+$ cat Contig*/*out*/*data*/*/*/*/*maker.proteins.fasta > SP80.maker.proteins.fasta
+$ cat Contig*/*out*/*data*/*/*/*/*maker.transcripts.fasta > SP80.maker.transcripts.fasta
 ```
 
 To extract repeatmasked genome seq and gff
