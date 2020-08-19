@@ -239,13 +239,16 @@ module load GCC/7.3.0-2.30
 module load OpenMPI/3.1.1
 module load EMBOSS/6.6.0
 module load Anaconda2/5.3.0
+
 #conda create -n gffutils
 source activate gffutils
 #conda install -c bioconda gffutils
 #conda install -c bioconda pyfasta
 
+which python
+
 date
-python find_longest_ORF_and_NMDs.py longestORF_FL_SP80.fa LongestORFinfo_FL_SP80.txt NMD_FL_SP80.txt
+/sonas-hs/ware/hpc/home/diniz/.conda/envs/gffutils/bin/python find_longest_ORF_and_NMDs_seqId_singleExonGeneNA.py pacbio_hq_transcripts_orf_nc_3_NOreverse.fa pacbio_hq_transcripts.gtf t2_out.fa t2_longestORFs.txt t2NMDs.txt
 date
 ```
 ```
