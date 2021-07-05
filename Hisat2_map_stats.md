@@ -91,9 +91,13 @@ done
 ```
 #R570
 cd /projects/augustold/CSHL/Hisat2_map_stats/R570
-python3 /projects/aliemelo/resources/scripts/make_hisat2_table.py -l summary_list2.txt -o R570_map_summary.csv
 
+ls /projects/augustold/CSHL/Hisat2_map_stats/R570/summary* | xargs -n 1 basename | cut -d "." -f1 | cut -d "_" -f2 | sort -u > sample_lst_A.txt
+ls /projects/augustold/CSHL/Hisat2_map_stats/R570/summary* | xargs -n 1 basename | sort -u > sample_lst_B.txt
+paste -d'\t' sample_lst_A.txt sample_lst_B.txt > sample_lst.txt
+rm -rf sample_lst_A.txt sample_lst_B.txt
 
+python3 /projects/aliemelo/resources/scripts/make_hisat2_table.py -l sample_lst.txt -o R570_map_summary.csv
 
 ```
 # Get expression tables
