@@ -85,11 +85,46 @@ for SAMPLE in $(ls /projects/augustold/fastq/ | sed s/_[12].fq.gz// | sort -u); 
 
     rm -rf ${SAMPLE}.sam
 done
+```
 
 # Get summary tables
-
+```
 #R570
 cd /projects/augustold/CSHL/Hisat2_map_stats/R570
-
 python3 /projects/aliemelo/resources/scripts/make_hisat2_table.py -l summary_list2.txt -o R570_map_summary.csv
+
+
+
 ```
+# Get expression tables
+```
+# AP85-441
+#screen
+#conda activate RNAseq_SP803280_2021
+#cd /projects/augustold/CSHL/Hisat2_map_stats/AP85-441/
+
+for i in $(ls /projects/augustold/CSHL/Hisat2_map_stats/AP85-441/*bam | xargs -n 1 basename | cut -d "." -f1 | sort -u)
+do
+   stringtie ${i}.sorted.bam \
+   -G /projects/augustold/CSHL/Saccharum_genome_refs/Sspon/Sspon.v20190103.gff3 \
+   -e --rf -p 20 \
+   -o stringtie/${i}.gtf \
+   -A stringtie/${i}_gene_abund.tab
+done
+
+
+# SP80-3280
+#screen
+#conda activate RNAseq_SP803280_2021
+#cd /projects/augustold/CSHL/Hisat2_map_stats/SP80-3280
+
+for i in $(ls /projects/augustold/CSHL/Hisat2_map_stats/SP80-3280/*bam | xargs -n 1 basename | cut -d "." -f1 | sort -u)
+do
+   stringtie ${i}.sorted.bam \
+   -G /projects/augustold/CSHL/Saccharum_genome_refs/SP803280/scga7.v2.gff3 \
+   -e --rf -p 20 \
+   -o stringtie_scga7_v2/${i}.gtf \
+   -A stringtie_scga7_v2/${i}_gene_abund.tab
+done
+```
+
